@@ -14,7 +14,6 @@ export const byDisplayStartEnd = (a, b) => {
 	const aDisplay = componentsByTag[a.type].display;
 	const bDisplay = componentsByTag[b.type].display;
 
-	console.log(a.type, aDisplay, bDisplay, b.type);
 	return (aDisplay !== bDisplay) ?
 		(aDisplay === 'inline') ? 1 : -1 :
 		byStartEnd(a, b);
