@@ -4,7 +4,5 @@ services:
     build:
       context: ../
       dockerfile: docker/Dockerfile-prod-client
-    links:
-      - "server"
     ports:
       - "80:80"
