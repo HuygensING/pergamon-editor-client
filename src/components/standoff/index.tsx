@@ -1,4 +1,5 @@
 import * as React from 'react';
+import Select from 'hire-forms-select';
 import { connect } from 'react-redux';
 require('codemirror/mode/javascript/javascript');
 import * as CodeMirror from 'react-codemirror';
@@ -68,6 +69,15 @@ class Json2react extends React.Component<any, any> {
 	public render() {
 		return (
 			<div>
+				<Select
+					onChange={(id) => this.props.setDocId(id)}
+					options={[
+						{ key: 'original', value: 'original' },
+						{ key: 'typical', value: 'typical' },
+						{ key: 'large', value: 'large' }
+					]}
+				  value={{ key: this.props.id, value: this.props.id }}
+				/>
 				<Head2>Text</Head2>
 				<CodeMirror
 					className="text"

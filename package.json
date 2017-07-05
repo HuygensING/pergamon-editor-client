@@ -1,5 +1,5 @@
 {
-  "name": "e-pistolarium-2.0",
+  "name": "pergamon-client",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "hire-forms-select": "^2.2.7",
     "react": "^15.6.1",
     "react-codemirror": "^1.0.0",
     "react-dom": "^15.6.1",
@@ -45,7 +46,9 @@
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "testPathIgnorePatterns": ["/__tests__/data/"],
+    "testPathIgnorePatterns": [
+      "/__tests__/data/"
+    ],
     "moduleFileExtensions": [
       "ts",
       "tsx",
