@@ -7,7 +7,6 @@
     "compose-dev": "docker-compose -f docker/docker-compose.yml",
     "compose-prod": "npm run compose-dev -- -f docker/docker-compose-prod.yml",
     "build": "webpack",
-    "server": "node server.js",
     "test": "jest",
     "watch": "webpack -w"
   },

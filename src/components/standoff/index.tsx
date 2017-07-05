@@ -4,7 +4,7 @@ require('codemirror/mode/javascript/javascript');
 import * as CodeMirror from 'react-codemirror';
 import fillGaps from "./fill-gaps";
 import createTree from "./create-tree";
-import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byRowStartEnd, byStartEnd} from "./utils";
+import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "./utils";
 import {splitAnnotations} from "./split-annotations";
 import componentByTag from './tags';
 import styled from "styled-components";
