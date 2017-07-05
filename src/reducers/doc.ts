@@ -36,19 +36,22 @@ export default (state = initialState, action) => {
 				id: action.id,
 				annotations: data[action.id].annotations,
 				text: data[action.id].text,
-			}}
+			}};
+			break;
 		}
 
 		case 'SET_DOC_TEXT': {
 			nextState = { ...nextState, ...{
 				text: action.text,
-			}}
+			}};
+			break;
 		}
 
 		case 'SET_DOC_ANNOTATIONS': {
 			nextState = { ...nextState, ...{
 				annotations: action.annotations,
-			}}
+			}};
+			break;
 		}
 
 		default:

@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Select from 'hire-forms-select';
 import { connect } from 'react-redux';
-require('codemirror/mode/javascript/javascript');
-import * as CodeMirror from 'react-codemirror';
+import Select from 'hire-forms-select';
+import Textarea from 'hire-forms-textarea';
 import fillGaps from "./fill-gaps";
 import createTree from "./create-tree";
 import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "./utils";
@@ -67,6 +66,13 @@ class Json2react extends React.Component<any, any> {
 	}
 
 	public render() {
+		const MyTextarea = styled(Textarea)`
+			border: 1px solid #888;
+			margin: 1em;
+			max-height: 30vh;
+			width: calc(100% - 2em);
+		`;
+
 		return (
 			<div>
 				<Select
@@ -79,19 +85,14 @@ class Json2react extends React.Component<any, any> {
 				  value={{ key: this.props.id, value: this.props.id }}
 				/>
 				<Head2>Text</Head2>
-				<CodeMirror
-					className="text"
-					value={this.props.text}
+				<MyTextarea
 					onChange={(text: string) => this.props.setDocText({text})}
+					value={this.props.text}
 				/>
 				<Head2>Annotations</Head2>
-				<CodeMirror
-					value={JSON.stringify(this.props.annotations, null, 2)}
+				<MyTextarea
 					onChange={(annotations: string) => this.props.setDocAnnotations(JSON.parse(annotations))}
-				  options={{
-				  	lineNumbers: true,
-				  	mode: 'javascript',
-				  }}
+					value={JSON.stringify(this.props.annotations, null, 2)}
 				/>
 				<Head2>Output</Head2>
 				{this.standoff2react()}
