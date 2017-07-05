@@ -1,0 +1,56 @@
+{
+  "name": "e-pistolarium-2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compose-dev": "docker-compose -f docker/docker-compose.yml",
+    "compose-prod": "npm run compose-dev -- -f docker/docker-compose-prod.yml",
+    "build": "webpack",
+    "server": "node server.js",
+    "test": "jest",
+    "watch": "webpack -w"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^20.0.2",
+    "@types/node": "^8.0.6",
+    "@types/react": "^15.0.33",
+    "@types/react-router-dom": "^4.0.5",
+    "awesome-typescript-loader": "^3.2.1",
+    "browser-sync": "^2.18.12",
+    "connect-modrewrite": "^0.10.1",
+    "jest": "^20.0.4",
+    "lodash.debounce": "^4.0.8",
+    "proxy-middleware": "^0.15.0",
+    "ts-jest": "^20.0.6",
+    "typescript": "2.4.1",
+    "webpack": "^3.0.0"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "react": "^15.6.1",
+    "react-codemirror": "^1.0.0",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "redux": "^3.7.1",
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^2.1.0"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": ["/__tests__/data/"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
+  }
+}
