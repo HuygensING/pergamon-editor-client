@@ -7,25 +7,17 @@ export const removeNewAnnotation = () => (dispatch) =>
 export const createAnnotation = (ev) => (dispatch, getState) => {
 	const { selectionStart, selectionEnd, value } = ev.currentTarget;
 	if (selectionEnd - selectionStart === 0) return;
-	const selectedString = value.slice(selectionStart, selectionEnd);
 
-	const text = getState().doc.text;
-	const occurrences = (text.match(new RegExp(selectedString, 'g')) || []).length;
-
-	if (occurrences === 1) {
-		dispatch({
-			type: 'CREATE_ANNOTATION',
-			annotation_type: 'highlight',
-			start: selectionStart,
-			end: selectionEnd,
-		});
-		dispatch({
-			type: 'ADD_ANNOTATION',
-			annotation: getState().annotation,
-		});
-	} else {
-		throw new Error('Not a unique selection');
-	}
+	dispatch({
+		type: 'CREATE_ANNOTATION',
+		annotation_type: 'highlight',
+		start: selectionStart,
+		end: selectionEnd,
+	});
+	dispatch({
+		type: 'ADD_ANNOTATION',
+		annotation: getState().annotation,
+	});
 
 	// const selection = window.getSelection();
 	//
