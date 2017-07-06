@@ -5,6 +5,5 @@ COPY build /usr/share/nginx/html/build/
 COPY index.html /usr/share/nginx/html/index.html
 COPY node_modules/react /usr/share/nginx/html/node_modules/react/
 COPY node_modules/react-dom /usr/share/nginx/html/node_modules/react-dom/
-COPY node_modules/codemirror /usr/share/nginx/html/node_modules/codemirror/
 
 EXPOSE 80

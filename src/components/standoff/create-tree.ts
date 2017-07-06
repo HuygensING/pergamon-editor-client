@@ -1,6 +1,6 @@
 import {hasOverlap} from "./utils";
 
-const createTree = (agg, curr, index, arr) => {
+const toTree = (agg, curr, index, arr) => {
 	if (agg.length === 0) {
 		agg.push(curr);
 		return agg;
@@ -23,4 +23,4 @@ const createTree = (agg, curr, index, arr) => {
 	return agg;
 };
 
-export default createTree;
+export default toTree;

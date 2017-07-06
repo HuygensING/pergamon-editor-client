@@ -14,8 +14,10 @@ export const Head2 = styled.h2`
 	margin: 2em 1em -0.5em 1em;
 `;
 
-class Json2react extends React.Component<any, any> {
-	private renderNode = (node, index?) => {
+class Standoff extends React.Component<any, any> {
+	private outputNode;
+
+	private renderTree = (node, index?) => {
 		if (!componentByTag.hasOwnProperty(node.type)) {
 			throw new Error(`Component not found: ${node.type}`);
 		}
@@ -31,7 +33,7 @@ class Json2react extends React.Component<any, any> {
 				{
 					node.children
 						.reduce(fillGaps(node), [])
-						.map(this.renderNode)
+						.map(this.renderTree)
 				}
 			</Comp>	:
 			<Comp
@@ -45,26 +47,6 @@ class Json2react extends React.Component<any, any> {
 			</Comp>;
 	};
 
-	private standoff2react() {
-		const annotations = this.props.annotations
-			.sort(byDisplayStartEnd)
-			.map(addRow())
-			.sort(byRowDisplayStartEnd)
-			.reduce(splitAnnotations(), [])
-			.sort(byStartEnd)
-			.reduce(createTree, []);
-
-		const root = {
-			start: 0,
-			end: this.props.text.length - 1,
-			id: 'some-random-root-id',
-			type: 'doc',
-			children: annotations,
-		};
-
-		return this.renderNode(root);
-	}
-
 	public render() {
 		const MyTextarea = styled(Textarea)`
 			border: 1px solid #888;
@@ -76,7 +58,9 @@ class Json2react extends React.Component<any, any> {
 		return (
 			<div>
 				<Select
-					onChange={(id) => this.props.setDocId(id)}
+					onChange={(id) => {
+						this.props.setDocId(id)
+					}}
 					options={[
 						{ key: 'original', value: 'original' },
 						{ key: 'typical', value: 'typical' },
@@ -95,7 +79,9 @@ class Json2react extends React.Component<any, any> {
 					value={JSON.stringify(this.props.annotations, null, 2)}
 				/>
 				<Head2>Output</Head2>
-				{this.standoff2react()}
+				<div ref={(node) => { this.outputNode = node; }}>
+					{this.renderTree(this.props.tree)}
+				</div>
 			</div>
 		);
 	}
@@ -106,10 +92,11 @@ export default connect(
 		id: state.doc.id,
 		annotations: state.doc.annotations,
 		text: state.doc.text,
+		tree: state.doc.tree,
 	}),
 	{
 		setDocId,
 		setDocText,
 		setDocAnnotations,
 	}
-)(Json2react);
+)(Standoff);
