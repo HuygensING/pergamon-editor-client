@@ -34,7 +34,7 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "hire-forms-select": "^2.2.7",
-    "hire-forms-textarea": "^2.0.1",
+    "hire-forms-textarea": "^2.1.0",
     "md5": "^2.2.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

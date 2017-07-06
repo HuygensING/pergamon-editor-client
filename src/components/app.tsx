@@ -14,13 +14,20 @@ const App = styled.div`
 	height: 100%;
 `;
 
+const Header = styled.div`
+	background: #DDD;
+	font-size: 2em;
+	font-weight: bold;
+	padding: 2vh 1vw;
+`;
+
 export default () => (
 	<Provider store={store}>
 		<ConnectedRouter history={history}>
 			<App>
-				<header>
-					<h1>Pergamon client</h1>
-				</header>
+				<Header>
+					Pergamon client
+				</Header>
 				<Route
 					component={Home}
 					exact

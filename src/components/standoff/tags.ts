@@ -7,8 +7,10 @@ const InlineDiv = styled.div`
 const Doc = styled.div`
 	background: lightyellow;
 	border: 2px dotted orange;
-	margin: 1em;
+	box-sizing: border-box;
 	padding: 1em;
+	height: 65vh;
+	overflow: auto;
 `;
 
 const Paragraph = styled.div`
