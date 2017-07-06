@@ -83,7 +83,7 @@ export default (state = initialState, action) => {
 		case 'SET_DOC_TEXT': {
 			nextState = { ...nextState, ...{
 				text: action.text,
-				tree: getTree(action.id, nextState.text, nextState.annotations),
+				tree: getTree(nextState.id, action.text, nextState.annotations),
 			}};
 			break;
 		}

@@ -81,8 +81,8 @@ describe('splitAnnotations', () => {
 	});
 });
 
-describe('createTree', () => {
-	test('createTree 1', () => {
+describe('toTree', () => {
+	test('toTree 1', () => {
 		const received = annotationsSplitted
 			.sort(byRowStartEnd)
 			.reduce(createTree, []);

@@ -1,4 +1,4 @@
-import createTree from '../src/components/standoff/create-tree';
+import toTree from '../src/components/standoff/create-tree';
 import {splitAnnotations, toSplitPoints} from "../src/components/standoff/split-annotations";
 import { annotationsWithRow, annotationsSortedByRow, annotationsSplitted, tree } from './data/set1';
 import {byRowDisplayStartEnd, byStartEnd} from "../src/components/standoff/utils";
@@ -19,11 +19,11 @@ describe('splitAnnotations', () => {
 	});
 });
 
-describe('createTree', () => {
-	test('createTree 1', () => {
+describe('toTree', () => {
+	test('toTree 1', () => {
 		const received = annotationsSplitted
 			.sort(byStartEnd)
-			.reduce(createTree, []);
+			.reduce(toTree, []);
 		expect(received).toEqual(tree);
 	})
 });
