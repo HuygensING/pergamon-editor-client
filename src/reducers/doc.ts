@@ -5,6 +5,7 @@ import large from './docs/large';
 import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "../components/standoff/utils";
 import {splitAnnotations} from "../components/standoff/split-annotations";
 import toTree from "../components/standoff/create-tree";
+import {IAnnotation} from "./annotation";
 
 const data = {
 	typical,
@@ -41,14 +42,6 @@ const getTree = (id: string, text: string, annotations: IAnnotation[]): IAnnotat
 		return tree;
 	}
 };
-
-interface IAnnotation {
-	children?: IAnnotation[],
-	end: number,
-	id: number | string;
-	start: number,
-	type: string;
-}
 
 interface IState {
 	id: string;
@@ -92,6 +85,15 @@ export default (state = initialState, action) => {
 			nextState = { ...nextState, ...{
 				annotations: action.annotations,
 				tree: getTree(nextState.id, nextState.text, action.annotations),
+			}};
+			break;
+		}
+
+		case 'ADD_ANNOTATION': {
+			const annotations = nextState.annotations.concat(action.annotation);
+			nextState = { ...nextState, ...{
+				annotations,
+				tree: getTree(nextState.id, nextState.text, annotations),
 			}};
 			break;
 		}

@@ -37,6 +37,10 @@ const Underline = styled(InlineDiv)`
 	text-decoration: underline;
 `;
 
+const Highlight = styled(InlineDiv)`
+	background-color: rgba(255, 255, 0, 0.8);
+`;
+
 export default {
 	bold: {
 		component: Bold,
@@ -60,6 +64,10 @@ export default {
 	},
 	underline: {
 		component: Underline,
+		display: 'inline',
+	},
+	highlight: {
+		component: Highlight,
 		display: 'inline',
 	},
 

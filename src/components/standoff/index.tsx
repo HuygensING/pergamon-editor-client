@@ -5,12 +5,14 @@ import Textarea from 'hire-forms-textarea';
 import styled from "styled-components";
 import {setDocAnnotations, setDocId, setDocText} from "../../actions/doc";
 import TextTree from "./text-tree";
+import Text from "./text";
+import {createAnnotation} from "../../actions/annotation";
 
 export const Head2 = styled.h2`
 	margin: 0;
 `;
 
-const MyTextarea = styled(Textarea)`
+export const MyTextarea = styled(Textarea)`
 	border: 1px solid #888;
 	height: 65vh;
 	width: 100%;
@@ -48,10 +50,7 @@ const Standoff = (props) =>
 		</Menu>
 		<Column>
 			<Head2>Text</Head2>
-			<MyTextarea
-				onChange={(text: string) => props.setDocText(text)}
-				value={props.text}
-			/>
+			<Text {...props} />
 		</Column>
 		<Column>
 			<Head2>Annotations</Head2>
@@ -77,6 +76,7 @@ export default connect(
 		tree: state.doc.tree,
 	}),
 	{
+		createAnnotation,
 		setDocId,
 		setDocText,
 		setDocAnnotations,
