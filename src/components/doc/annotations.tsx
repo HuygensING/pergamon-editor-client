@@ -18,6 +18,11 @@ const SmallButton = styled.div`
 	line-height: 1.5em;
 `;
 
+const Wrapper = styled.div`
+	height: 65vh;
+	overflow: auto;
+`;
+
 class Annotations extends React.Component<any, any> {
 	public state = {
 		list: true,
@@ -26,21 +31,23 @@ class Annotations extends React.Component<any, any> {
 	public render() {
 		const {activateAnnotation, annotationList, annotationTree, text} = this.props;
 		return (
-			<div className="annotations">
+			<div>
 				<Head2>
 					Annotations
 					<SmallButton onClick={() => this.setState({list: true})}>☰</SmallButton>
 					<SmallButton onClick={() => this.setState({list: false})}>Ͱ</SmallButton>
 				</Head2>
-				<AnnotationList
-					activateAnnotation={activateAnnotation}
-					annotations={
-						(this.state.list) ?
-							annotationList.sort(byStartEnd) :
-							annotationTree
-					}
-					text={text}
-				/>
+				<Wrapper>
+					<AnnotationList
+						activateAnnotation={activateAnnotation}
+						annotations={
+							(this.state.list) ?
+								annotationList.sort(byStartEnd) :
+								annotationTree
+						}
+						text={text}
+					/>
+				</Wrapper>
 			</div>
 		);
 	}
