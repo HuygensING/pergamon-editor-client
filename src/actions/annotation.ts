@@ -22,12 +22,24 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 };
 
 export const activateAnnotation = (id) => (dispatch, getState) => {
+	const prevAnnotation = getState().annotation;
 	const annotation = getState().doc.annotations.find((a) => a.id === id);
-	console.log(annotation)
+	const isActive = prevAnnotation.id === annotation.id;
 	dispatch({
 		type: 'ACTIVATE_ANNOTATION',
-		id,
-		start: annotation.start,
-		end: annotation.end,
+		annotation: isActive ? null : {...annotation},
 	});
+};
+
+export const changeAnnotationProps = (props) => (dispatch, getState) => {
+	dispatch({
+		type: 'CHANGE_ANNOTATION_PROPS',
+		props,
+	});
+
+	console.log(getState().annotation)
+	dispatch({
+		type: 'REPLACE_ANNOTATION',
+		annotation: getState().annotation,
+	})
 };

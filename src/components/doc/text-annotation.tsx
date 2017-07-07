@@ -9,8 +9,6 @@ const TextAnnotation = ({annotation, children, end, id, start, type}) => {
 	const Tag = componentByTag[type].component;
 
 	const ActiveTag = styled(Tag)`
-		background: red;
-		color: white;
 	`;
 
 	let Comp = Tag;

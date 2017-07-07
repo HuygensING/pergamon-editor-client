@@ -98,6 +98,18 @@ export default (state = initialState, action) => {
 			break;
 		}
 
+		case 'REPLACE_ANNOTATION': {
+			const annotations = nextState.annotations
+				.filter((a) => a.id !== action.annotation.id)
+				.concat(action.annotation);
+
+			nextState = { ...nextState, ...{
+				annotations,
+				tree: getTree(nextState.id, nextState.text, annotations),
+			}};
+			break;
+		}
+
 		default:
 	}
 

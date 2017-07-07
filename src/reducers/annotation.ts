@@ -37,11 +37,14 @@ export default (state = initialState, action) => {
 		}
 
 		case 'ACTIVATE_ANNOTATION': {
-			nextState = { ...nextState, ...{
-				id: action.id,
-				start: action.start,
-				end: action.end,
-			}};
+			nextState = (action.annotation == null) ?
+				initialState :
+				{ ...nextState, ...action.annotation };
+			break;
+		}
+
+		case 'CHANGE_ANNOTATION_PROPS': {
+			nextState = { ...nextState, ...action.props};
 			break;
 		}
 

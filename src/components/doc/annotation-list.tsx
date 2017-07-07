@@ -15,6 +15,8 @@ const AnnotationList = (props) =>
 			props.annotations.map((annotation, index) =>
 				<Annotation
 					activateAnnotation={props.activateAnnotation}
+					activeAnnotation={props.annotation}
+					changeAnnotationProps={props.changeAnnotationProps}
 					annotation={annotation}
 					key={index}
 					text={props.text}

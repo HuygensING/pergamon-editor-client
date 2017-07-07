@@ -29,7 +29,14 @@ class Annotations extends React.Component<any, any> {
 	};
 
 	public render() {
-		const {activateAnnotation, annotationList, annotationTree, text} = this.props;
+		const {
+			activateAnnotation,
+			annotation,
+			annotationList,
+			annotationTree,
+			changeAnnotationProps,
+			text
+		} = this.props;
 		return (
 			<div>
 				<Head2>
@@ -40,11 +47,13 @@ class Annotations extends React.Component<any, any> {
 				<Wrapper>
 					<AnnotationList
 						activateAnnotation={activateAnnotation}
+						annotation={annotation}
 						annotations={
 							(this.state.list) ?
 								annotationList.sort(byStartEnd) :
 								annotationTree
 						}
+						changeAnnotationProps={changeAnnotationProps}
 						text={text}
 					/>
 				</Wrapper>

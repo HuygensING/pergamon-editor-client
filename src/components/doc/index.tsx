@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {setDocAnnotations, setDocId, setDocText} from "../../actions/doc";
 import TextTree from "./text-tree";
 import Text from "./text";
-import {activateAnnotation, createAnnotation} from "../../actions/annotation";
+import {activateAnnotation, changeAnnotationProps, createAnnotation} from "../../actions/annotation";
 import Annotations from "./annotations";
 
 export const Head2 = styled.h2`
@@ -54,9 +54,11 @@ const Doc = (props) =>
 		</Column>
 		<Column>
 			<Annotations
+				annotation={props.annotation}
 				activateAnnotation={props.activateAnnotation}
 				annotationList={props.annotations}
 				annotationTree={props.tree.children}
+				changeAnnotationProps={props.changeAnnotationProps}
 				text={props.text}
 			/>
 		</Column>
@@ -80,6 +82,7 @@ export default connect(
 	}),
 	{
 		activateAnnotation,
+		changeAnnotationProps,
 		createAnnotation,
 		setDocId,
 		setDocText,
