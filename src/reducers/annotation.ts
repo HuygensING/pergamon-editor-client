@@ -36,6 +36,15 @@ export default (state = initialState, action) => {
 			break;
 		}
 
+		case 'ACTIVATE_ANNOTATION': {
+			nextState = { ...nextState, ...{
+				id: action.id,
+				start: action.start,
+				end: action.end,
+			}};
+			break;
+		}
+
 		default:
 	}
 

@@ -1,7 +1,7 @@
-import toTree from '../src/components/standoff/create-tree';
-import {splitAnnotations, toSplitPoints} from "../src/components/standoff/split-annotations";
+import toTree from '../src/components/doc/create-tree';
+import {splitAnnotations, toSplitPoints} from "../src/components/doc/split-annotations";
 import { annotationsWithRow, annotationsSortedByRow, annotationsSplitted, tree } from './data/set1';
-import {byRowDisplayStartEnd, byStartEnd} from "../src/components/standoff/utils";
+import {byRowDisplayStartEnd, byStartEnd} from "../src/components/doc/utils";
 
 describe('toSplitPoints', () => {
 	test('toSplitPoints 1', () => {

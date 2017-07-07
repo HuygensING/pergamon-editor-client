@@ -14,25 +14,20 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 		start: selectionStart,
 		end: selectionEnd,
 	});
+
 	dispatch({
 		type: 'ADD_ANNOTATION',
 		annotation: getState().annotation,
 	});
-
-	// const selection = window.getSelection();
-	//
-	// console.log('s', selection, selection.isCollapsed);
-	//
-	// // If the selection has no length, an annotation cannot be made.
-	// // if (selection.isCollapsed) return;
-	//
-	// // A new selection has been made. Remove the old selection/range.
-	// // if (getState().annotation.start != null) removeNewAnnotation()(dispatch);
-	//
-	// // Extract the range from the selection.
-	// const range = selection.getRangeAt(0);
-	// console.log(range);
-
-	// selection.empty();
 };
 
+export const activateAnnotation = (id) => (dispatch, getState) => {
+	const annotation = getState().doc.annotations.find((a) => a.id === id);
+	console.log(annotation)
+	dispatch({
+		type: 'ACTIVATE_ANNOTATION',
+		id,
+		start: annotation.start,
+		end: annotation.end,
+	});
+};

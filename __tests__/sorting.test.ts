@@ -1,4 +1,4 @@
-import {addRow, byDisplayStartEnd, byRowDisplayStartEnd} from "../src/components/standoff/utils";
+import {addRow, byDisplayStartEnd, byRowDisplayStartEnd} from "../src/components/doc/utils";
 import {annotations as a1} from "./data/set1";
 import {annotationsSorted as as1} from "./data/set1";
 import {annotationsWithRow as awr1} from "./data/set1";

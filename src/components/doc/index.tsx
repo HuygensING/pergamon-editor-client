@@ -1,21 +1,21 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Select from 'hire-forms-select';
-import Textarea from 'hire-forms-textarea';
 import styled from "styled-components";
 import {setDocAnnotations, setDocId, setDocText} from "../../actions/doc";
 import TextTree from "./text-tree";
 import Text from "./text";
-import {createAnnotation} from "../../actions/annotation";
+import {activateAnnotation, createAnnotation} from "../../actions/annotation";
+import Annotations from "./annotations";
 
 export const Head2 = styled.h2`
 	margin: 0;
 `;
 
-export const MyTextarea = styled(Textarea)`
-	border: 1px solid #888;
-	height: 65vh;
-	width: 100%;
+export const Head3 = styled.h3`
+	color: #666;
+	font-size: 1em;
+	margin: 2em 0 0 0;
 `;
 
 const Column = styled.div`
@@ -33,7 +33,7 @@ const Menu = styled.div`
 	margin: 0 0 2em 0;
 `;
 
-const Standoff = (props) =>
+const Doc = (props) =>
 	<div className="standoff">
 		<Menu>
 			<Select
@@ -53,15 +53,17 @@ const Standoff = (props) =>
 			<Text {...props} />
 		</Column>
 		<Column>
-			<Head2>Annotations</Head2>
-			<MyTextarea
-				onChange={(annotations: string) => props.setDocAnnotations(JSON.parse(annotations))}
-				value={JSON.stringify(props.annotations, null, 2)}
+			<Annotations
+				activateAnnotation={props.activateAnnotation}
+				annotationList={props.annotations}
+				annotationTree={props.tree.children}
+				text={props.text}
 			/>
 		</Column>
 		<Column>
 			<Head2>Output</Head2>
 			<TextTree
+				annotation={props.annotation}
 				root={props.tree}
 				text={props.text}
 			/>
@@ -74,11 +76,13 @@ export default connect(
 		annotations: state.doc.annotations,
 		text: state.doc.text,
 		tree: state.doc.tree,
+		annotation: state.annotation,
 	}),
 	{
+		activateAnnotation,
 		createAnnotation,
 		setDocId,
 		setDocText,
 		setDocAnnotations,
 	}
-)(Standoff);
+)(Doc);

@@ -2,9 +2,9 @@ import * as md5 from 'md5';
 import original from './docs/original';
 import typical from './docs/typical';
 import large from './docs/large';
-import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "../components/standoff/utils";
-import {splitAnnotations} from "../components/standoff/split-annotations";
-import toTree from "../components/standoff/create-tree";
+import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "../components/doc/utils";
+import {splitAnnotations} from "../components/doc/split-annotations";
+import toTree from "../components/doc/create-tree";
 import {IAnnotation} from "./annotation";
 
 const data = {

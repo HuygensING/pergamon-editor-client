@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux'
 
 import Home from './home';
-import Standoff from './standoff';
+import Doc from './doc';
 
 import store from '../store';
 import history from '../store/history';
@@ -34,8 +34,8 @@ export default () => (
 					path="/"
 				/>
 				<Route
-					component={Standoff}
-					path="/standoff"
+					component={Doc}
+					path="/doc"
 				/>
 			</App>
 		</ConnectedRouter>

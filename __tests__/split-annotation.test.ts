@@ -1,4 +1,4 @@
-import {splitAnnotation} from "../src/components/standoff/split-annotations";
+import {splitAnnotation} from "../src/components/doc/split-annotations";
 
 describe('splitAnnotation', () => {
 	test('splitAnnotation: on start point', () => {

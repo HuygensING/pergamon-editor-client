@@ -1,6 +1,6 @@
-import createTree from '../src/components/standoff/create-tree';
-import {byStartEnd, hasOverlap, addRow, byRowStartEnd} from "../src/components/standoff/utils";
-import {splitAnnotation, splitAnnotations, toSplitPoints} from "../src/components/standoff/split-annotations";
+import createTree from '../src/components/doc/create-tree';
+import {byStartEnd, hasOverlap, addRow, byRowStartEnd} from "../src/components/doc/utils";
+import {splitAnnotation, splitAnnotations, toSplitPoints} from "../src/components/doc/split-annotations";
 import { annotations, annotationsWithRow, annotationsSortedByRow, annotationsSplitted, tree } from './data/set2';
 
 describe('addRow', () => {
