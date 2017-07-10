@@ -1,3 +1,7 @@
+// The original data set, but the original underline goes from
+// 23 to 38. If 23 is changed to 2, the underline (an inline el),
+// crosses the two paragraphs (block elements).
+
 export const annotations = [
 	{
 		start: 2,

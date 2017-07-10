@@ -1,3 +1,5 @@
+// The original test data.
+
 export const annotations = [
 	{
 		start: 6,
