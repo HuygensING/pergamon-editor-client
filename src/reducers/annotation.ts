@@ -1,7 +1,8 @@
 export interface IAnnotation {
+	attributes?: any;
 	children?: IAnnotation[],
 	end: number,
-	id: number | string;
+	id?: number | string;
 	start: number,
 	type: string;
 }

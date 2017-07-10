@@ -1,8 +1,10 @@
 import * as React from 'react';
 import HFSelect from 'hire-forms-select';
 import HFInput from 'hire-forms-input';
-import tags from './tags';
+import tags from '../tags';
 import styled from "styled-components";
+import Start from "./start/index";
+import End from "./end/index";
 
 const inputEl = `
 	display: inline-block;
@@ -29,7 +31,7 @@ const Select = styled(HFSelect)`
 	${inputEl}
 `;
 
-const Input = styled(HFInput)`
+export const Input = styled(HFInput)`
 	${inputEl}
 `;
 
@@ -64,32 +66,18 @@ const AnnotationForm = ({
 		</Li>
 		<Li>
 			<Label>Start</Label>
-			<Input
-				onChange={value => {
-					const start: number = parseInt(value, 10);
-					if (
-						Number.isInteger(start) &&
-						start <= annotation.end
-					) {
-						changeAnnotationProps({ start })
-					}
-				}}
-				value={annotation.start}
+			<Start
+				annotation={annotation}
+			  changeAnnotationProps={changeAnnotationProps}
+			  start={annotation.start}
 			/>
 		</Li>
 		<Li>
 			<Label>End</Label>
-			<Input
-				onChange={value => {
-					const end: number = parseInt(value, 10);
-					if (
-						Number.isInteger(end) &&
-						end >= annotation.start
-					) {
-						changeAnnotationProps({ end })
-					}
-				}}
-				value={annotation.end}
+			<End
+				annotation={annotation}
+				changeAnnotationProps={changeAnnotationProps}
+				end={annotation.end}
 			/>
 		</Li>
 	</Ul>;

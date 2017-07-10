@@ -1,4 +1,10 @@
-export default ({
+import {IAnnotation} from "../annotation";
+interface ITypical {
+  annotations: IAnnotation[],
+  text: string;
+}
+
+const typical: ITypical = ({
   "annotations": [
     {
       "attributes": {},
@@ -639,6 +645,8 @@ export default ({
       "end": 3505,
       "type": "tag:hi"
     }
-  ],
+  ].map((a: IAnnotation, i: number) => { a.id = i; return a; }),
   "text": "2153. 1635 juni 22. Aan L. Camerarius.Satis est, quod perlatae sunt ad te, quas scripseram, literae, causae dilati responsi et justae sunt et nullum in mora fuit periculum. Et dulcius mihi est velut uno conspectu contueri tot honores, qui maximo viro D. cancellario illis in partibus maximi intra merita tamen stantes contigerunt.Vectigalis negotium, ut prudenter ais, difficile apud homines talia non segniter curantes, quod emolliverit verbis comibus, multum gaudeo planeque consentio et ad ea, quae in Borussia aguntur, utile id futurum et tibi in posterum ad continendam illam amicitiam minus fore difficultatis.Cum ventos Hamburgum ferentes habuerit, non dubito, quin jam illis sit in locis, in quibus eum esse maxime expedit publico. Ego ut hinc legatus quamprimum mittatur, qui consilia ipsius adjuvet, eniti non desinam. Scio magnum in ejus animo desiderium fuisse compellandi Bohemiae reginam ac laetor, quod a colloquio ipsi dilectior discesserit.Rex post editum illud scriptum, quod nuper misi de causis belli in Hispanum, vulgavit et alterum paris argumenti, sed propius res Belgarum spectans, in quo nonnulla excerpta sunt capita ejus federis, quod merito videre desideras et ego tecum laborabo, ut e latebris, siqua fieri potest, protrahatur. An quae in hoc fit edicto invitatio Belgarum ad libertatem sub illis, quas adscriptas vides conditionibus, eam, quae speratur effectura sit civitatum, defectionem, video et heic dubitari. Hactenus nihil nisi vi actum video.Quae si et a Picardia in Atrebates eorumque finitimos irruat, priusquam eo penetret superbus transito ad Philipsburgum Rheno Gallasius, erunt per illa loca in arcto res Hispani. Rex magnam e Lotharingia manum promittit, imo ut puto jam mittit auxillo iis, qui sub duce Bernhardo Feuquerioque sunt, quibus, ut spero, difficile non erit carpere, si non disjicere Gallasii agmen, neque transrhenanis partibus tanto exercitu exoneratis praedari aliquid aggredi.Per Brabantiam famem nostris voluisse facere videntur Hispani freti Leodiensium magis fida in ipsos amicitia; sed ei rei jam provisum intelligo perterritis Leodiensibus, conciliatis agrestium animis, curataque commeatus e Batavis advectione. Haec tam diligenter administrata dedecorat illa ad Duinquercam, quid aliud dicam quam supinitas.Nobilissimo filio tuo auctam dignitatem tum ob rem ipsam mihi ipsius amantissimo dulce est, tum quod insigne est testimonium optime ipsi volentis potentissimi viri. Quare ut et hoc et caetera consilia vestra Deus fortunet teque cum omni familia publicis rebus et mihi quoque sospitem praestet toto animo ipsum veneror.Illustrissimae Dominationis Tuae addictissimusH. Grotius.Lutetiae, 22 Iunii novi cal. anni 1635.Adres: Ludovico Camerario, Reginae Regnique Sueciae Consiliario et Legato apud Praepot. Ord. Foeder. Belgii.Gedrukt Epist., p. 155.Vgl. Livius XXXVIII, 25, 13.De Zweedse rijkskanselier Axel Oxenstierna.Vgl. no. 2144, p. 25 en n. 3 aldaar.Elisabeth Stuart, dochter van Jacobus I van Engeland en weduwe van de in 1632 overleden paltsgraaf Frederik V.Lodewijk XIII van Frankrijk.Zie no. 2137, p. 15 en n. 10 aldaar.Philips IV.Zie no. 2135, p. 11 en n. 16 aldaar.Matthias, graaf Gallas, veldheer in het leger van Ferdinand II.Bernhard, hertog van Saksen-Weimar.Manasse de Pas, markies van Feuquières; zie over hem V no. 1960, p. 290 n. 2.Joachim Camerarius (1603-1687). De gelukwens heeft betrekking op Joachims benoeming tot raad van de kroon van Zweden; zie Oxenst. Skrifter 1. afd. XIII, p. 268 no. 126 dd. 27 mei 1635."
 });
+
+export default typical;

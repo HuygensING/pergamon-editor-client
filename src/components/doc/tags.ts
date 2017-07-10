@@ -104,7 +104,7 @@ export default {
 		display: 'inline',
 	},
 	"tag:p": {
-		component: InlineDiv,
+		component: Paragraph,
 		display: 'inline',
 	},
 	"tag:pb": {
