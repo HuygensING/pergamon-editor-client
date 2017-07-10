@@ -14,16 +14,10 @@ const Doc = styled.div`
 `;
 
 const Paragraph = styled.div`
-	color: blue;
-	background: rgba(255, 182, 193, 0.2);
-	border: 2px dotted pink;
 	margin: 1em;
-	padding: 1em;
 `;
 
-const Text = styled(InlineDiv)`
-	color: green;
-`;
+const Text = styled(InlineDiv)``;
 
 const Bold = styled(InlineDiv)`
 	font-weight: bold;
@@ -96,7 +90,7 @@ export default {
 		display: 'inline',
 	},
 	"tag:head": {
-		component: InlineDiv,
+		component: styled.h2``,
 		display: 'inline',
 	},
 	"tag:ref": {
@@ -144,11 +138,11 @@ export default {
 		display: 'inline',
 	},
 	"tag:hi": {
-		component: InlineDiv,
+		component: Highlight,
 		display: 'inline',
 	},
 	"tag:sup": {
-		component: InlineDiv,
+		component: styled.sup``,
 		display: 'inline',
 	},
 	"tag:graphic": {
