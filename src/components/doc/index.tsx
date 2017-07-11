@@ -53,20 +53,20 @@ const Doc = (props) =>
 			<Text {...props} />
 		</Column>
 		<Column>
+			<Head2>Output</Head2>
+			<TextTree
+				annotation={props.annotation}
+				root={props.tree}
+				text={props.text}
+			/>
+		</Column>
+		<Column>
 			<Annotations
 				annotation={props.annotation}
 				activateAnnotation={props.activateAnnotation}
 				annotationList={props.annotations}
 				annotationTree={props.tree.children}
 				changeAnnotationProps={props.changeAnnotationProps}
-				text={props.text}
-			/>
-		</Column>
-		<Column>
-			<Head2>Output</Head2>
-			<TextTree
-				annotation={props.annotation}
-				root={props.tree}
 				text={props.text}
 			/>
 		</Column>

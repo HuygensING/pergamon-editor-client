@@ -5,8 +5,8 @@ const InlineDiv = styled.div`
 `;
 
 const Doc = styled.div`
-	background: lightyellow;
-	border: 2px dotted orange;
+	// background: lightyellow;
+	// border: 2px dotted orange;
 	box-sizing: border-box;
 	padding: 1em;
 	height: 65vh;
