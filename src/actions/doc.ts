@@ -5,9 +5,10 @@ export const setDocId = (id) => (dispatch, getState) => {
 	})
 };
 
-export const setDocText = (text) => (dispatch, getState) => {
+export const setDocText = (text, ev) => (dispatch, getState) => {
 	dispatch({
 		type: 'SET_DOC_TEXT',
+		caretPosition: ev.currentTarget.selectionStart,
 		text,
 	})
 };

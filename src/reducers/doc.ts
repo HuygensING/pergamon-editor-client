@@ -75,6 +75,16 @@ export default (state = initialState, action) => {
 
 		case 'SET_DOC_TEXT': {
 			nextState = { ...nextState, ...{
+				annotations: nextState.annotations.map((a) => {
+					if (a.start > action.caretPosition) {
+						a.start = a.start + 1;
+					}
+					if (a.end > action.caretPosition) {
+						a.end = a.end + 1;
+					}
+
+					return a;
+				}),
 				text: action.text,
 				tree: getTree(nextState.id, action.text, nextState.annotations),
 			}};
