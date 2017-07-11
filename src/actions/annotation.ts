@@ -12,7 +12,7 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 		type: 'CREATE_ANNOTATION',
 		annotation_type: 'highlight',
 		start: selectionStart,
-		end: selectionEnd,
+		end: selectionEnd - 1,
 	});
 
 	dispatch({
