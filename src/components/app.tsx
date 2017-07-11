@@ -35,7 +35,7 @@ export default () => (
 				/>
 				<Route
 					component={Doc}
-					path="/doc"
+					path="/doc/:id"
 				/>
 			</App>
 		</ConnectedRouter>

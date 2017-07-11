@@ -7,6 +7,7 @@ import TextTree from "./text-tree";
 import Text from "./text";
 import {activateAnnotation, changeAnnotationProps, createAnnotation} from "../../actions/annotation";
 import Annotations from "./annotations";
+import history from '../../store/history';
 
 export const Head2 = styled.h2`
 	margin: 0;
@@ -33,44 +34,75 @@ const Menu = styled.div`
 	margin: 0 0 2em 0;
 `;
 
-const Doc = (props) =>
-	<div className="standoff">
-		<Menu>
-			<Select
-				onChange={(id) => {
-					props.setDocId(id)
-				}}
-				options={[
-					{ key: 'original', value: 'original' },
-					{ key: 'typical', value: 'typical' },
-					{ key: 'large', value: 'large' }
-				]}
-				value={{ key: props.id, value: props.id }}
-			/>
-		</Menu>
-		<Column>
-			<Head2>Text</Head2>
-			<Text {...props} />
-		</Column>
-		<Column>
-			<Head2>Output</Head2>
-			<TextTree
-				annotation={props.annotation}
-				root={props.tree}
-				text={props.text}
-			/>
-		</Column>
-		<Column>
-			<Annotations
-				annotation={props.annotation}
-				activateAnnotation={props.activateAnnotation}
-				annotationList={props.annotations}
-				annotationTree={props.tree.children}
-				changeAnnotationProps={props.changeAnnotationProps}
-				text={props.text}
-			/>
-		</Column>
-	</div>;
+const MenuItem = styled.div`
+	width: 100px;
+`;
+
+class Doc extends React.Component<any, any> {
+	public componentDidMount() {
+		this.props.setDocId(this.props.match.params.id);
+	}
+
+	public componentWillReceiveProps(nextProps) {
+		if (this.props.match.params.id !== nextProps.match.params.id) {
+			this.props.setDocId(nextProps.match.params.id);
+		}
+	}
+
+	public render() {
+		const {
+			activateAnnotation,
+			annotation,
+			annotations,
+			changeAnnotationProps,
+			id,
+			text,
+			tree,
+		} = this.props;
+
+		if (id == null) return null;
+
+		return (
+			<div>
+				<Menu>
+					<MenuItem>
+						<Select
+							onChange={id => history.push(`/doc/${id}`)}
+							options={[
+								{ key: 'original', value: 'original' },
+								{ key: 'typical', value: 'typical' },
+								{ key: 'large', value: 'large' }
+							]}
+							value={{ key: id, value: id }}
+						/>
+					</MenuItem>
+				</Menu>
+				<Column>
+					<Head2>Text</Head2>
+					<Text {...this.props} />
+				</Column>
+				<Column>
+					<Head2>Output</Head2>
+					<TextTree
+						annotation={annotation}
+						root={tree}
+						text={text}
+					/>
+				</Column>
+				<Column>
+					<Annotations
+						annotation={annotation}
+						activateAnnotation={activateAnnotation}
+						annotationList={annotations}
+						annotationTree={tree.children}
+						changeAnnotationProps={changeAnnotationProps}
+						text={text}
+					/>
+				</Column>
+			</div>
+		);
+	}
+}
 
 export default connect(
 	state => ({

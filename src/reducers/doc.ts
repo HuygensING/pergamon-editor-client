@@ -51,10 +51,10 @@ interface IState {
 }
 
 const initialState: IState = {
-	id: 'original',
-	annotations: data.original.annotations,
-	text: data.original.text,
-	tree: getTree('original', data.original.text, data.original.annotations),
+	id: null,
+	annotations: [],
+	text: '',
+	tree: null,
 };
 
 export default (state = initialState, action) => {
