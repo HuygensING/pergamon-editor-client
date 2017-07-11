@@ -3,7 +3,7 @@ import {Input} from "../index";
 
 class Start extends React.Component<any, any> {
 	public state = {
-		value: (this.props.start) ? this.props.start : '',
+		value: (this.props.start != null) ? this.props.start : '',
 	};
 
 	public render() {

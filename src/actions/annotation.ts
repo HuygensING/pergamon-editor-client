@@ -10,7 +10,7 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 
 	dispatch({
 		type: 'CREATE_ANNOTATION',
-		annotation_type: 'highlight',
+		annotation_type: 'text',
 		start: selectionStart,
 		end: selectionEnd - 1,
 	});
