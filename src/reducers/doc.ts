@@ -2,7 +2,7 @@ import * as md5 from 'md5';
 import original from './docs/original';
 import typical from './docs/typical';
 import large from './docs/large';
-import {addRow, byDisplayStartEnd, byRowDisplayStartEnd, byStartEnd} from "../components/doc/utils";
+import {addRow, byDisplayStartEnd, byRowStartEnd} from "../components/doc/utils";
 import {splitAnnotations} from "../components/doc/split-annotations";
 import toTree from "../components/doc/create-tree";
 import {IAnnotation} from "./annotation";
@@ -13,8 +13,8 @@ const data = {
 	original,
 };
 
-const createTree = (text: string, annotations: IAnnotation[]): IAnnotation => {
-	return {
+const createTree = (text: string, annotations: IAnnotation[]): IAnnotation =>
+	({
 		start: 0,
 		end: text.length - 1,
 		id: 'some-random-tree-id',
@@ -22,12 +22,12 @@ const createTree = (text: string, annotations: IAnnotation[]): IAnnotation => {
 		children: annotations
 			.sort(byDisplayStartEnd)
 			.map(addRow())
-			.sort(byRowDisplayStartEnd)
+			.sort(byRowStartEnd)
 			.reduce(splitAnnotations(), [])
-			.sort(byStartEnd)
+			.map(addRow())
+			.sort(byRowStartEnd)
 			.reduce(toTree, []),
-	};
-};
+	});
 
 const treeCache = {};
 const getTree = (id: string, text: string, annotations: IAnnotation[]): IAnnotation => {

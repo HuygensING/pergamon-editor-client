@@ -11,19 +11,30 @@ export const byStartEnd = (a, b) => {
 };
 
 export const byDisplayStartEnd = (a, b) => {
+
+	// console.log(a, b, a.end < b.start, a.start > b.end);
+	// // Only for overlapping annotations it is needed to check display prop
+	// if (a.end < b.start) return -1;
+	// if (a.start > b.end) return 1;
+
 	const aDisplay = componentsByTag[a.type].display;
 	const bDisplay = componentsByTag[b.type].display;
 
-	return (aDisplay !== bDisplay) ?
-		(aDisplay === 'inline') ? 1 : -1 :
-		byStartEnd(a, b);
+	// console.log(aDisplay !== bDisplay, aDisplay === 'inline');
+	// If display prop are not the same, 'block' get precedence over 'inline'
+	// If display prop is equal, look at start and end prop
+	if (aDisplay !== bDisplay) {
+		return (aDisplay === 'inline') ? 1 : -1;
+	} else {
+		return byStartEnd(a, b);
+	}
 };
 
-export const byRowDisplayStartEnd = (a, b) => {
+export const byRowStartEnd = (a, b) => {
 	if (a.row > b.row) return 1;
 	if (b.row > a.row) return -1;
 	if (a.row === b.row) {
-		return byDisplayStartEnd(a, b);
+		return byStartEnd(a, b);
 	}
 };
 
@@ -31,13 +42,8 @@ export const hasOverlap = (a, b) => !(a.end < b.start || a.start > b.end);
 
 export const addRow = () => {
 	const rows = [[]];
-	return (annotation, index) => {
-		if (index === 0) {
-			annotation.row = 0;
-			rows[0].push(annotation);
-			return annotation;
-		}
-
+	return annotation => {
+		const space = [];
 		for (let row = 0; row < rows.length; row++) {
 			const annotationsInRow = rows[row];
 			const isRowWithSpace = annotationsInRow.reduce((hasSpace, curr) => {
@@ -45,17 +51,23 @@ export const addRow = () => {
 			}, true);
 
 			if (isRowWithSpace) {
-				annotationsInRow.push(annotation);
-				// event.top = row * Constants.EVENT_ROW_HEIGHT;
-				annotation.row = row;
-				break;
+				space[row] = null;
+			} else {
+				space[row] = annotationsInRow
+					.filter(a => hasOverlap(annotation, a))
+					.some(a => componentsByTag[a.type].display === 'block');
 			}
 		}
 
-		if (annotation.row == null) {
+		const highestBlockIndex = space.lastIndexOf(true);
+		let rowIndex = space.findIndex((x, i) => x == null && i > highestBlockIndex);
+		if (rowIndex === -1) {
 			const newLength = rows.push([annotation]);
-			annotation.row = newLength - 1;
+			rowIndex = newLength - 1;
+		} else {
+			rows[rowIndex].push(annotation);
 		}
+		annotation.row = rowIndex;
 
 		return annotation;
 	}
