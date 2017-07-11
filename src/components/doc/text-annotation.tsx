@@ -9,6 +9,11 @@ const TextAnnotation = ({annotation, children, end, id, start, type}) => {
 	const Tag = componentByTag[type].component;
 
 	const ActiveTag = styled(Tag)`
+		background-color: rgba(0, 0, 0, 0.2);
+		border: 1px solid rgba(0, 0, 0, 0.4);
+		box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.6);
+		margin: 0.5em;
+		padding: 0.5em;
 	`;
 
 	let Comp = Tag;
