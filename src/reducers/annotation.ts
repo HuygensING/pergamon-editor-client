@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
 		case 'CREATE_ANNOTATION': {
 			nextState = initialState;
 			nextState = { ...nextState, ...{
+				id: `random-id-${Math.floor(Math.random() * 10000)}`,
 				start: action.start,
 				end: action.end,
 				type: action.annotation_type,
