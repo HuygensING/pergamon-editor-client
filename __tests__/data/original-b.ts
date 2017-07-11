@@ -1,15 +1,16 @@
-// The original test data.
+// The original test data, but the first paragraph overlaps
+// the second (by just one codepoint).
 
 export const annotations = [
 	{
 		start: 6,
-		end: 29,
-		type: 'p',
+		end: 31,
+		type: 'paragraph',
 	},
 	{
 		start: 31,
 		end: 71,
-		type: 'p',
+		type: 'paragraph',
 	},
 	{
 		start: 8,
@@ -31,120 +32,123 @@ export const annotations = [
 export const annotationsWithRow = [
 	{
 		start: 6,
-		end: 29,
+		end: 31,
 		row: 0,
+		type: 'paragraph',
 	},
 	{
 		start: 31,
 		end: 71,
-		row: 0,
+		row: 1,
+		type: 'paragraph',
 	},
 	{
 		start: 8,
 		end: 16,
 		row: 1,
+		type: 'bold',
 	},
 	{
 		start: 23,
 		end: 38,
-		row: 1,
+		row: 2,
+		type: 'underline',
 	},
 	{
 		start: 34,
 		end: 35,
-		row: 2,
-	}
-];
-
-export const annotationsSortedByRow = [
-	{
-		start: 6,
-		end: 29,
-		row: 0,
-	},
-	{
-		start: 31,
-		end: 71,
-		row: 0,
-	},
-	{
-		start: 8,
-		end: 16,
-		row: 1,
-	},
-	{
-		start: 23,
-		end: 38,
-		row: 1,
-	},
-	{
-		start: 34,
-		end: 35,
-		row: 2,
+		row: 3,
+		type: 'italic',
 	}
 ];
 
 export const annotationsSplitted = [
 	{
 		start: 6,
-		end: 29,
+		end: 31,
+		type: 'paragraph',
 	},
 	{
 		start: 31,
+		end: 31,
+		type: 'paragraph',
+	},
+	{
+		start: 32,
 		end: 71,
+		type: 'paragraph',
 	},
 	{
 		start: 8,
 		end: 16,
+		type: 'bold',
 	},
 	{
 		start: 23,
-		end: 29,
-	},
-	{
-		start: 30,
 		end: 30,
+		type: 'underline',
 	},
 	{
 		start: 31,
+		end: 31,
+		type: 'underline',
+	},
+	{
+		start: 32,
 		end: 38,
+		type: 'underline',
 	},
 	{
 		start: 34,
 		end: 35,
+		type: 'italic',
 	}
 ];
 
 export const tree = [
 	{
 		start: 6,
-		end: 29,
+		end: 31,
+		type: 'paragraph',
 		children: [
+			{
+				start: 31,
+				end: 31,
+				type: 'paragraph',
+				children: [
+					{
+						start: 31,
+						end: 31,
+						type: 'underline',
+					}
+				]
+			},
 			{
 				start: 8,
 				end: 16,
+				type: 'bold',
 			},
 			{
 				start: 23,
-				end: 29,
+				end: 30,
+				type: 'underline',
 			},
 		]
 	},
 	{
-		start: 30,
-		end: 30,
-	},
-	{
-		start: 31,
+		start: 32,
 		end: 71,
+		type: 'paragraph',
 		children: [
 			{
-				start: 31,
+				start: 32,
 				end: 38,
+				type: 'underline',
 				children: [
 					{
 						start: 34,
 						end: 35,
+						type: 'italic',
 					}
 				]
 			},

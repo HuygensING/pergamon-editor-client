@@ -91,34 +91,6 @@ export const annotationsWithRow = [
 	}
 ];
 
-export const annotationsSortedByRow = [
-	{
-		start: 2,
-		end: 38,
-		row: 0,
-	},
-	{
-		start: 6,
-		end: 29,
-		row: 1,
-	},
-	{
-		start: 31,
-		end: 71,
-		row: 1,
-	},
-	{
-		start: 8,
-		end: 16,
-		row: 2,
-	},
-	{
-		start: 34,
-		end: 35,
-		row: 2,
-	}
-];
-
 export const annotationsSplitted = [
 	{
 		start: 6,
