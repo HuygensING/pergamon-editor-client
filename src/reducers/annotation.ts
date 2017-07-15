@@ -1,6 +1,9 @@
+import {defaultDocument, IDocument} from "./document";
+
 export interface IAnnotation {
 	attributes?: any;
 	children?: IAnnotation[],
+	document?: IDocument,
 	end: number,
 	id?: number | string;
 	start: number,
@@ -29,11 +32,7 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'REMOVE_NEW_ANNOTATION': {
-			break;
-		}
-
-		case 'CANCEL_ANNOTATION': {
+		case 'CLEAR_ANNOTATION': {
 			nextState = initialState;
 			break;
 		}
@@ -45,10 +44,48 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'CHANGE_ANNOTATION_PROPS': {
-			nextState = { ...nextState, ...action.props};
+		case 'CREATE_ANNOTATION_PROPS': {
+			nextState = {
+				...nextState,
+				...{ document: defaultDocument}
+			};
 			break;
 		}
+
+		case 'CHANGE_ANNOTATION_PROPS': {
+			nextState = { ...nextState, ...action.props };
+
+			break;
+		}
+
+		case 'CREATE_ANNOTATION_DOCUMENT': {
+			const nextDocument = {
+				...defaultDocument,
+				...{ id: `some-id-${Math.floor(Math.random() * 10000)}`}
+			};
+
+			nextState = {
+				...nextState,
+				...{ document: nextDocument },
+			};
+
+			break;
+		}
+
+		case 'CHANGE_ANNOTATION_DOCUMENT': {
+			const nextDocument = {
+				...nextState.document,
+				...action.props,
+			};
+
+			nextState = {
+				...nextState,
+				...{ document: nextDocument },
+			};
+
+			break;
+		}
+
 
 		default:
 	}

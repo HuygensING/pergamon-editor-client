@@ -1,10 +1,9 @@
 import {IAnnotation} from "../annotation";
-interface ITypical {
-  annotations: IAnnotation[],
-  text: string;
-}
+import {IDocument} from "../document";
 
-const typical: ITypical = ({
+const typical: IDocument = ({
+	tree: null,
+  id: 'typical',
   "annotations": [
     {
       "attributes": {},

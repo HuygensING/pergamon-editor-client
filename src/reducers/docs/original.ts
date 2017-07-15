@@ -1,4 +1,7 @@
-export default ({
+import {IDocument} from "../document";
+const original: IDocument = ({
+	tree: null,
+	id: 'original',
 	annotations: [
 		{
 			id: 1,
@@ -33,3 +36,5 @@ export default ({
 	],
 	text: "Hunger, endurance, and horror. Swabbies wave from strengths like stormy furners."
 });
+
+export default original;

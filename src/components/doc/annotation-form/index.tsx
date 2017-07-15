@@ -1,12 +1,15 @@
 import * as React from 'react';
 import HFSelect from 'hire-forms-select';
 import HFInput from 'hire-forms-input';
-import tags from '../tags';
+import history from '../../../store/history';
+import Textarea from './textarea';
 import styled from "styled-components";
-import Start from "./start/index";
-import End from "./end/index";
+import tags from '../tags';
+import Start from "./start";
+import End from "./end";
+import Button from "../../ui/button";
 
-const inputEl = `
+export const inputEl = `
 	display: inline-block;
 	width: 70%;
 `;
@@ -41,9 +44,16 @@ const Immutable = styled.div`
 	font-style: italic;
 `;
 
+const BodyButton = styled(Button)`
+	${inputEl}
+`;
+
 const AnnotationForm = ({
+	activateChildDocument,
 	annotation,
+	changeAnnotationDocument,
 	changeAnnotationProps,
+	createAnnotationDocument,
 	text,
 }) =>
 	<Ul>
@@ -55,7 +65,6 @@ const AnnotationForm = ({
 			<Label>Text</Label>
 			<Immutable>{ text.slice(annotation.start, annotation.end + 1) }</Immutable>
 		</Li>
-
 		<Li>
 			<Label>Type</Label>
 			<Select
@@ -79,6 +88,32 @@ const AnnotationForm = ({
 				changeAnnotationProps={changeAnnotationProps}
 				end={annotation.end}
 			/>
+		</Li>
+		<Li>
+			<Label>
+				Body
+				{
+					annotation.hasOwnProperty('document') &&
+					<Button
+						onClick={() => {
+							activateChildDocument();
+							history.push(`/document/${annotation.document.id}`)
+						}}
+					>
+						✎
+					</Button>
+				}
+			</Label>
+			{
+				annotation.hasOwnProperty('document') ?
+					<Textarea
+						annotation={annotation}
+					  changeAnnotationDocument={changeAnnotationDocument}
+					/> :
+					<BodyButton onClick={() => createAnnotationDocument(annotation.id)}>
+					Add body
+					</BodyButton>
+			}
 		</Li>
 	</Ul>;
 

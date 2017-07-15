@@ -3,27 +3,35 @@ import AnnotationList from "./annotation-list";
 import {Head2} from "./index";
 import styled from "styled-components";
 import {byStartEnd} from "./utils";
+import {IAnnotation} from "../../reducers/annotation";
+import Button from "../ui/button";
 
-const SmallButton = styled.div`
-	background: #EEE;
-	border: 1px solid #DDD;
-	border-radius: 3px;
-	cursor: pointer;
-	display: inline-block;
-	font-size: 0.5em;	
-	margin-left: 1em;
-	width: 1.5em;
-	height: 1.5em;
-	text-align: center;
-	line-height: 1.5em;
-`;
+interface IProps {
+	activateAnnotation: (string) => void;
+	activateChildDocument: (string) => void;
+	annotation: IAnnotation;
+	annotationList: IAnnotation[];
+	annotationTree: IAnnotation;
+	changeAnnotationProps: (any) => void;
+	changeAnnotationDocument: (any) => void;
+	createAnnotationDocument: (string) => void;
+	text: string;
+}
+
+interface IState {
+	list: boolean;
+}
 
 const Wrapper = styled.div`
 	height: 65vh;
 	overflow: auto;
 `;
 
-class Annotations extends React.Component<any, any> {
+const HeadButton = styled(Button)`
+	margin-left: 1em;
+`;
+
+class Annotations extends React.Component<IProps, IState> {
 	public state = {
 		list: true,
 	};
@@ -31,22 +39,36 @@ class Annotations extends React.Component<any, any> {
 	public render() {
 		const {
 			activateAnnotation,
+			activateChildDocument,
 			annotation,
 			annotationList,
 			annotationTree,
+			changeAnnotationDocument,
 			changeAnnotationProps,
+			createAnnotationDocument,
 			text
 		} = this.props;
 		return (
 			<div>
 				<Head2>
 					Annotations
-					<SmallButton onClick={() => this.setState({list: true})}>☰</SmallButton>
-					<SmallButton onClick={() => this.setState({list: false})}>Ͱ</SmallButton>
+					<HeadButton
+						onClick={() => this.setState({list: true})}
+					  scale="0.5"
+					>
+						☰
+					</HeadButton>
+					<HeadButton
+						onClick={() => this.setState({list: false})}
+					  scale="0.5"
+					>
+						Ͱ
+					</HeadButton>
 				</Head2>
 				<Wrapper>
 					<AnnotationList
 						activateAnnotation={activateAnnotation}
+						activateChildDocument={activateChildDocument}
 						annotation={annotation}
 						annotations={
 							(this.state.list) ?
@@ -54,6 +76,8 @@ class Annotations extends React.Component<any, any> {
 								annotationTree
 						}
 						changeAnnotationProps={changeAnnotationProps}
+						createAnnotationDocument={createAnnotationDocument}
+						changeAnnotationDocument={changeAnnotationDocument}
 						text={text}
 					/>
 				</Wrapper>

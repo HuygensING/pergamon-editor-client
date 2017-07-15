@@ -15,10 +15,12 @@ const App = styled.div`
 `;
 
 const Header = styled.div`
-	background: #DDD;
+	background: #CCC;
 	font-size: 2em;
 	font-weight: bold;
-	padding: 2vh 1vw;
+	height: 8vh;
+	line-height: 8vh;
+	padding-left: 1vw;
 `;
 
 export default () => (
@@ -35,7 +37,7 @@ export default () => (
 				/>
 				<Route
 					component={Doc}
-					path="/doc/:id"
+					path="/document/:id"
 				/>
 			</App>
 		</ConnectedRouter>

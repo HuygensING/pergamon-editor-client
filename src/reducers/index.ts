@@ -1,4 +1,5 @@
 import annotation from './annotation';
-import doc from './doc';
+import annotationPath from './annotation-path';
+import doc from './document';
 
-export default { annotation, doc };
+export default { annotation, annotationPath, doc };

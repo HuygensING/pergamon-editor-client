@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from "styled-components";
-import {Head3} from "./index";
+import {Head4} from "./index";
 import TextAnnotation from "./text-annotation";
 import AnnotationList from "./annotation-list";
 import AnnotationForm from "./annotation-form";
@@ -8,22 +8,33 @@ import AnnotationForm from "./annotation-form";
 const Li = styled.li`
 `;
 
+const Small = styled.small`
+	margin-left: 1em;
+`;
+
 const Annotation = ({
   activateAnnotation,
+	activateChildDocument,
 	activeAnnotation,
 	annotation,
+	changeAnnotationDocument,
 	changeAnnotationProps,
+	createAnnotationDocument,
 	text
 }) =>
 	<Li>
-		<Head3 onClick={() => activateAnnotation(annotation.id)}>
-			{annotation.start} - {annotation.end}, {annotation.type}
-		</Head3>
+		<Head4 onClick={() => activateAnnotation(annotation.id)}>
+			{annotation.type}
+			<Small>({annotation.start} - {annotation.end})</Small>
+		</Head4>
 		{
 			(activeAnnotation != null && annotation.id === activeAnnotation.id) ?
 				<AnnotationForm
+					activateChildDocument={activateChildDocument}
 					annotation={annotation}
+					changeAnnotationDocument={changeAnnotationDocument}
 				  changeAnnotationProps={changeAnnotationProps}
+				  createAnnotationDocument={createAnnotationDocument}
 				  text={text}
 				/> :
 				<TextAnnotation {...annotation}>

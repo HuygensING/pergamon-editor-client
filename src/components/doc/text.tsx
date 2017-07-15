@@ -3,11 +3,12 @@ import styled from "styled-components";
 import Textarea from 'hire-forms-textarea';
 
 const TextTextarea = styled(Textarea)`
-	border: 1px solid #888;
+	border: none;
+	font-family: 'sans-serif';
 	height: 65vh;
+	outline: none;
 	width: 100%;
 `;
-
 
 const Text = ({createAnnotation, text, setDocText}) =>
 	<div>

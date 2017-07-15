@@ -3,7 +3,7 @@ import fillGaps from "./fill-gaps";
 import TextAnnotation from "./text-annotation";
 
 const TextTree = ({ annotation, root, text }) => {
-	const children = root.hasOwnProperty('children') ?
+	const children = (root.hasOwnProperty('children') && root.children.length) ?
 		root.children
 			.reduce(fillGaps(root), [])
 			.map((child, i) =>
