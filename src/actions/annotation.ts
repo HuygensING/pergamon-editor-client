@@ -43,3 +43,11 @@ export const changeAnnotationProps = (props) => (dispatch, getState) => {
 	})
 };
 
+export const deleteAnnotation = (annotationId) => (dispatch, getState) => {
+	dispatch({
+		type: 'DELETE_ANNOTATION',
+		annotationId,
+	});
+
+	dispatch({ type: 'CLEAR_ANNOTATION' });
+};

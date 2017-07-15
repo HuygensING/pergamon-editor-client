@@ -141,6 +141,25 @@ export default (state = initialState, action) => {
 			break;
 		}
 
+		case 'DELETE_ANNOTATION': {
+			const { id, text } = nextState.active;
+
+			const annotations = nextState.active.annotations
+				.filter((a) => a.id !== action.annotationId);
+
+			const nextDocument = {
+				...nextState.active,
+				...{
+					annotations,
+					tree: getTree(id, text, annotations),
+				}
+			};
+
+			nextState = { ...nextState, ...{ active: nextDocument }};
+
+			break;
+		}
+
 		case 'REPLACE_ANNOTATION': {
 			const { id, text } = nextState.active;
 			const annotations = nextState.active.annotations

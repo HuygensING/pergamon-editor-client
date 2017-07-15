@@ -22,6 +22,7 @@ const AnnotationList = (props) =>
 					changeAnnotationDocument={props.changeAnnotationDocument}
 					changeAnnotationProps={props.changeAnnotationProps}
 					createAnnotationDocument={props.createAnnotationDocument}
+					deleteAnnotation={props.deleteAnnotation}
 					key={index}
 					text={props.text}
 				/>

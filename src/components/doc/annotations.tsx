@@ -15,6 +15,7 @@ interface IProps {
 	changeAnnotationProps: (any) => void;
 	changeAnnotationDocument: (any) => void;
 	createAnnotationDocument: (string) => void;
+	deleteAnnotation: (string) => void;
 	text: string;
 }
 
@@ -46,6 +47,7 @@ class Annotations extends React.Component<IProps, IState> {
 			changeAnnotationDocument,
 			changeAnnotationProps,
 			createAnnotationDocument,
+			deleteAnnotation,
 			text
 		} = this.props;
 		return (
@@ -78,6 +80,7 @@ class Annotations extends React.Component<IProps, IState> {
 						changeAnnotationProps={changeAnnotationProps}
 						createAnnotationDocument={createAnnotationDocument}
 						changeAnnotationDocument={changeAnnotationDocument}
+						deleteAnnotation={deleteAnnotation}
 						text={text}
 					/>
 				</Wrapper>

@@ -20,6 +20,7 @@ const Annotation = ({
 	changeAnnotationDocument,
 	changeAnnotationProps,
 	createAnnotationDocument,
+	deleteAnnotation,
 	text
 }) =>
 	<Li>
@@ -35,6 +36,7 @@ const Annotation = ({
 					changeAnnotationDocument={changeAnnotationDocument}
 				  changeAnnotationProps={changeAnnotationProps}
 				  createAnnotationDocument={createAnnotationDocument}
+				  deleteAnnotation={deleteAnnotation}
 				  text={text}
 				/> :
 				<TextAnnotation {...annotation}>

@@ -8,6 +8,7 @@ import tags from '../tags';
 import Start from "./start";
 import End from "./end";
 import Button from "../../ui/button";
+import RemoveButton from "../../ui/remove-button";
 
 export const inputEl = `
 	display: inline-block;
@@ -48,12 +49,17 @@ const BodyButton = styled(Button)`
 	${inputEl}
 `;
 
+const StyledRemoveButton = styled(RemoveButton)`
+	${inputEl}
+`;
+
 const AnnotationForm = ({
 	activateChildDocument,
 	annotation,
 	changeAnnotationDocument,
 	changeAnnotationProps,
 	createAnnotationDocument,
+	deleteAnnotation,
 	text,
 }) =>
 	<Ul>
@@ -114,6 +120,15 @@ const AnnotationForm = ({
 					Add body
 					</BodyButton>
 			}
+		</Li>
+		<Li>
+			<Label></Label>
+			<StyledRemoveButton
+				action={deleteAnnotation}
+			  id={annotation.id}
+			>
+				Delete {annotation.type} annotation
+			</StyledRemoveButton>
 		</Li>
 	</Ul>;
 

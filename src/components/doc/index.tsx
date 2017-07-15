@@ -5,7 +5,7 @@ import styled from "styled-components";
 import {setDocAnnotations, setDocId, setDocText} from "../../actions/document";
 import TextTree from "./text-tree";
 import Text from "./text";
-import {activateAnnotation, changeAnnotationProps, createAnnotation} from "../../actions/annotation";
+import {activateAnnotation, changeAnnotationProps, createAnnotation, deleteAnnotation} from "../../actions/annotation";
 import Annotations from "./annotations";
 import history from '../../store/history';
 import {
@@ -88,6 +88,7 @@ class Doc extends React.Component<any, any> {
 			changeAnnotationDocument,
 			createAnnotation,
 			createAnnotationDocument,
+			deleteAnnotation,
 			doc,
 			documents,
 			setDocText,
@@ -140,6 +141,7 @@ class Doc extends React.Component<any, any> {
 						changeAnnotationDocument={changeAnnotationDocument}
 						changeAnnotationProps={changeAnnotationProps}
 						createAnnotationDocument={createAnnotationDocument}
+						deleteAnnotation={deleteAnnotation}
 						text={text}
 					/>
 				</Column>
@@ -163,6 +165,7 @@ export default connect(
 		changeAnnotationDocument,
 		createAnnotation,
 		createAnnotationDocument,
+		deleteAnnotation,
 		setDocId,
 		setDocText,
 		setDocAnnotations,
