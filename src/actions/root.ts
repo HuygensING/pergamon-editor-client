@@ -1,30 +1,35 @@
 export const deactivateAnnotation = () => async (dispatch, getState) => {
 	dispatch({
-		id: null,
-		type: 'ROOT_SET_ACTIVE_ANNOTATION_ID',
+		type: 'DEACTIVATE_ANNOTATION',
 	});
 };
 
 
 export const activateAnnotation = (id) => async (dispatch, getState) => {
-	if (getState().active_annotation_id !== id) {
+	if (getState().root.active_annotation_id !== id) {
 		dispatch({
 			id,
-			type: 'ROOT_SET_ACTIVE_ANNOTATION_ID',
+			type: 'ACTIVATE_ANNOTATION',
 		});
 	} else {
 		dispatch(deactivateAnnotation());
 	}
 };
 
+export const activateDocument = (id) => async (dispatch, getState) => {
+	await dispatch(deactivateAnnotation());
+
+	dispatch({
+		type: 'ACTIVATE_DOCUMENT',
+		id,
+	});
+}
+
 export const setRootId = (id) => (dispatch, getState) => {
 	dispatch({
-		type: 'ROOT_SET_ROOT_DOCUMENT_ID',
+		type: 'SET_ROOT_DOCUMENT_ID',
 		id,
 	});
 
-	dispatch({
-		type: 'ROOT_SET_ACTIVE_DOCUMENT_ID',
-		id,
-	});
+	dispatch(activateDocument(id));
 };

@@ -1,15 +1,14 @@
-import {deactivateAnnotation} from "./root";
-export const activateChildDocument = () => async (dispatch, getState) => {
-	const annotation = getState().annotation;
+import {activateDocument, deactivateAnnotation} from "./root";
+import {IAnnotation} from "../reducers/annotation";
 
-	// await dispatch(setDocument(annotation.document));
+export const activateAnnotationDocument = (annotation: IAnnotation, documentId: string) =>
+	async (dispatch, getState) => {
+		dispatch({
+			type: 'ANNOTATION_PATH_ADD',
+			annotation,
+		});
 
-	dispatch({
-		type: 'ANNOTATION_PATH_ADD',
-		annotation,
-	});
-
-	dispatch(deactivateAnnotation());
+		dispatch(activateDocument(documentId));
 };
 
 export const goToChildDocument = (index) => async (dispatch, getState) => {
@@ -21,11 +20,11 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 	const state = getState();
 	const annotation = state.annotationPath.last();
 
-	// if (annotation != null) {
-	// 	await dispatch(setDocumentId(annotation.document.id));
-	// } else {
-	// 	await dispatch(setDocument(state.root));
-	// }
+	const documentId = (annotation != null) ?
+		annotation.documentId :
+		state.root.root_document_id;
+
+	dispatch(activateDocument(documentId))
 
 	dispatch(deactivateAnnotation());
 };

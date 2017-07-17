@@ -1,10 +1,10 @@
 import {activateAnnotation, deactivateAnnotation} from "./root";
 
-export const updateText = (text, ev) => (dispatch, getState) => {
+export const updateText = (text, ev, documentId?) => (dispatch, getState) => {
 	const root = getState().root;
 	dispatch({
 		caretPosition: ev.currentTarget.selectionStart,
-		documentId: root.active_document_id,
+		documentId: documentId || getState().root.active_document_id,
 		text,
 		type: 'DOCUMENTS_UPDATE_TEXT',
 	});
@@ -49,3 +49,23 @@ export const deleteAnnotation = () => (dispatch, getState) => {
 	dispatch(deactivateAnnotation());
 };
 
+export const createAnnotationDocument = () => (dispatch, getState) => {
+	const documentId = `some-id-${Math.floor(Math.random() * 10000)}`;
+
+	dispatch({
+		documentId,
+		type: 'DOCUMENTS_CREATE_DOCUMENT',
+	});
+
+	dispatch(updateAnnotation({ documentId }));
+};
+
+// export const updateAnnotationDocument = (documentId, props) => (dispatch, getState) => {
+// 	const root = getState().root;
+// 	dispatch({
+// 		annotationId: root.active_annotation_id,
+// 		documentId,
+// 		props,
+// 		type: 'DOCUMENTS_UPDATE_DOCUMENT',
+// 	});
+// };

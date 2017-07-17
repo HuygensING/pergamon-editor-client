@@ -1,7 +1,7 @@
 import original from './docs/original';
 import typical from './docs/typical';
 import large from './docs/large';
-import {IDocument} from "./document";
+import {defaultDocument, IDocument} from "./document";
 import {replaceItem, updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
 
@@ -15,11 +15,15 @@ export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		// case 'DOCUMENTS_ADD_DOCUMENT': {
-		// 	nextState = nextState.concat(action.document);
-		//
-		// 	break;
-		// }
+		case 'DOCUMENTS_CREATE_DOCUMENT': {
+			const newDocument = updateProp(defaultDocument, {
+				 id: action.documentId,
+			});
+
+			nextState = nextState.concat(newDocument);
+
+			break;
+		}
 		//
 		// case 'DOCUMENTS_UPDATE_DOCUMENT': {
 		// 	nextState = replaceItem(nextState, action.document);
@@ -27,7 +31,7 @@ export default (state = initialState, action) => {
 		// 	break;
 		// }
 
-		case 'ROOT_SET_ACTIVE_DOCUMENT_ID': {
+		case 'ACTIVATE_DOCUMENT': {
 			nextState = updatePropInArray(nextState, action.id, (doc) =>
 				(doc.tree == null) ?
 					{ tree: getTree(doc.id, doc.text, doc.annotations) } :

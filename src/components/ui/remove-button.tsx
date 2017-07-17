@@ -8,7 +8,6 @@ const messages = [
 	'Talk about it?',
 	'Farewell...',
 	'Go out with a BOOM!',
-	'Life is short...'
 ];
 
 const StyledButton = styled(Button)`

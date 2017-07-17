@@ -16,15 +16,17 @@ const AnnotationList = (props) =>
 			props.annotations.map((annotation, index) =>
 				<Annotation
 					activateAnnotation={props.activateAnnotation}
-					activateChildDocument={props.activateChildDocument}
+					activateAnnotationDocument={props.activateAnnotationDocument}
 					activeAnnotation={props.annotation}
+					activeAnnotationDocument={props.activeAnnotationDocument}
 					activeDocument={props.activeDocument}
 					annotation={annotation}
-					changeAnnotationDocument={props.changeAnnotationDocument}
 					createAnnotationDocument={props.createAnnotationDocument}
 					deleteAnnotation={props.deleteAnnotation}
+					documents={props.documents}
 					key={index}
 					updateAnnotation={props.updateAnnotation}
+				  updateText={props.updateText}
 				/>
 			)
 		}

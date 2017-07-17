@@ -10,23 +10,30 @@ export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		case 'ROOT_SET_ROOT_DOCUMENT_ID': {
+		case 'SET_ROOT_DOCUMENT_ID': {
 			nextState = updateProp(nextState, {
 				root_document_id: action.id,
 			});
 			break;
 		}
 
-		case 'ROOT_SET_ACTIVE_DOCUMENT_ID': {
+		case 'ACTIVATE_DOCUMENT': {
 			nextState = updateProp(nextState, {
-				active_document_id: action.id
+				active_document_id: action.id,
 			});
 			break;
 		}
 
-		case 'ROOT_SET_ACTIVE_ANNOTATION_ID': {
+		case 'ACTIVATE_ANNOTATION': {
 			nextState = updateProp(nextState, {
-				active_annotation_id: action.id
+				active_annotation_id: action.id,
+			});
+			break;
+		}
+
+		case 'DEACTIVATE_ANNOTATION': {
+			nextState = updateProp(nextState, {
+				active_annotation_id: null,
 			});
 			break;
 		}

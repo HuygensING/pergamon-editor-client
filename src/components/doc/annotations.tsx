@@ -9,13 +9,15 @@ import {IDocument} from "../../reducers/document";
 
 interface IProps {
 	activateAnnotation: (string) => void;
-	activateChildDocument: (string) => void;
+	activateAnnotationDocument: (string) => void;
+	activeAnnotationDocument: IDocument;
 	activeDocument: IDocument;
 	annotation: IAnnotation;
-	updateAnnotation: (any) => void;
-	changeAnnotationDocument: (any) => void;
 	createAnnotationDocument: (string) => void;
 	deleteAnnotation: (string) => void;
+	documents: IDocument[];
+	updateAnnotation: (any) => void;
+	updateText: (any) => void;
 }
 
 interface IState {
@@ -39,13 +41,15 @@ class Annotations extends React.Component<IProps, IState> {
 	public render() {
 		const {
 			activateAnnotation,
+			activateAnnotationDocument,
+			activeAnnotationDocument,
 			activeDocument,
-			activateChildDocument,
 			annotation,
-			changeAnnotationDocument,
-			updateAnnotation,
 			createAnnotationDocument,
 			deleteAnnotation,
+			documents,
+			updateAnnotation,
+			updateText,
 		} = this.props;
 
 		const annotationList= activeDocument.annotations;
@@ -71,7 +75,8 @@ class Annotations extends React.Component<IProps, IState> {
 				<Wrapper>
 					<AnnotationList
 						activateAnnotation={activateAnnotation}
-						activateChildDocument={activateChildDocument}
+						activateAnnotationDocument={activateAnnotationDocument}
+						activeAnnotationDocument={activeAnnotationDocument}
 						activeDocument={activeDocument}
 						annotation={annotation}
 						annotations={
@@ -79,10 +84,11 @@ class Annotations extends React.Component<IProps, IState> {
 								annotationList.sort(byStartEnd) :
 								annotationTree
 						}
-						updateAnnotation={updateAnnotation}
 						createAnnotationDocument={createAnnotationDocument}
-						changeAnnotationDocument={changeAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
+						documents={documents}
+						updateAnnotation={updateAnnotation}
+						updateText={updateText}
 					/>
 				</Wrapper>
 			</div>

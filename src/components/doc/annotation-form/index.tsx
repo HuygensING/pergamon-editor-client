@@ -54,13 +54,14 @@ const StyledRemoveButton = styled(RemoveButton)`
 `;
 
 const AnnotationForm = ({
-	activateChildDocument,
+	activateAnnotationDocument,
+	activeAnnotationDocument,
 	annotation,
-	changeAnnotationDocument,
-	updateAnnotation,
 	createAnnotationDocument,
 	deleteAnnotation,
 	text,
+	updateAnnotation,
+	updateText,
 }) =>
 	<Ul>
 		<Li>
@@ -108,19 +109,21 @@ const AnnotationForm = ({
 			<Label>
 				Body
 				{
-					annotation.hasOwnProperty('document') &&
+					annotation.hasOwnProperty('documentId') &&
 					<Button
-						onClick={activateChildDocument}
+						onClick={() =>
+							activateAnnotationDocument(annotation, activeAnnotationDocument.id)
+						}
 					>
 						✎
 					</Button>
 				}
 			</Label>
 			{
-				annotation.hasOwnProperty('document') ?
+				annotation.hasOwnProperty('documentId') ?
 					<Textarea
-						annotation={annotation}
-					  changeAnnotationDocument={changeAnnotationDocument}
+						activeAnnotationDocument={activeAnnotationDocument}
+					  updateText={updateText}
 					/> :
 					<BodyButton onClick={() => createAnnotationDocument(annotation.id)}>
 					Add body

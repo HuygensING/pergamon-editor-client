@@ -23,13 +23,13 @@ const LiRoot = styled.li`
 	
 	span {
 		color: ${(props: ILi) =>
-			props.active ? 'initial' : orange
+			props.active ?  orange : 'initial'
 		};
 		cursor: ${(props: ILi) =>
-			props.active ? 'default' : 'pointer'
+			props.active ? 'pointer' : 'default'
 		};
 		border-bottom: ${(props: ILi) =>
-			props.active ? 'none' : `1px solid ${orange}`
+			props.active ? `1px solid ${orange}` : 'none'
 		};
 	}
 `;
@@ -60,7 +60,7 @@ const Menu = ({
 			{/*/>*/}
 			<ul>
 				<LiRoot
-					active={!annotationsInPath.length}
+					active={annotationsInPath.length > 0}
 				  onClick={() => goToChildDocument(-1)}
 				>
 					<span>{root.id}</span>
@@ -70,15 +70,16 @@ const Menu = ({
 		<MenuItem>
 			<ul>
 				{
-					annotationsInPath.map((a, i) =>
-						<Li
-							active={activeDocument.id === a.document.id}
-							key={i}
-							onClick={() => goToChildDocument(i)}
-						>
-							<span>{a.type}</span>
-						</Li>
-					)
+					annotationsInPath
+						.map((a, i) =>
+							<Li
+								active={activeDocument.id !== a.documentId}
+								key={i}
+								onClick={() => goToChildDocument(i)}
+							>
+								<span>{a.type}</span>
+							</Li>
+						)
 				}
 			</ul>
 		</MenuItem>

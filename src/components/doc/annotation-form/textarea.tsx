@@ -10,18 +10,16 @@ const Textarea = styled(HFTextarea)`
 
 class ChildDocumentTextarea extends React.Component<any, any> {
 	public state = {
-		value: this.props.annotation.document.text
+		value: this.props.activeAnnotationDocument.text
 	};
 
 	public render() {
 		return (
 			<Textarea
 				autoresize
-				onChange={value => {
+				onChange={(value, ev) => {
 					this.setState({value});
-					this.props.changeAnnotationDocument({
-						text: value,
-					});
+					this.props.updateText(value, ev, this.props.activeAnnotationDocument.id);
 				}}
 				value={this.state.value}
 			/>

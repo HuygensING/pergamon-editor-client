@@ -6,8 +6,8 @@ import Text from "./text";
 import Annotations from "./annotations";
 import {
 	createAnnotationDocument,
-} from "../../actions/annotation-document";
-import {activateChildDocument, goToChildDocument} from "../../actions/annotation-path";
+} from "../../actions/documents";
+import {activateAnnotationDocument, goToChildDocument} from "../../actions/annotation-path";
 import Menu from "./menu";
 import {activateAnnotation, setRootId} from "../../actions/root";
 import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../actions/documents";
@@ -54,12 +54,11 @@ class ActiveDocument extends React.Component<any, any> {
 	public render() {
 		const {
 			activateAnnotation,
-			activateChildDocument,
+			activateAnnotationDocument,
 			activeAnnotationId,
 			activeDocumentId,
 			annotationsInPath,
 			updateAnnotation,
-			changeAnnotationDocument,
 			createAnnotation,
 			createAnnotationDocument,
 			deleteAnnotation,
@@ -69,13 +68,22 @@ class ActiveDocument extends React.Component<any, any> {
 			updateText,
 		} = this.props;
 
+		const rootDocument = documents.find(d => d.id === rootDocumentId);
+
 		const activeDocument = documents
 				.find(d => d.id === activeDocumentId);
+
 		if (activeDocument == null) return null;
+
 		const activeAnnotation = activeDocument.annotations
 			.find(a => a.id === activeAnnotationId);
 
-		const rootDocument = documents.find(d => d.id === rootDocumentId);
+		const activeAnnotationDocument = (
+			activeAnnotation != null &&
+			activeAnnotation.hasOwnProperty('documentId')
+		) ?
+			documents.find(d => d.id === activeAnnotation.documentId) :
+			null;
 
 		return (
 			<Div>
@@ -105,13 +113,15 @@ class ActiveDocument extends React.Component<any, any> {
 				<Column>
 					<Annotations
 						activateAnnotation={activateAnnotation}
+						activateAnnotationDocument={activateAnnotationDocument}
+						activeAnnotationDocument={activeAnnotationDocument}
 						activeDocument={activeDocument}
-						activateChildDocument={activateChildDocument}
 						annotation={activeAnnotation}
-						changeAnnotationDocument={changeAnnotationDocument}
-						updateAnnotation={updateAnnotation}
 						createAnnotationDocument={createAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
+						documents={documents}
+						updateAnnotation={updateAnnotation}
+					  updateText={updateText}
 					/>
 				</Column>
 			</Div>
@@ -129,7 +139,7 @@ export default connect(
 	}),
 	{
 		activateAnnotation,
-		activateChildDocument,
+		activateAnnotationDocument,
 		updateAnnotation,
 		createAnnotation,
 		createAnnotationDocument,

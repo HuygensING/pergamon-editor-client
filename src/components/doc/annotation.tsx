@@ -12,15 +12,17 @@ const Small = styled.small`
 `;
 
 const Annotation = ({
-  activateAnnotation,
-	activateChildDocument,
+	activateAnnotation,
+	activateAnnotationDocument,
 	activeAnnotation,
+	activeAnnotationDocument,
 	activeDocument,
 	annotation,
-	changeAnnotationDocument,
-	updateAnnotation,
 	createAnnotationDocument,
 	deleteAnnotation,
+	documents,
+	updateAnnotation,
+	updateText,
 }) =>
 	<Li>
 		<Head4 onClick={() =>
@@ -32,16 +34,17 @@ const Annotation = ({
 		{
 			(activeAnnotation != null && annotation.id === activeAnnotation.id) ?
 				<AnnotationForm
-					activateChildDocument={activateChildDocument}
+					activateAnnotationDocument={activateAnnotationDocument}
+					activeAnnotationDocument={activeAnnotationDocument}
 					annotation={annotation}
-					changeAnnotationDocument={changeAnnotationDocument}
-				  updateAnnotation={updateAnnotation}
 				  createAnnotationDocument={createAnnotationDocument}
 				  deleteAnnotation={deleteAnnotation}
 				  text={activeDocument.text}
+				  updateAnnotation={updateAnnotation}
+				  updateText={updateText}
 				/> :
-				annotation.hasOwnProperty('document') ?
-					annotation.document.text :
+				annotation.hasOwnProperty('documentId') ?
+					documents.find(d => d.id === annotation.documentId).text :
 					null
 		}
 		{
