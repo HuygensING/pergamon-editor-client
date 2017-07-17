@@ -1,11 +1,16 @@
-const initialState = [];
+import {IAnnotation} from "./annotation";
 
-export default (state = initialState, action) => {
+export default (state: IAnnotation[] = [], action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		case 'ACTIVATE_CHILD_DOCUMENT': {
-			nextState = nextState.concat(action.annotationId);
+		case 'ANNOTATION_PATH_ADD': {
+			nextState = nextState.concat(action.annotation);
+			break;
+		}
+
+		case 'ANNOTATION_PATH_GO_TO_INDEX': {
+			nextState = nextState.slice(0, action.index + 1);
 			break;
 		}
 

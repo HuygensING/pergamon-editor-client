@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		case 'CREATE_ANNOTATION': {
+		case 'ANNOTATION_CREATE': {
 			nextState = initialState;
 			nextState = { ...nextState, ...{
 				id: `random-id-${Math.floor(Math.random() * 10000)}`,
@@ -32,33 +32,25 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'CLEAR_ANNOTATION': {
+		case 'ANNOTATION_CLEAR': {
 			nextState = initialState;
 			break;
 		}
 
-		case 'ACTIVATE_ANNOTATION': {
+		case 'ANNOTATION_ACTIVATE': {
 			nextState = (action.annotation == null) ?
 				initialState :
 				{ ...nextState, ...action.annotation };
 			break;
 		}
 
-		case 'CREATE_ANNOTATION_PROPS': {
-			nextState = {
-				...nextState,
-				...{ document: defaultDocument}
-			};
-			break;
-		}
-
-		case 'CHANGE_ANNOTATION_PROPS': {
+		case 'ANNOTATION_CHANGE_PROPS': {
 			nextState = { ...nextState, ...action.props };
 
 			break;
 		}
 
-		case 'CREATE_ANNOTATION_DOCUMENT': {
+		case 'ANNOTATION_CREATE_DOCUMENT': {
 			const nextDocument = {
 				...defaultDocument,
 				...{ id: `some-id-${Math.floor(Math.random() * 10000)}`}
@@ -72,7 +64,7 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'CHANGE_ANNOTATION_DOCUMENT': {
+		case 'ANNOTATION_CHANGE_DOCUMENT_PROPS': {
 			const nextDocument = {
 				...nextState.document,
 				...action.props,

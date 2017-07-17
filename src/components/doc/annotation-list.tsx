@@ -31,9 +31,3 @@ const AnnotationList = (props) =>
 	</Ul>;
 
 export default AnnotationList;
-
-
-{/*<MyTextarea*/}
-	{/*onChange={(annotations: string) => props.setDocAnnotations(JSON.parse(annotations))}*/}
-	{/*value={JSON.stringify(props.annotations, null, 2)}*/}
-{/*/>*/}

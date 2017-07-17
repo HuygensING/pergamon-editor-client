@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Select from 'hire-forms-select';
 import styled from "styled-components";
-import {setDocAnnotations, setDocId, setDocText} from "../../actions/document";
+import {setDocumentId, setDocumentText} from "../../actions/document";
 import TextTree from "./text-tree";
 import Text from "./text";
 import {activateAnnotation, changeAnnotationProps, createAnnotation, deleteAnnotation} from "../../actions/annotation";
 import Annotations from "./annotations";
-import history from '../../store/history';
 import {
-	activateChildDocument, changeAnnotationDocument,
-	createAnnotationDocument
+	changeAnnotationDocument,
+	createAnnotationDocument,
 } from "../../actions/annotation-document";
-import SubDoc from "./sub-doc";
+import {activateChildDocument, goToChildDocument} from "../../actions/annotation-path";
+import Menu from "./menu";
 
 export const Head2 = styled.h2`
 	margin: 0;
@@ -42,40 +41,14 @@ const Column = styled.div`
 	width: 32vw;
 `;
 
-const Menu = styled.div`
-	background: #DDD;
-	padding: 1vh 1vw;
-	margin: 0;
-`;
-
-const MenuItem = styled.div`
-	width: 100px;
-`;
-
-const Header = styled.div`
-	background: #EEE;
-	padding: 2vh 1vw;
-`;
-
-const renderChildDocument = (subDocs, depth=0) =>
-	subDocs.length ?
-		<SubDoc
-			active={subDocs.length === 1}
-			depth={depth}
-			docId={subDocs[0]}
-		>
-			{renderChildDocument(subDocs.slice(1), ++depth)}
-		</SubDoc> :
-		null;
-
 class Doc extends React.Component<any, any> {
 	public componentDidMount() {
-		this.props.setDocId(this.props.match.params.id);
+		this.props.setDocumentId(this.props.match.params.id, true);
 	}
 
 	public componentWillReceiveProps(nextProps) {
 		if (this.props.match.params.id !== nextProps.match.params.id) {
-			this.props.setDocId(nextProps.match.params.id);
+			this.props.setDocumentId(nextProps.match.params.id, true);
 		}
 	}
 
@@ -84,6 +57,7 @@ class Doc extends React.Component<any, any> {
 			activateAnnotation,
 			activateChildDocument,
 			annotation,
+			annotationsInPath,
 			changeAnnotationProps,
 			changeAnnotationDocument,
 			createAnnotation,
@@ -91,35 +65,29 @@ class Doc extends React.Component<any, any> {
 			deleteAnnotation,
 			doc,
 			documents,
-			setDocText,
+			goToChildDocument,
+			root,
+			setDocumentText,
 		} = this.props;
 
-		const { annotations, id, text, tree } = doc;
+		const { annotations, text, tree } = doc;
 
-		if (id == null) return null;
+		if (root == null || doc.id == null) return null;
 
 		return (
 			<Div>
-				<Menu>
-					<MenuItem>
-						<Select
-							onChange={id => history.push(`/document/${id}`)}
-							options={documents.map(d => ({
-								key: d.id,
-								value: d.id,
-							}))}
-							value={{ key: id, value: id }}
-						/>
-					</MenuItem>
-				</Menu>
-				<Header>
-					<Head2>{id}</Head2>
-				</Header>
+				<Menu
+					annotationsInPath={annotationsInPath}
+					doc={doc}
+					documents={documents}
+				  goToChildDocument={goToChildDocument}
+				  root={root}
+				/>
 				<Column>
 					<Head3>Text</Head3>
 					<Text
 						createAnnotation={createAnnotation}
-						setDocText={setDocText}
+						setDocumentText={setDocumentText}
 						text={text}
 					/>
 				</Column>
@@ -145,7 +113,6 @@ class Doc extends React.Component<any, any> {
 						text={text}
 					/>
 				</Column>
-				{renderChildDocument(this.props.annotationPath)}
 			</Div>
 		);
 	}
@@ -153,9 +120,10 @@ class Doc extends React.Component<any, any> {
 
 export default connect(
 	state => ({
-		doc: state.doc.active,
-		documents: state.doc.all,
-		annotationPath: state.annotationPath,
+		doc: state.document,
+		documents: state.documents,
+		annotationsInPath: state.annotationPath,
+		root: state.root,
 		annotation: state.annotation,
 	}),
 	{
@@ -166,8 +134,8 @@ export default connect(
 		createAnnotation,
 		createAnnotationDocument,
 		deleteAnnotation,
-		setDocId,
-		setDocText,
-		setDocAnnotations,
+		goToChildDocument,
+		setDocumentId,
+		setDocumentText,
 	}
 )(Doc);

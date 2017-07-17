@@ -1,53 +1,60 @@
-// export const cancelAnnotation = () => (dispatch) =>
-// 	dispatch({ type: 'CANCEL_ANNOTATION'});
-//
-// export const removeNewAnnotation = () => (dispatch) =>
-// 	dispatch({ type: 'REMOVE_NEW_ANNOTATION'});
-
 export const createAnnotation = (ev) => (dispatch, getState) => {
 	const { selectionStart, selectionEnd } = ev.currentTarget;
 	if (selectionEnd - selectionStart === 0) return;
 
 	dispatch({
-		type: 'CREATE_ANNOTATION',
+		type: 'ANNOTATION_CREATE',
 		annotation_type: 'text',
 		start: selectionStart,
 		end: selectionEnd - 1,
 	});
 
 	dispatch({
-		type: 'ADD_ANNOTATION',
+		type: 'DOCUMENT_ADD_ANNOTATION',
 		annotation: getState().annotation,
 	});
 };
 
-export const activateAnnotation = (id) => (dispatch, getState) => {
-	const prevAnnotation = getState().annotation;
-	const annotation = getState().doc.active.annotations.find((a) => a.id === id);
-	const isAlreadyActive = prevAnnotation.id === annotation.id;
+export const documentUpdateAnnotation = () => (dispatch, getState) =>
 	dispatch({
-		type: 'ACTIVATE_ANNOTATION',
-		annotation: isAlreadyActive ? null : {...annotation},
+		type: 'DOCUMENT_UPDATE_ANNOTATION',
+		annotation: getState().annotation,
 	});
+
+export const clearAnnotation = () => async (dispatch, getState) => {
+	await dispatch(documentUpdateAnnotation());
+	dispatch({ type: 'ANNOTATION_CLEAR' });
 };
 
-export const changeAnnotationProps = (props) => (dispatch, getState) => {
+
+export const activateAnnotation = (id) => async (dispatch, getState) => {
+	const prevAnnotation = getState().annotation;
+	const annotation = getState().document.annotations.find((a) => a.id === id);
+	console.log(prevAnnotation.id === annotation.id)
+	if (prevAnnotation.id !== annotation.id) {
+		dispatch({
+			type: 'ANNOTATION_ACTIVATE',
+			annotation,
+		});
+	} else {
+		dispatch(clearAnnotation());
+	}
+};
+
+export const changeAnnotationProps = (props) => async (dispatch, getState) => {
 	dispatch({
-		type: 'CHANGE_ANNOTATION_PROPS',
+		type: 'ANNOTATION_CHANGE_PROPS',
 		props,
 	});
 
-	dispatch({
-		type: 'REPLACE_ANNOTATION',
-		annotation: getState().annotation,
-	})
+	await dispatch(documentUpdateAnnotation());
 };
 
 export const deleteAnnotation = (annotationId) => (dispatch, getState) => {
 	dispatch({
-		type: 'DELETE_ANNOTATION',
+		type: 'ANNOTATION_DELETE',
 		annotationId,
 	});
 
-	dispatch({ type: 'CLEAR_ANNOTATION' });
+	dispatch({ type: 'ANNOTATION_CLEAR' });
 };

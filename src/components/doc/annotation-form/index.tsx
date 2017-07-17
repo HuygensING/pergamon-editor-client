@@ -1,7 +1,6 @@
 import * as React from 'react';
 import HFSelect from 'hire-forms-select';
 import HFInput from 'hire-forms-input';
-import history from '../../../store/history';
 import Textarea from './textarea';
 import styled from "styled-components";
 import tags from '../tags';
@@ -9,6 +8,7 @@ import Start from "./start";
 import End from "./end";
 import Button from "../../ui/button";
 import RemoveButton from "../../ui/remove-button";
+import TextAnnotation from "../text-annotation";
 
 export const inputEl = `
 	display: inline-block;
@@ -71,6 +71,15 @@ const AnnotationForm = ({
 			<Label>Text</Label>
 			<Immutable>{ text.slice(annotation.start, annotation.end + 1) }</Immutable>
 		</Li>
+		{
+			tags[annotation.type].display === 'inline' &&
+			<Li>
+				<Label>Render</Label>
+				<TextAnnotation {...annotation}>
+					{ text.slice(annotation.start, annotation.end + 1) }
+				</TextAnnotation>
+			</Li>
+		}
 		<Li>
 			<Label>Type</Label>
 			<Select
@@ -101,10 +110,7 @@ const AnnotationForm = ({
 				{
 					annotation.hasOwnProperty('document') &&
 					<Button
-						onClick={() => {
-							activateChildDocument();
-							history.push(`/document/${annotation.document.id}`)
-						}}
+						onClick={activateChildDocument}
 					>
 						✎
 					</Button>

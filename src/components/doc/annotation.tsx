@@ -39,9 +39,9 @@ const Annotation = ({
 				  deleteAnnotation={deleteAnnotation}
 				  text={text}
 				/> :
-				<TextAnnotation {...annotation}>
-					{ text.slice(annotation.start, annotation.end + 1) }
-				</TextAnnotation>
+				annotation.hasOwnProperty('document') ?
+					annotation.document.text :
+					null
 		}
 		{
 			(annotation.children != null) &&

@@ -1,40 +1,23 @@
+import {documentUpdateAnnotation} from "./annotation";
 export const createAnnotationDocument = () => (dispatch, getState) => {
 	dispatch({
-		type: 'CREATE_ANNOTATION_DOCUMENT',
+		type: 'ANNOTATION_CREATE_DOCUMENT',
 	});
+
+	dispatch(documentUpdateAnnotation());
 
 	const nextAnnotation = getState().annotation;
-
 	dispatch({
-		type: 'REPLACE_ANNOTATION',
-		annotation: nextAnnotation,
-	});
-
-	dispatch({
-		type: 'ADD_DOCUMENT',
+		type: 'DOCUMENTS_ADD',
 		document: nextAnnotation.document,
 	});
 };
 
 export const changeAnnotationDocument = (props) => (dispatch, getState) => {
 	dispatch({
-		type: 'CHANGE_ANNOTATION_DOCUMENT',
+		type: 'ANNOTATION_CHANGE_DOCUMENT_PROPS',
 		props,
 	});
 
-	dispatch({
-		type: 'REPLACE_ANNOTATION',
-		annotation: getState().annotation,
-	})
+	dispatch(documentUpdateAnnotation());
 };
-
-export const activateChildDocument = () => (dispatch, getState) => {
-	dispatch({
-		type: 'REPLACE_ANNOTATION_DOCUMENT',
-		document: getState().annotation.document,
-	});
-
-
-	dispatch({ type: 'CLEAR_ANNOTATION' });
-};
-

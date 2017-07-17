@@ -9,7 +9,7 @@ const typical: IDocument = ({
       "attributes": {},
       "start": 0,
       "end": 3555,
-      "type": "tag:TEI"
+      "type": "tag:TEI",
     },
     {
       "attributes": {},

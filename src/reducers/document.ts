@@ -1,7 +1,4 @@
 import * as md5 from 'md5';
-import original from './docs/original';
-import typical from './docs/typical';
-import large from './docs/large';
 import {addRow, byDisplayStartEnd, byRowStartEnd} from "../components/doc/utils";
 import {splitAnnotations} from "../components/doc/split-annotations";
 import toTree from "../components/doc/create-tree";
@@ -44,7 +41,6 @@ export interface IDocument {
 	tree: IAnnotation,
 }
 
-
 export const defaultDocument: IDocument = {
 	id: null,
 	annotations: [],
@@ -52,36 +48,28 @@ export const defaultDocument: IDocument = {
 	tree: null,
 };
 
-interface IState {
-	active: IDocument;
-	all: IDocument[];
-}
-
-export const initialState: IState = {
-	active: defaultDocument,
-	all: [original, typical, large],
-};
+export const initialState: IDocument = defaultDocument;
 
 export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		case 'SET_DOC_ID': {
-			const nextDocument = nextState.all.find((d) => d.id === action.id);
+		case 'DOCUMENT_SET': {
+			const { annotations, id, text, tree } = action.document;
 
-			if (nextDocument.tree == null) {
-				nextDocument.tree = getTree(action.id, nextDocument.text, nextDocument.annotations);
+			if (tree == null) {
+				action.document.tree = getTree(id, text, annotations);
 			}
 
-			nextState = { ...nextState, ...{ active: nextDocument }};
+			nextState = action.document;
 
 			break;
 		}
 
-		case 'SET_DOC_TEXT': {
-			const { id, annotations } = nextState.active;
-			const nextDocument = {
-				...nextState.active,
+		case 'DOCUMENT_SET_TEXT': {
+			const { id, annotations } = nextState;
+			nextState = {
+				...nextState,
 				...{
 					annotations: annotations.map((a) => {
 						if (a.start > action.caretPosition) {
@@ -98,93 +86,53 @@ export default (state = initialState, action) => {
 				}
 			};
 
-			nextState = { ...nextState, ...{ active: nextDocument }};
-
 			break;
 		}
 
-		case 'SET_DOC_ANNOTATIONS': {
-			const { id, text } = nextState.active;
-			const nextDocument = {
-				...nextState.active,
-				...{
-					annotations: action.annotations,
-					tree: getTree(id, text, action.annotations),
-				}
-			};
-
-			nextState = { ...nextState, ...{ active: nextDocument }};
-
-			break;
-		}
-
-		case 'ADD_DOCUMENT': {
-			const all = nextState.all.concat(action.document);
-			nextState = { ...nextState, ...{ all }};
-
-			break;
-		}
-
-		case 'ADD_ANNOTATION': {
-			const { id, text } = nextState.active;
-			const annotations = nextState.active.annotations.concat(action.annotation);
-			const nextDocument = {
-				...nextState.active,
+		case 'DOCUMENT_ADD_ANNOTATION': {
+			const { id, text } = nextState;
+			const annotations = nextState.annotations.concat(action.annotation);
+			nextState = {
+				...nextState,
 				...{
 					annotations,
 					tree: getTree(id, text, annotations),
 				}
 			};
 
-			nextState = { ...nextState, ...{ active: nextDocument }};
-
 			break;
 		}
 
-		case 'DELETE_ANNOTATION': {
-			const { id, text } = nextState.active;
+		case 'ANNOTATION_DELETE': {
+			const { id, text } = nextState;
 
-			const annotations = nextState.active.annotations
+			const annotations = nextState.annotations
 				.filter((a) => a.id !== action.annotationId);
 
-			const nextDocument = {
-				...nextState.active,
+			nextState = {
+				...nextState,
 				...{
 					annotations,
 					tree: getTree(id, text, annotations),
 				}
 			};
 
-			nextState = { ...nextState, ...{ active: nextDocument }};
-
 			break;
 		}
 
-		case 'REPLACE_ANNOTATION': {
-			const { id, text } = nextState.active;
-			const annotations = nextState.active.annotations
+		case 'DOCUMENT_UPDATE_ANNOTATION': {
+			const { id, text } = nextState;
+			const annotations = nextState.annotations
 				.filter((a) => a.id !== action.annotation.id)
 				.concat(action.annotation);
 
-			const nextDocument = {
-				...nextState.active,
+			nextState = {
+				...nextState,
 				...{
 					annotations,
 					tree: getTree(id, text, annotations),
 				},
 			};
-
-			nextState = { ...nextState, ...{ active: nextDocument }};
-
-			break;
-		}
-
-		case 'REPLACE_ANNOTATION_DOCUMENT': {
-			const all = nextState.all
-				.filter((a) => a.id !== action.document.id)
-				.concat(action.document);
-
-			nextState = { ...nextState, ... { all }};
 
 			break;
 		}
