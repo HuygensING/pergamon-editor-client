@@ -16,7 +16,6 @@ const Button = styled.div`
 	height: 1.5em;
 	line-height: 1.5em;
 	overflow: hidden;
-	padding: 0 1em;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;

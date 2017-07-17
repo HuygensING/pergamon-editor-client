@@ -15,6 +15,7 @@ const StyledButton = styled(Button)`
 		props.confirm ? 'red' : buttonBackgroundColor};
 	color: ${(props: { confirm: boolean }) =>
 		props.confirm ? 'white' : 'black'};
+	padding: 0 1em;
 `;
 
 class RemoveButton extends React.Component<any, any> {
