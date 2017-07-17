@@ -12,7 +12,6 @@ export default (state = initialState, action) => {
 	switch (action.type) {
 		case 'ROOT_SET_ROOT_DOCUMENT_ID': {
 			nextState = updateProp(nextState, {
-				active_document_id: action.id,
 				root_document_id: action.id,
 			});
 			break;

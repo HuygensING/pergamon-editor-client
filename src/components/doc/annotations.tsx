@@ -12,7 +12,7 @@ interface IProps {
 	activateChildDocument: (string) => void;
 	activeDocument: IDocument;
 	annotation: IAnnotation;
-	changeAnnotationProps: (any) => void;
+	updateAnnotation: (any) => void;
 	changeAnnotationDocument: (any) => void;
 	createAnnotationDocument: (string) => void;
 	deleteAnnotation: (string) => void;
@@ -43,7 +43,7 @@ class Annotations extends React.Component<IProps, IState> {
 			activateChildDocument,
 			annotation,
 			changeAnnotationDocument,
-			changeAnnotationProps,
+			updateAnnotation,
 			createAnnotationDocument,
 			deleteAnnotation,
 		} = this.props;
@@ -79,7 +79,7 @@ class Annotations extends React.Component<IProps, IState> {
 								annotationList.sort(byStartEnd) :
 								annotationTree
 						}
-						changeAnnotationProps={changeAnnotationProps}
+						updateAnnotation={updateAnnotation}
 						createAnnotationDocument={createAnnotationDocument}
 						changeAnnotationDocument={changeAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}

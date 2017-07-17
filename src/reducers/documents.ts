@@ -2,7 +2,7 @@ import original from './docs/original';
 import typical from './docs/typical';
 import large from './docs/large';
 import {IDocument} from "./document";
-import {replaceItem, updatePropInArray} from "./utils";
+import {replaceItem, updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
 
 export const initialState: IDocument[] = [
@@ -15,19 +15,19 @@ export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
-		case 'DOCUMENTS_ADD_DOCUMENT': {
-			nextState = nextState.concat(action.document);
+		// case 'DOCUMENTS_ADD_DOCUMENT': {
+		// 	nextState = nextState.concat(action.document);
+		//
+		// 	break;
+		// }
+		//
+		// case 'DOCUMENTS_UPDATE_DOCUMENT': {
+		// 	nextState = replaceItem(nextState, action.document);
+		//
+		// 	break;
+		// }
 
-			break;
-		}
-
-		case 'DOCUMENTS_UPDATE_DOCUMENT': {
-			nextState = replaceItem(nextState, action.document);
-
-			break;
-		}
-
-		case 'ROOT_SET_ROOT_DOCUMENT_ID': {
+		case 'ROOT_SET_ACTIVE_DOCUMENT_ID': {
 			nextState = updatePropInArray(nextState, action.id, (doc) =>
 				(doc.tree == null) ?
 					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
@@ -36,9 +36,9 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'DOCUMENTS_UPDATE_DOCUMENT_TEXT': {
-			nextState = updatePropInArray(nextState, action.id, (doc) => ({
-				annotations: doc.annotations.map((a) => {
+		case 'DOCUMENTS_UPDATE_TEXT': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc) => {
+				const annotations = doc.annotations.map((a) => {
 					if (a.start > action.caretPosition) {
 						a.start = a.start + 1;
 					}
@@ -47,10 +47,64 @@ export default (state = initialState, action) => {
 					}
 
 					return a;
-				}),
-				text: action.text,
-				tree: getTree(action.id, action.text, doc.annotations),
-			}));
+				});
+
+				return {
+					annotations,
+					text: action.text,
+					tree: getTree(doc.id, action.text, annotations),
+				};
+			});
+
+			break;
+		}
+
+		case 'DOCUMENTS_CREATE_ANNOTATION': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
+				const annotations = doc.annotations.concat({
+					id: action.annotationId,
+					start: action.start,
+					end: action.end,
+					type: action.annotationType,
+				});
+
+				return {
+					annotations,
+					tree: getTree(action.id, doc.text, annotations),
+				};
+			});
+
+			break;
+		}
+
+		case 'DOCUMENTS_UPDATE_ANNOTATION': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
+				const annotations = doc.annotations.map(a =>
+					(a.id === action.annotationId) ?
+						updateProp(a, action.props)	:
+						a
+				);
+
+				return {
+					annotations,
+					tree: getTree(action.id, doc.text, annotations),
+				};
+			});
+
+			break;
+		}
+
+		case 'DOCUMENTS_DELETE_ANNOTATION': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
+				const annotations = doc.annotations.filter(a =>
+					(a.id !== action.annotationId)
+				);
+
+				return {
+					annotations,
+					tree: getTree(action.id, doc.text, annotations),
+				};
+			});
 
 			break;
 		}

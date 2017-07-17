@@ -7,7 +7,7 @@ class Start extends React.Component<any, any> {
 	};
 
 	public render() {
-		const { annotation, changeAnnotationProps } = this.props;
+		const { annotation, updateAnnotation } = this.props;
 		const { value } = this.state;
 		return (
 			<Input
@@ -19,7 +19,7 @@ class Start extends React.Component<any, any> {
 				validate={value => {
 					const start: number = parseInt(value, 10);
 					const isValid = Number.isInteger(start) && start <= annotation.end;
-					if (isValid) changeAnnotationProps({ start });
+					if (isValid) updateAnnotation({ start });
 					return isValid ? { isValid } : { isValid, message: "The start point cannot be greater than the end point." };
 				}}
 				value={value}

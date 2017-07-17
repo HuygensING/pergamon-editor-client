@@ -2,21 +2,6 @@ import * as React from 'react';
 import Button, {buttonBackgroundColor} from "./button";
 import styled from "styled-components";
 
-declare global {
-	interface Array<T> {
-		last(): T;
-		pickRandom(): T;
-	}
-}
-
-Array.prototype.last = function () {
-	return this[this.length - 1];
-};
-
-Array.prototype.pickRandom = function () {
-	return this[Math.floor(Math.random() * this.length)];
-};
-
 const messages = [
 	'Really? :(',
 	'Never coming back!',
@@ -45,7 +30,7 @@ class RemoveButton extends React.Component<any, any> {
 				confirm={this.state.confirm}
 				onClick={() => {
 					if (this.state.confirm) {
-						this.props.action(this.props.id);
+						this.props.action();
 					} else {
 						this.setState({ confirm: true });
 					}

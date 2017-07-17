@@ -18,7 +18,7 @@ const Annotation = ({
 	activeDocument,
 	annotation,
 	changeAnnotationDocument,
-	changeAnnotationProps,
+	updateAnnotation,
 	createAnnotationDocument,
 	deleteAnnotation,
 }) =>
@@ -35,7 +35,7 @@ const Annotation = ({
 					activateChildDocument={activateChildDocument}
 					annotation={annotation}
 					changeAnnotationDocument={changeAnnotationDocument}
-				  changeAnnotationProps={changeAnnotationProps}
+				  updateAnnotation={updateAnnotation}
 				  createAnnotationDocument={createAnnotationDocument}
 				  deleteAnnotation={deleteAnnotation}
 				  text={activeDocument.text}

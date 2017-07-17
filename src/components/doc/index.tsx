@@ -1,17 +1,16 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import {setDocumentId, setDocumentText, setRootId} from "../../actions/document";
 import TextTree from "./text-tree";
 import Text from "./text";
-import {activateAnnotation, changeAnnotationProps, createAnnotation, deleteAnnotation} from "../../actions/annotation";
 import Annotations from "./annotations";
 import {
-	changeAnnotationDocument,
 	createAnnotationDocument,
 } from "../../actions/annotation-document";
 import {activateChildDocument, goToChildDocument} from "../../actions/annotation-path";
 import Menu from "./menu";
+import {activateAnnotation, setRootId} from "../../actions/root";
+import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../actions/documents";
 
 export const Head2 = styled.h2`
 	margin: 0;
@@ -58,9 +57,8 @@ class ActiveDocument extends React.Component<any, any> {
 			activateChildDocument,
 			activeAnnotationId,
 			activeDocumentId,
-			annotation,
 			annotationsInPath,
-			changeAnnotationProps,
+			updateAnnotation,
 			changeAnnotationDocument,
 			createAnnotation,
 			createAnnotationDocument,
@@ -68,7 +66,7 @@ class ActiveDocument extends React.Component<any, any> {
 			documents,
 			goToChildDocument,
 			rootDocumentId,
-			setDocumentText,
+			updateText,
 		} = this.props;
 
 		const activeDocument = documents
@@ -93,14 +91,15 @@ class ActiveDocument extends React.Component<any, any> {
 					<Text
 						activeDocument={activeDocument}
 						createAnnotation={createAnnotation}
-						setDocumentText={setDocumentText}
+						updateText={updateText}
 					/>
 				</Column>
 				<Column>
 					<Head3>Output</Head3>
 					<TextTree
-						activeDocument={activeDocument}
 						annotation={activeAnnotation}
+						root={activeDocument.tree}
+					  text={activeDocument.text}
 					/>
 				</Column>
 				<Column>
@@ -110,7 +109,7 @@ class ActiveDocument extends React.Component<any, any> {
 						activateChildDocument={activateChildDocument}
 						annotation={activeAnnotation}
 						changeAnnotationDocument={changeAnnotationDocument}
-						changeAnnotationProps={changeAnnotationProps}
+						updateAnnotation={updateAnnotation}
 						createAnnotationDocument={createAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
 					/>
@@ -131,14 +130,12 @@ export default connect(
 	{
 		activateAnnotation,
 		activateChildDocument,
-		changeAnnotationProps,
-		changeAnnotationDocument,
+		updateAnnotation,
 		createAnnotation,
 		createAnnotationDocument,
 		deleteAnnotation,
 		goToChildDocument,
-		setDocumentId,
-		setDocumentText,
+		updateText,
 		setRootId,
 	}
 )(ActiveDocument);

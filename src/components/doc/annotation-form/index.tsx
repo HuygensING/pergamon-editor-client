@@ -57,7 +57,7 @@ const AnnotationForm = ({
 	activateChildDocument,
 	annotation,
 	changeAnnotationDocument,
-	changeAnnotationProps,
+	updateAnnotation,
 	createAnnotationDocument,
 	deleteAnnotation,
 	text,
@@ -84,7 +84,7 @@ const AnnotationForm = ({
 			<Label>Type</Label>
 			<Select
 				options={Object.keys(tags).map((k) => ({ key: k, value: k}))}
-			  onChange={type => changeAnnotationProps({ type })}
+			  onChange={type => updateAnnotation({ type })}
 			  value={{ key: annotation.type, value: annotation.type }}
 			/>
 		</Li>
@@ -92,7 +92,7 @@ const AnnotationForm = ({
 			<Label>Start</Label>
 			<Start
 				annotation={annotation}
-			  changeAnnotationProps={changeAnnotationProps}
+			  updateAnnotation={updateAnnotation}
 			  start={annotation.start}
 			/>
 		</Li>
@@ -100,7 +100,7 @@ const AnnotationForm = ({
 			<Label>End</Label>
 			<End
 				annotation={annotation}
-				changeAnnotationProps={changeAnnotationProps}
+				updateAnnotation={updateAnnotation}
 				end={annotation.end}
 			/>
 		</Li>
@@ -131,7 +131,6 @@ const AnnotationForm = ({
 			<Label></Label>
 			<StyledRemoveButton
 				action={deleteAnnotation}
-			  id={annotation.id}
 			>
 				Delete {annotation.type} annotation
 			</StyledRemoveButton>

@@ -1,9 +1,8 @@
-import {setDocument, setDocumentId} from "./document";
-import {deactivateAnnotation} from "./annotation";
+import {deactivateAnnotation} from "./root";
 export const activateChildDocument = () => async (dispatch, getState) => {
 	const annotation = getState().annotation;
 
-	await dispatch(setDocument(annotation.document));
+	// await dispatch(setDocument(annotation.document));
 
 	dispatch({
 		type: 'ANNOTATION_PATH_ADD',
@@ -22,11 +21,11 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 	const state = getState();
 	const annotation = state.annotationPath.last();
 
-	if (annotation != null) {
-		await dispatch(setDocumentId(annotation.document.id));
-	} else {
-		await dispatch(setDocument(state.root));
-	}
+	// if (annotation != null) {
+	// 	await dispatch(setDocumentId(annotation.document.id));
+	// } else {
+	// 	await dispatch(setDocument(state.root));
+	// }
 
 	dispatch(deactivateAnnotation());
 };
