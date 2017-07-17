@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from "styled-components";
 import {Head4} from "./index";
-import TextAnnotation from "./text-annotation";
 import AnnotationList from "./annotation-list";
 import AnnotationForm from "./annotation-form";
 
@@ -16,15 +15,17 @@ const Annotation = ({
   activateAnnotation,
 	activateChildDocument,
 	activeAnnotation,
+	activeDocument,
 	annotation,
 	changeAnnotationDocument,
 	changeAnnotationProps,
 	createAnnotationDocument,
 	deleteAnnotation,
-	text
 }) =>
 	<Li>
-		<Head4 onClick={() => activateAnnotation(annotation.id)}>
+		<Head4 onClick={() =>
+			activateAnnotation(annotation.id)
+		}>
 			{annotation.type}
 			<Small>({annotation.start} - {annotation.end})</Small>
 		</Head4>
@@ -37,7 +38,7 @@ const Annotation = ({
 				  changeAnnotationProps={changeAnnotationProps}
 				  createAnnotationDocument={createAnnotationDocument}
 				  deleteAnnotation={deleteAnnotation}
-				  text={text}
+				  text={activeDocument.text}
 				/> :
 				annotation.hasOwnProperty('document') ?
 					annotation.document.text :
@@ -48,7 +49,7 @@ const Annotation = ({
 			<AnnotationList
 				activateAnnotation={activateAnnotation}
 				annotations={annotation.children}
-				text={text}
+				text={activeDocument.text}
 			/>
 		}
 	</Li>;

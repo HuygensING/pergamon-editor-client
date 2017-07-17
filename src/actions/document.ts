@@ -19,15 +19,23 @@ export const setDocumentId = (id, isRoot=false) => async (dispatch, getState) =>
 
 	if (isRoot) {
 		dispatch({
-			type: 'ROOT_SET',
+			type: 'ROOT_SET_ROOT_DOCUMENT_ID',
 			document: getState().document,
 		});
 	}
 };
 
-export const setDocumentText = (text, ev) => (dispatch, getState) =>
+export const setDocumentText = (id, text, ev) => (dispatch, getState) =>
 	dispatch({
-		type: 'DOCUMENT_SET_TEXT',
 		caretPosition: ev.currentTarget.selectionStart,
+		id,
 		text,
+		type: 'DOCUMENTS_UPDATE_DOCUMENT_TEXT',
 	});
+
+export const setRootId = (id) => (dispatch, getState) =>
+	dispatch({
+		type: 'ROOT_SET_ROOT_DOCUMENT_ID',
+		id,
+	});
+

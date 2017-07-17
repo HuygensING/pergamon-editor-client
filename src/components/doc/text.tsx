@@ -10,12 +10,14 @@ const TextTextarea = styled(Textarea)`
 	width: 100%;
 `;
 
-const Text = ({createAnnotation, text, setDocumentText}) =>
+const Text = ({createAnnotation, activeDocument, setDocumentText}) =>
 	<div>
 		<TextTextarea
-			onChange={(text: string, ev: any) => setDocumentText(text, ev)}
+			onChange={(text: string, ev: any) =>
+				setDocumentText(activeDocument.id, text, ev)
+			}
 			onMouseUp={createAnnotation}
-			value={text}
+			value={activeDocument.text}
 		/>
 	</div>;
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import {setDocumentId, setDocumentText} from "../../actions/document";
+import {setDocumentId, setDocumentText, setRootId} from "../../actions/document";
 import TextTree from "./text-tree";
 import Text from "./text";
 import {activateAnnotation, changeAnnotationProps, createAnnotation, deleteAnnotation} from "../../actions/annotation";
@@ -41,14 +41,14 @@ const Column = styled.div`
 	width: 32vw;
 `;
 
-class Doc extends React.Component<any, any> {
+class ActiveDocument extends React.Component<any, any> {
 	public componentDidMount() {
-		this.props.setDocumentId(this.props.match.params.id, true);
+		this.props.setRootId(this.props.match.params.id, true);
 	}
 
 	public componentWillReceiveProps(nextProps) {
 		if (this.props.match.params.id !== nextProps.match.params.id) {
-			this.props.setDocumentId(nextProps.match.params.id, true);
+			this.props.setRootId(nextProps.match.params.id, true);
 		}
 	}
 
@@ -56,6 +56,8 @@ class Doc extends React.Component<any, any> {
 		const {
 			activateAnnotation,
 			activateChildDocument,
+			activeAnnotationId,
+			activeDocumentId,
 			annotation,
 			annotationsInPath,
 			changeAnnotationProps,
@@ -63,54 +65,54 @@ class Doc extends React.Component<any, any> {
 			createAnnotation,
 			createAnnotationDocument,
 			deleteAnnotation,
-			doc,
 			documents,
 			goToChildDocument,
-			root,
+			rootDocumentId,
 			setDocumentText,
 		} = this.props;
 
-		const { annotations, text, tree } = doc;
+		const activeDocument = documents
+				.find(d => d.id === activeDocumentId);
+		if (activeDocument == null) return null;
+		const activeAnnotation = activeDocument.annotations
+			.find(a => a.id === activeAnnotationId);
 
-		if (root == null || doc.id == null) return null;
+		const rootDocument = documents.find(d => d.id === rootDocumentId);
 
 		return (
 			<Div>
 				<Menu
 					annotationsInPath={annotationsInPath}
-					doc={doc}
+					activeDocument={activeDocument}
 					documents={documents}
 				  goToChildDocument={goToChildDocument}
-				  root={root}
+				  root={rootDocument}
 				/>
 				<Column>
 					<Head3>Text</Head3>
 					<Text
+						activeDocument={activeDocument}
 						createAnnotation={createAnnotation}
 						setDocumentText={setDocumentText}
-						text={text}
 					/>
 				</Column>
 				<Column>
 					<Head3>Output</Head3>
 					<TextTree
-						annotation={annotation}
-						root={tree}
-						text={text}
+						activeDocument={activeDocument}
+						annotation={activeAnnotation}
 					/>
 				</Column>
 				<Column>
 					<Annotations
 						activateAnnotation={activateAnnotation}
+						activeDocument={activeDocument}
 						activateChildDocument={activateChildDocument}
-						annotation={annotation}
-						annotationList={annotations}
-						annotationTree={tree.children}
+						annotation={activeAnnotation}
 						changeAnnotationDocument={changeAnnotationDocument}
 						changeAnnotationProps={changeAnnotationProps}
 						createAnnotationDocument={createAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
-						text={text}
 					/>
 				</Column>
 			</Div>
@@ -120,11 +122,11 @@ class Doc extends React.Component<any, any> {
 
 export default connect(
 	state => ({
-		doc: state.document,
-		documents: state.documents,
+		activeAnnotationId: state.root.active_annotation_id,
 		annotationsInPath: state.annotationPath,
-		root: state.root,
-		annotation: state.annotation,
+		activeDocumentId: state.root.active_document_id,
+		documents: state.documents,
+		rootDocumentId: state.root.root_document_id,
 	}),
 	{
 		activateAnnotation,
@@ -137,5 +139,6 @@ export default connect(
 		goToChildDocument,
 		setDocumentId,
 		setDocumentText,
+		setRootId,
 	}
-)(Doc);
+)(ActiveDocument);

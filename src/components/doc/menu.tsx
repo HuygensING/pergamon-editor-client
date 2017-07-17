@@ -43,7 +43,7 @@ const Li = LiRoot.extend`
 
 const Menu = ({
 	annotationsInPath,
-	doc,
+	activeDocument,
 	documents,
 	goToChildDocument,
 	root,
@@ -72,7 +72,7 @@ const Menu = ({
 				{
 					annotationsInPath.map((a, i) =>
 						<Li
-							active={doc.id === a.document.id}
+							active={activeDocument.id === a.document.id}
 							key={i}
 							onClick={() => goToChildDocument(i)}
 						>

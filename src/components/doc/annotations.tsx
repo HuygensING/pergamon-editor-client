@@ -5,18 +5,17 @@ import styled from "styled-components";
 import {byStartEnd} from "./utils";
 import {IAnnotation} from "../../reducers/annotation";
 import Button from "../ui/button";
+import {IDocument} from "../../reducers/document";
 
 interface IProps {
 	activateAnnotation: (string) => void;
 	activateChildDocument: (string) => void;
+	activeDocument: IDocument;
 	annotation: IAnnotation;
-	annotationList: IAnnotation[];
-	annotationTree: IAnnotation;
 	changeAnnotationProps: (any) => void;
 	changeAnnotationDocument: (any) => void;
 	createAnnotationDocument: (string) => void;
 	deleteAnnotation: (string) => void;
-	text: string;
 }
 
 interface IState {
@@ -40,16 +39,18 @@ class Annotations extends React.Component<IProps, IState> {
 	public render() {
 		const {
 			activateAnnotation,
+			activeDocument,
 			activateChildDocument,
 			annotation,
-			annotationList,
-			annotationTree,
 			changeAnnotationDocument,
 			changeAnnotationProps,
 			createAnnotationDocument,
 			deleteAnnotation,
-			text
 		} = this.props;
+
+		const annotationList= activeDocument.annotations;
+		const annotationTree= activeDocument.tree.children;
+
 		return (
 			<div>
 				<Head2>
@@ -71,6 +72,7 @@ class Annotations extends React.Component<IProps, IState> {
 					<AnnotationList
 						activateAnnotation={activateAnnotation}
 						activateChildDocument={activateChildDocument}
+						activeDocument={activeDocument}
 						annotation={annotation}
 						annotations={
 							(this.state.list) ?
@@ -81,7 +83,6 @@ class Annotations extends React.Component<IProps, IState> {
 						createAnnotationDocument={createAnnotationDocument}
 						changeAnnotationDocument={changeAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
-						text={text}
 					/>
 				</Wrapper>
 			</div>

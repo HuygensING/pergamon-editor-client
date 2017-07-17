@@ -21,23 +21,23 @@ export const documentUpdateAnnotation = () => (dispatch, getState) =>
 		annotation: getState().annotation,
 	});
 
-export const clearAnnotation = () => async (dispatch, getState) => {
-	await dispatch(documentUpdateAnnotation());
-	dispatch({ type: 'ANNOTATION_CLEAR' });
+export const deactivateAnnotation = () => async (dispatch, getState) => {
+	// await dispatch(documentUpdateAnnotation());
+	dispatch({
+		id: null,
+		type: 'ROOT_SET_ACTIVE_ANNOTATION_ID',
+	});
 };
 
 
 export const activateAnnotation = (id) => async (dispatch, getState) => {
-	const prevAnnotation = getState().annotation;
-	const annotation = getState().document.annotations.find((a) => a.id === id);
-	console.log(prevAnnotation.id === annotation.id)
-	if (prevAnnotation.id !== annotation.id) {
+	if (getState().active_annotation_id !== id) {
 		dispatch({
-			type: 'ANNOTATION_ACTIVATE',
-			annotation,
+			id,
+			type: 'ROOT_SET_ACTIVE_ANNOTATION_ID',
 		});
 	} else {
-		dispatch(clearAnnotation());
+		dispatch(deactivateAnnotation());
 	}
 };
 

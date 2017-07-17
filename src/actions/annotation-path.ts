@@ -1,5 +1,5 @@
 import {setDocument, setDocumentId} from "./document";
-import {clearAnnotation} from "./annotation";
+import {deactivateAnnotation} from "./annotation";
 export const activateChildDocument = () => async (dispatch, getState) => {
 	const annotation = getState().annotation;
 
@@ -10,7 +10,7 @@ export const activateChildDocument = () => async (dispatch, getState) => {
 		annotation,
 	});
 
-	dispatch(clearAnnotation());
+	dispatch(deactivateAnnotation());
 };
 
 export const goToChildDocument = (index) => async (dispatch, getState) => {
@@ -28,6 +28,6 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 		await dispatch(setDocument(state.root));
 	}
 
-	dispatch(clearAnnotation());
+	dispatch(deactivateAnnotation());
 };
 
