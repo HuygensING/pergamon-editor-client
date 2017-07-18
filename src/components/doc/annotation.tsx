@@ -2,7 +2,9 @@ import * as React from 'react';
 import styled from "styled-components";
 import {Head4} from "./index";
 import AnnotationList from "./annotation-list";
-import AnnotationForm from "./annotation-form";
+import AnnotationForm, {IAnnotationFormProps} from "./annotation-form";
+import {IDocument} from "../../reducers/document";
+import {IAnnotation} from "../../reducers/annotation";
 
 const Li = styled.li`
 `;
@@ -11,50 +13,59 @@ const Small = styled.small`
 	margin-left: 1em;
 `;
 
-const Annotation = ({
-	activateAnnotation,
-	activateAnnotationDocument,
-	activeAnnotation,
-	activeAnnotationDocument,
-	activeDocument,
-	annotation,
-	createAnnotationDocument,
-	deleteAnnotation,
-	documents,
-	updateAnnotation,
-	updateText,
-}) =>
+export interface IAnnotationCommon extends IAnnotationFormProps {
+	activateAnnotation: (string) => void;
+	documents: IDocument[];
+}
+
+export interface IAnnotationProps extends IAnnotationCommon {
+	annotation: IAnnotation;
+}
+
+const Annotation: React.SFC<IAnnotationProps> = (props) =>
 	<Li>
 		<Head4 onClick={() =>
-			activateAnnotation(annotation.id)
+			props.activateAnnotation(props.annotation.id)
 		}>
-			{annotation.type}
-			<Small>({annotation.start} - {annotation.end})</Small>
+			{props.annotation.type}
+			<Small>({props.annotation.start} - {props.annotation.end})</Small>
 		</Head4>
 		{
-			(activeAnnotation != null && annotation.id === activeAnnotation.id) ?
+			(
+				props.activeAnnotation != null &&
+				props.annotation.id === props.activeAnnotation.id
+			) ?
 				<AnnotationForm
-					activateAnnotationDocument={activateAnnotationDocument}
-					activeAnnotationDocument={activeAnnotationDocument}
-					annotation={annotation}
-				  createAnnotationDocument={createAnnotationDocument}
-				  deleteAnnotation={deleteAnnotation}
-				  text={activeDocument.text}
-				  updateAnnotation={updateAnnotation}
-				  updateText={updateText}
+					activateAnnotationDocument={props.activateAnnotationDocument}
+					activeAnnotation={props.activeAnnotation}
+					activeAnnotationDocument={props.activeAnnotationDocument}
+					activeDocument={props.activeDocument}
+				  createAnnotationDocument={props.createAnnotationDocument}
+				  deleteAnnotation={props.deleteAnnotation}
+				  updateAnnotation={props.updateAnnotation}
+				  updateText={props.updateText}
 				/> :
-				annotation.hasOwnProperty('documentId') ?
-					documents.find(d => d.id === annotation.documentId).text :
+				props.annotation.hasOwnProperty('documentId') ?
+					props.documents.find(d => d.id === props.annotation.documentId).text :
 					null
 		}
 		{
-			(annotation.children != null) &&
+			(props.annotation.children != null) &&
 			<AnnotationList
-				activateAnnotation={activateAnnotation}
-				annotations={annotation.children}
-				text={activeDocument.text}
+				activateAnnotation={props.activateAnnotation}
+				activateAnnotationDocument={props.activateAnnotationDocument}
+				activeAnnotation={props.annotation}
+				activeAnnotationDocument={props.activeAnnotationDocument}
+				activeDocument={props.activeDocument}
+				annotations={props.annotation.children}
+				createAnnotationDocument={props.createAnnotationDocument}
+				deleteAnnotation={props.deleteAnnotation}
+				documents={props.documents}
+				updateAnnotation={props.updateAnnotation}
+				updateText={props.updateText}
 			/>
 		}
 	</Li>;
 
 export default Annotation;
+

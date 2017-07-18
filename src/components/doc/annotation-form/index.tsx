@@ -9,6 +9,8 @@ import End from "./end";
 import Button from "../../ui/button";
 import RemoveButton from "../../ui/remove-button";
 import TextAnnotation from "../text-annotation";
+import {IDocument} from "../../../reducers/document";
+import {IAnnotation} from "../../../reducers/annotation";
 
 export const inputEl = `
 	display: inline-block;
@@ -53,31 +55,43 @@ const StyledRemoveButton = styled(RemoveButton)`
 	${inputEl}
 `;
 
-const AnnotationForm = ({
-	activateAnnotationDocument,
-	activeAnnotationDocument,
-	annotation,
-	createAnnotationDocument,
-	deleteAnnotation,
-	text,
-	updateAnnotation,
-	updateText,
-}) =>
+export interface IAnnotationFormProps {
+	activateAnnotationDocument: (IAnnotation, string) => void;
+	activeAnnotationDocument: IDocument;
+	activeAnnotation: IAnnotation;
+	activeDocument: IDocument;
+	createAnnotationDocument: (string) => void;
+	deleteAnnotation: (string) => void;
+	updateAnnotation: (any) => void;
+	updateText: (any) => void;
+}
+
+const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 	<Ul>
 		<Li>
 			<Label>ID</Label>
-			<Immutable>{annotation.id}</Immutable>
+			<Immutable>{props.activeAnnotation.id}</Immutable>
 		</Li>
 		<Li>
 			<Label>Text</Label>
-			<Immutable>{ text.slice(annotation.start, annotation.end + 1) }</Immutable>
+			<Immutable>
+				{
+					props.activeDocument.text
+						.slice(props.activeAnnotation.start, props.activeAnnotation.end + 1)
+				}
+			</Immutable>
 		</Li>
 		{
-			tags[annotation.type].display === 'inline' &&
+			tags[props.activeAnnotation.type].display === 'inline' &&
 			<Li>
 				<Label>Render</Label>
-				<TextAnnotation {...annotation}>
-					{ text.slice(annotation.start, annotation.end + 1) }
+				<TextAnnotation
+					annotation={props.activeAnnotation}
+				>
+					{
+						props.activeDocument.text
+							.slice(props.activeAnnotation.start, props.activeAnnotation.end + 1)
+					}
 				</TextAnnotation>
 			</Li>
 		}
@@ -85,34 +99,40 @@ const AnnotationForm = ({
 			<Label>Type</Label>
 			<Select
 				options={Object.keys(tags).map((k) => ({ key: k, value: k}))}
-			  onChange={type => updateAnnotation({ type })}
-			  value={{ key: annotation.type, value: annotation.type }}
+			  onChange={type => props.updateAnnotation({ type })}
+			  value={{
+			  	key: props.activeAnnotation.type,
+				  value: props.activeAnnotation.type
+			  }}
 			/>
 		</Li>
 		<Li>
 			<Label>Start</Label>
 			<Start
-				annotation={annotation}
-			  updateAnnotation={updateAnnotation}
-			  start={annotation.start}
+				activeAnnotation={props.activeAnnotation}
+			  updateAnnotation={props.updateAnnotation}
+			  start={props.activeAnnotation.start}
 			/>
 		</Li>
 		<Li>
 			<Label>End</Label>
 			<End
-				annotation={annotation}
-				updateAnnotation={updateAnnotation}
-				end={annotation.end}
+				activeAnnotation={props.activeAnnotation}
+				updateAnnotation={props.updateAnnotation}
+				end={props.activeAnnotation.end}
 			/>
 		</Li>
 		<Li>
 			<Label>
 				Body
 				{
-					annotation.hasOwnProperty('documentId') &&
+					props.activeAnnotation.hasOwnProperty('documentId') &&
 					<Button
 						onClick={() =>
-							activateAnnotationDocument(annotation, activeAnnotationDocument.id)
+							props.activateAnnotationDocument(
+								props.activeAnnotation,
+								props.activeAnnotationDocument.id
+							)
 						}
 					>
 						✎
@@ -120,12 +140,16 @@ const AnnotationForm = ({
 				}
 			</Label>
 			{
-				annotation.hasOwnProperty('documentId') ?
+				props.activeAnnotation.hasOwnProperty('documentId') ?
 					<Textarea
-						activeAnnotationDocument={activeAnnotationDocument}
-					  updateText={updateText}
+						activeAnnotationDocument={props.activeAnnotationDocument}
+					  updateText={props.updateText}
 					/> :
-					<BodyButton onClick={() => createAnnotationDocument(annotation.id)}>
+					<BodyButton
+						onClick={() =>
+							props.createAnnotationDocument(props.activeAnnotation.id)
+						}
+					>
 					Add body
 					</BodyButton>
 			}
@@ -133,9 +157,9 @@ const AnnotationForm = ({
 		<Li>
 			<Label></Label>
 			<StyledRemoveButton
-				action={deleteAnnotation}
+				action={props.deleteAnnotation}
 			>
-				Delete {annotation.type} annotation
+				Delete {props.activeAnnotation.type} annotation
 			</StyledRemoveButton>
 		</Li>
 	</Ul>;

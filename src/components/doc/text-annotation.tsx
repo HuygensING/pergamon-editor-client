@@ -2,12 +2,18 @@ import * as React from 'react';
 import componentByTag from './tags';
 import styled from "styled-components";
 import {orange, orangeRGB} from "../../constants";
+import {IAnnotation} from "../../reducers/annotation";
 
-const TextAnnotation = ({annotation, children, end, id, start, type}) => {
-	if (!componentByTag.hasOwnProperty(type)) {
-		throw new Error(`Component not found: ${type}`);
+interface ITextAnnotationProps {
+	activeAnnotation?: IAnnotation;
+	annotation: IAnnotation;
+}
+
+const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
+	if (!componentByTag.hasOwnProperty(props.annotation.type)) {
+		throw new Error(`Component not found: ${props.annotation.type}`);
 	}
-	const Tag = componentByTag[type].component;
+	const Tag = componentByTag[props.annotation.type].component;
 
 	const ActiveTag = styled(Tag)`
 		background-color: rgba(${orangeRGB}, 0.03);
@@ -19,13 +25,18 @@ const TextAnnotation = ({annotation, children, end, id, start, type}) => {
 	`;
 
 	let Comp = Tag;
-	if (annotation != null) {
-		Comp = annotation.id === id ? ActiveTag : Tag;
+	if (props.annotation != null) {
+		Comp = (
+			props.activeAnnotation != null &&
+			props.activeAnnotation.id === props.annotation.id
+		) ?
+			ActiveTag :
+			Tag;
 	}
 
 	return (
 		<Comp>
-			{children}
+			{props.children}
 		</Comp>
 	);
 };

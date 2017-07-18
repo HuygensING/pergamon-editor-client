@@ -3,22 +3,8 @@ import AnnotationList from "./annotation-list";
 import {Head2} from "./index";
 import styled from "styled-components";
 import {byStartEnd} from "./utils";
-import {IAnnotation} from "../../reducers/annotation";
 import Button from "../ui/button";
-import {IDocument} from "../../reducers/document";
-
-interface IProps {
-	activateAnnotation: (string) => void;
-	activateAnnotationDocument: (string) => void;
-	activeAnnotationDocument: IDocument;
-	activeDocument: IDocument;
-	annotation: IAnnotation;
-	createAnnotationDocument: (string) => void;
-	deleteAnnotation: (string) => void;
-	documents: IDocument[];
-	updateAnnotation: (any) => void;
-	updateText: (any) => void;
-}
+import {IAnnotationCommon} from "./annotation";
 
 interface IState {
 	list: boolean;
@@ -33,7 +19,7 @@ const HeadButton = styled(Button)`
 	margin-left: 1em;
 `;
 
-class Annotations extends React.Component<IProps, IState> {
+class Annotations extends React.Component<IAnnotationCommon, IState> {
 	public state = {
 		list: true,
 	};
@@ -43,8 +29,8 @@ class Annotations extends React.Component<IProps, IState> {
 			activateAnnotation,
 			activateAnnotationDocument,
 			activeAnnotationDocument,
+			activeAnnotation,
 			activeDocument,
-			annotation,
 			createAnnotationDocument,
 			deleteAnnotation,
 			documents,
@@ -77,8 +63,8 @@ class Annotations extends React.Component<IProps, IState> {
 						activateAnnotation={activateAnnotation}
 						activateAnnotationDocument={activateAnnotationDocument}
 						activeAnnotationDocument={activeAnnotationDocument}
+						activeAnnotation={activeAnnotation}
 						activeDocument={activeDocument}
-						annotation={annotation}
 						annotations={
 							(this.state.list) ?
 								annotationList.sort(byStartEnd) :

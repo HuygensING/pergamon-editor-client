@@ -18,8 +18,8 @@ const TextTree = ({ annotation, root, text }) => {
 
 	return (
 		<TextAnnotation
-			annotation={annotation}
-			{...root}
+			activeAnnotation={annotation}
+			annotation={root}
 		>
 			{children}
 		</TextAnnotation>

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import Annotation from "./annotation";
+import Annotation, {IAnnotationCommon} from "./annotation";
 import { orange } from '../../constants';
+import {IAnnotation} from "../../reducers/annotation";
 
 const Ul = styled.ul`
 	& ul {
@@ -10,14 +11,18 @@ const Ul = styled.ul`
 	}	
 `;
 
-const AnnotationList = (props) =>
+interface IAnnotationListProps extends IAnnotationCommon {
+	annotations: IAnnotation[];
+}
+
+const AnnotationList: React.SFC<IAnnotationListProps> = (props) =>
 	<Ul>
 		{
 			props.annotations.map((annotation, index) =>
 				<Annotation
 					activateAnnotation={props.activateAnnotation}
 					activateAnnotationDocument={props.activateAnnotationDocument}
-					activeAnnotation={props.annotation}
+					activeAnnotation={props.activeAnnotation}
 					activeAnnotationDocument={props.activeAnnotationDocument}
 					activeDocument={props.activeDocument}
 					annotation={annotation}

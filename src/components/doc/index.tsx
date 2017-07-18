@@ -115,8 +115,8 @@ class ActiveDocument extends React.Component<any, any> {
 						activateAnnotation={activateAnnotation}
 						activateAnnotationDocument={activateAnnotationDocument}
 						activeAnnotationDocument={activeAnnotationDocument}
+						activeAnnotation={activeAnnotation}
 						activeDocument={activeDocument}
-						annotation={activeAnnotation}
 						createAnnotationDocument={createAnnotationDocument}
 						deleteAnnotation={deleteAnnotation}
 						documents={documents}
