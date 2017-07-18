@@ -1,9 +1,32 @@
 import original from './docs/original';
 import typical from './docs/typical';
 import large from './docs/large';
-import {defaultDocument, IDocument} from "./document";
-import {replaceItem, updateProp, updatePropInArray} from "./utils";
+import {updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
+
+export interface IAnnotation {
+	attributes?: any;
+	children?: IAnnotation[],
+	documentId?: string,
+	end: number,
+	id?: number | string;
+	start: number,
+	type: string;
+}
+
+export interface IDocument {
+	id: string;
+	annotations: IAnnotation[],
+	text: string;
+	tree: IAnnotation,
+}
+
+export const defaultDocument: IDocument = {
+	id: null,
+	annotations: [],
+	text: '',
+	tree: null,
+};
 
 export const initialState: IDocument[] = [
 	original,
@@ -24,12 +47,6 @@ export default (state = initialState, action) => {
 
 			break;
 		}
-		//
-		// case 'DOCUMENTS_UPDATE_DOCUMENT': {
-		// 	nextState = replaceItem(nextState, action.document);
-		//
-		// 	break;
-		// }
 
 		case 'ACTIVATE_DOCUMENT': {
 			nextState = updatePropInArray(nextState, action.id, (doc) =>

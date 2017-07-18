@@ -1,4 +1,4 @@
-import {IAnnotation} from "./annotation";
+import {IAnnotation} from "./documents";
 
 export default (state: IAnnotation[] = [], action) => {
 	let nextState = state;

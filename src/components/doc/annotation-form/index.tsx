@@ -9,8 +9,7 @@ import End from "./end";
 import Button from "../../ui/button";
 import RemoveButton from "../../ui/remove-button";
 import TextAnnotation from "../text-annotation";
-import {IDocument} from "../../../reducers/document";
-import {IAnnotation} from "../../../reducers/annotation";
+import {IAnnotation, IDocument} from "../../../reducers/documents";
 
 export const inputEl = `
 	display: inline-block;

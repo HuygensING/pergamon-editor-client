@@ -2,7 +2,7 @@ import * as React from 'react';
 import componentByTag from './tags';
 import styled from "styled-components";
 import {orange, orangeRGB} from "../../constants";
-import {IAnnotation} from "../../reducers/annotation";
+import {IAnnotation} from "../../reducers/documents";
 
 interface ITextAnnotationProps {
 	activeAnnotation?: IAnnotation;

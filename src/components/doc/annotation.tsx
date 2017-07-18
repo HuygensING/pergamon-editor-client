@@ -3,8 +3,7 @@ import styled from "styled-components";
 import {Head4} from "./index";
 import AnnotationList from "./annotation-list";
 import AnnotationForm, {IAnnotationFormProps} from "./annotation-form";
-import {IDocument} from "../../reducers/document";
-import {IAnnotation} from "../../reducers/annotation";
+import {IAnnotation, IDocument} from "../../reducers/documents";
 
 const Li = styled.li`
 `;

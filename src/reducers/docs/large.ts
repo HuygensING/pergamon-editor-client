@@ -1,5 +1,4 @@
-import {IAnnotation} from "../annotation";
-import {IDocument} from "../document";
+import {IAnnotation, IDocument} from "../documents";
 
 const large: IDocument = ({
   tree: null,

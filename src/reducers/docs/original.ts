@@ -1,4 +1,5 @@
-import {IDocument} from "../document";
+import {IDocument} from "../documents";
+
 const original: IDocument = ({
 	tree: null,
 	id: 'original',

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import Annotation, {IAnnotationCommon} from "./annotation";
 import { orange } from '../../constants';
-import {IAnnotation} from "../../reducers/annotation";
+import {IAnnotation} from "../../reducers/documents";
 
 const Ul = styled.ul`
 	& ul {

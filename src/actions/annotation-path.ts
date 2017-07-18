@@ -1,5 +1,5 @@
 import {activateDocument, deactivateAnnotation} from "./root";
-import {IAnnotation} from "../reducers/annotation";
+import {IAnnotation} from "../reducers/documents";
 
 export const activateAnnotationDocument = (annotation: IAnnotation, documentId: string) =>
 	async (dispatch, getState) => {
