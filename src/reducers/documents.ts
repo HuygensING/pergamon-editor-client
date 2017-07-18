@@ -60,10 +60,10 @@ export default (state = initialState, action) => {
 		case 'DOCUMENTS_UPDATE_TEXT': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc) => {
 				const annotations = doc.annotations.map((a) => {
-					if (a.start > action.caretPosition) {
+					if (a.start >= action.caretPosition - 1) {
 						a.start = a.start + 1;
 					}
-					if (a.end > action.caretPosition) {
+					if (a.end >= action.caretPosition - 1) {
 						a.end = a.end + 1;
 					}
 

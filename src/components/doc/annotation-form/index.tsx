@@ -76,7 +76,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 			<Immutable>
 				{
 					props.activeDocument.text
-						.slice(props.activeAnnotation.start, props.activeAnnotation.end + 1)
+						.slice(props.activeAnnotation.start, props.activeAnnotation.end)
 				}
 			</Immutable>
 		</Li>
@@ -89,7 +89,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				>
 					{
 						props.activeDocument.text
-							.slice(props.activeAnnotation.start, props.activeAnnotation.end + 1)
+							.slice(props.activeAnnotation.start, props.activeAnnotation.end)
 					}
 				</TextAnnotation>
 			</Li>
