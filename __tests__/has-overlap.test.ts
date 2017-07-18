@@ -10,7 +10,11 @@ describe('hasOverlap', () => {
 	});
 
 	test('hasOverlap 3', () => {
-		expect(hasOverlap({ start: 0, end: 5 }, { start : 5, end: 10 })).toBeTruthy();
+		expect(hasOverlap({ start: 0, end: 5 }, { start : 5, end: 10 })).toBeFalsy();
+	});
+
+	test('hasOverlap 3b', () => {
+		expect(hasOverlap({ start: 6, end: 11 }, { start : 2, end: 6 })).toBeFalsy();
 	});
 
 	test('hasOverlap 4', () => {

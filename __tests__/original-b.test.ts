@@ -13,7 +13,7 @@ describe('addRow', () => {
 describe('toSplitPoints', () => {
 	test('toSplitPoints 1', () => {
 		const received = annotationsWithRow.reduce(toSplitPoints, []);
-		const expected = [30, 31];
+		const expected = [31, 32];
 		expect(received).toEqual(expected);
 	});
 });

@@ -20,7 +20,7 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 		annotationId,
 		annotationType: 'text',
 		documentId: getState().root.active_document_id,
-		end: selectionEnd - 1,
+		end: selectionEnd,
 		start: selectionStart,
 		type: 'DOCUMENTS_CREATE_ANNOTATION',
 	});

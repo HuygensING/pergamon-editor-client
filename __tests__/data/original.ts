@@ -3,27 +3,27 @@
 export const annotations = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 	},
 	{
 		start: 23,
-		end: 38,
+		end: 39,
 		type: 'underline',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 	}
 ];
@@ -31,27 +31,27 @@ export const annotations = [
 export const annotationsSorted = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 	},
 	{
 		start: 23,
-		end: 38,
+		end: 39,
 		type: 'underline',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 	}
 ];
@@ -59,31 +59,31 @@ export const annotationsSorted = [
 export const annotationsWithRow = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		row: 0,
 		type: 'paragraph',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		row: 0,
 		type: 'paragraph',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		row: 1,
 		type: 'bold',
 	},
 	{
 		start: 23,
-		end: 38,
+		end: 39,
 		row: 1,
 		type: 'underline',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		row: 2,
 		type: 'italic',
 	}
@@ -92,37 +92,37 @@ export const annotationsWithRow = [
 export const annotationsSplitted = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 	},
 	{
 		start: 23,
-		end: 29,
-		type: 'underline',
-	},
-	{
-		start: 30,
 		end: 30,
 		type: 'underline',
 	},
 	{
+		start: 30,
+		end: 31,
+		type: 'underline',
+	},
+	{
 		start: 31,
-		end: 38,
+		end: 39,
 		type: 'underline',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 	}
 ];
@@ -130,39 +130,39 @@ export const annotationsSplitted = [
 export const tree = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 		children: [
 			{
 				start: 8,
-				end: 16,
+				end: 17,
 				type: 'bold',
 			},
 			{
 				start: 23,
-				end: 29,
+				end: 30,
 				type: 'underline',
 			},
 		]
 	},
 	{
 		start: 30,
-		end: 30,
+		end: 31,
 		type: 'underline',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 		children: [
 			{
 				start: 31,
-				end: 38,
+				end: 39,
 				type: 'underline',
 				children: [
 					{
 						start: 34,
-						end: 35,
+						end: 36,
 						type: 'italic',
 					}
 				]

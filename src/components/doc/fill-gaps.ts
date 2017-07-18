@@ -10,23 +10,22 @@ const fillGaps = (parent) => {
 		// If the first annotation does not start at 0, add a text component
 		// from 0 until the start of the first annotation.
 		if (prev == null && curr.start > parent.start) {
-			const end = curr.start - 1;
 			agg.push({
-				end,
+				end: curr.start,
 				id: 'some-random-first-id',
 				start: parent.start,
 				// text: data.text.slice(0, end),
 				type: 'text',
 			});
-			prevEnd = end;
+			prevEnd = curr.start;
 		}
 
 		// If the current start is bigger than the prevEnd, it means there
 		// are some 'untagged' chars. Add a text component to the 'untagged' chars.
 		// If "This {prevEnd}is{curr.start} an example", than "is" is untagged.
-		if (curr.start > prevEnd + 1) {
-			const start = prevEnd + 1;
-			const end = curr.start - 1;
+		if (curr.start > prevEnd) {
+			const start = prevEnd;
+			const end = curr.start;
 			agg.push({
 				end,
 				id: `some-random-id-${index}`,
@@ -50,7 +49,7 @@ const fillGaps = (parent) => {
 			agg.push({
 				end: parent.end,
 				id: 'some-random-last-id',
-				start: prevEnd + 1,
+				start: prevEnd,
 				type: 'text',
 			});
 		}

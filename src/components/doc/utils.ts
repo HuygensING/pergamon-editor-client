@@ -12,7 +12,6 @@ export const byStartEnd = (a, b) => {
 
 export const byDisplayStartEnd = (a, b) => {
 
-	// console.log(a, b, a.end < b.start, a.start > b.end);
 	// // Only for overlapping annotations it is needed to check display prop
 	// if (a.end < b.start) return -1;
 	// if (a.start > b.end) return 1;
@@ -20,7 +19,6 @@ export const byDisplayStartEnd = (a, b) => {
 	const aDisplay = componentsByTag[a.type].display;
 	const bDisplay = componentsByTag[b.type].display;
 
-	// console.log(aDisplay !== bDisplay, aDisplay === 'inline');
 	// If display prop are not the same, 'block' get precedence over 'inline'
 	// If display prop is equal, look at start and end prop
 	if (aDisplay !== bDisplay) {
@@ -38,7 +36,7 @@ export const byRowStartEnd = (a, b) => {
 	}
 };
 
-export const hasOverlap = (a, b) => !(a.end < b.start || a.start > b.end);
+export const hasOverlap = (a, b) => !(a.end <= b.start || a.start >= b.end);
 
 export const addRow = () => {
 	const rows = [[]];

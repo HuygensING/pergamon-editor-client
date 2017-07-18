@@ -5,27 +5,27 @@
 export const annotations = [
 	{
 		start: 2,
-		end: 38,
+		end: 39,
 		type: 'underline',
 	},
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 	}
 ];
@@ -33,27 +33,27 @@ export const annotations = [
 export const annotationsSorted = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 	},
 	{
 		start: 2,
-		end: 38,
+		end: 39,
 		type: 'underline',
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 	}
 ];
@@ -61,31 +61,31 @@ export const annotationsSorted = [
 export const annotationsWithRow = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 		row: 0,
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 		row: 0,
 	},
 	{
 		start: 2,
-		end: 38,
+		end: 39,
 		type: 'underline',
 		row: 1,
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 		row: 2,
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 		row: 2,
 	}
@@ -94,49 +94,49 @@ export const annotationsWithRow = [
 export const annotationsSplitted = [
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 		row: 0,
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 		row: 0,
 	},
 	{
 		start: 2,
-		end: 5,
+		end: 6,
 		type: 'underline',
 		row: 1,
 	},
 	{
 		start: 6,
-		end: 29,
-		type: 'underline',
-		row: 1,
-	},
-	{
-		start: 30,
 		end: 30,
 		type: 'underline',
 		row: 1,
 	},
 	{
+		start: 30,
+		end: 31,
+		type: 'underline',
+		row: 1,
+	},
+	{
 		start: 31,
-		end: 38,
+		end: 39,
 		type: 'underline',
 		row: 1,
 	},
 	{
 		start: 8,
-		end: 16,
+		end: 17,
 		type: 'bold',
 		row: 2,
 	},
 	{
 		start: 34,
-		end: 35,
+		end: 36,
 		type: 'italic',
 		row: 2,
 	}
@@ -145,25 +145,25 @@ export const annotationsSplitted = [
 export const tree = [
 	{
 		start: 2,
-		end: 5,
+		end: 6,
 		type: 'underline',
 		row: 1,
 	},
 	{
 		start: 6,
-		end: 29,
+		end: 30,
 		type: 'paragraph',
 		row: 0,
 		children: [
 			{
 				start: 6,
-				end: 29,
+				end: 30,
 				type: 'underline',
 				row: 1,
 				children: [
 					{
 						start: 8,
-						end: 16,
+						end: 17,
 						type: 'bold',
 						row: 2,
 					},
@@ -173,25 +173,25 @@ export const tree = [
 	},
 	{
 		start: 30,
-		end: 30,
+		end: 31,
 		type: 'underline',
 		row: 1,
 	},
 	{
 		start: 31,
-		end: 71,
+		end: 72,
 		type: 'paragraph',
 		row: 0,
 		children: [
 			{
 				start: 31,
-				end: 38,
+				end: 39,
 				type: 'underline',
 				row: 1,
 				children: [
 					{
 						start: 34,
-						end: 35,
+						end: 36,
 						type: 'italic',
 						row: 2,
 					}

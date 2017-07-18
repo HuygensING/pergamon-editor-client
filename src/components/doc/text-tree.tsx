@@ -14,7 +14,7 @@ const TextTree = ({ annotation, root, text }) => {
 					key={i}
 				/>
 			) :
-		text.slice(root.start, root.end + 1);
+		text.slice(root.start, root.end);
 
 	return (
 		<TextAnnotation

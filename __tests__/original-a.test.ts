@@ -26,7 +26,7 @@ describe('addRow', () => {
 describe('toSplitPoints', () => {
 	test('toSplitPoints 1', () => {
 		const received = annotationsWithRow.reduce(toSplitPoints, []);
-		const expected = [5, 29, 30];
+		const expected = [6, 30, 31];
 		expect(received).toEqual(expected);
 	});
 });
