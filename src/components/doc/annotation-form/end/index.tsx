@@ -5,7 +5,7 @@ import {IAnnotation} from "../../../../reducers/documents";
 interface IProps {
 	activeAnnotation: IAnnotation;
 	updateAnnotation: (any) => void;
-	end: string;
+	end: number;
 }
 
 interface IState {
@@ -14,7 +14,7 @@ interface IState {
 
 class End extends React.Component<IProps, IState> {
 	public state = {
-		value: (this.props.end) ? this.props.end : '',
+		value: (this.props.end.toString()) ? this.props.end.toString() : '',
 	};
 
 	public componentWillReceiveProps(nextProps) {
@@ -28,12 +28,12 @@ class End extends React.Component<IProps, IState> {
 		const { value } = this.state;
 		return (
 			<Input
-				onChange={value => {
-					let end: number | string = parseInt(value, 10);
-					if (Number.isNaN(end)) end = '';
+				onChange={(value: string) => {
+					let end: number = parseInt(value, 10);
+					if (Number.isNaN(end)) end = null;
 					this.setState({value: end.toString()});
 				}}
-				validate={value => {
+				validate={(value: string) => {
 					const end: number = parseInt(value, 10);
 					const isValid = Number.isInteger(end) && activeAnnotation.start <= end;
 					if (isValid) updateAnnotation({ end });
