@@ -17,7 +17,7 @@ export const Head2 = styled.h2`
 `;
 
 export const Head3 = styled.h3`
-	margin: 0;
+	margin: 1em 0 0 0;
 `;
 
 export const Head4 = styled.h4`
@@ -96,7 +96,6 @@ class ActiveDocument extends React.Component<any, any> {
 				  root={rootDocument}
 				/>
 				<Column>
-					<Head3>Text</Head3>
 					<Text
 						activeDocument={activeDocument}
 						createAnnotation={createAnnotation}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import AnnotationList from "./annotation-list";
-import {Head2} from "./index";
+import {Head2, Head3} from "./index";
 import styled from "styled-components";
 import {byStartEnd} from "./utils";
 import Button from "../ui/button";
@@ -44,7 +44,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 
 		return (
 			<div>
-				<Head2>
+				<Head3>
 					Annotations
 					<HeadButton
 						onClick={() => this.setState({list: true})}
@@ -58,7 +58,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 					>
 						Ͱ
 					</HeadButton>
-				</Head2>
+				</Head3>
 				<Wrapper>
 					<AnnotationList
 						activateAnnotation={activateAnnotation}

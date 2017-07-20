@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from "styled-components";
 import Textarea from 'hire-forms-textarea';
 import {debounceWait} from "../../actions/documents";
+import {Head3} from "./index";
 
 const TextTextarea = styled(Textarea)`
 	border: none;
@@ -11,13 +12,18 @@ const TextTextarea = styled(Textarea)`
 	width: 100%;
 `;
 
-const ProgressBar = styled.div`
+const Div50 = styled.div`
+	display: inline-block;
+	width: 50%;
+`;
+
+const ProgressBar = Div50.extend`
 	background-color: rgba(255, 0, 0, 0.1);
 	border: 1px solid red;
 	height: 1em;
 	position: relative;
-	width: 100%;
 `;
+
 const Bar = styled.div`
 	background-color: rgba(255, 0, 0, 0.3);
 	border: 1px solid rgba(0, 0, 0, 0);
@@ -25,6 +31,7 @@ const Bar = styled.div`
 	left: 0;
 	position: absolute;
 	top: 0;
+	width: 100%;
 `;
 
 const ProgressText = styled.div`
@@ -63,6 +70,7 @@ class Text extends React.Component<any, IState> {
 		const { percentage, requestStart } = this.state;
 		return (
 			<div>
+				<Div50><Head3>Text</Head3></Div50>
 				<ProgressBar>
 					{
 						requestStart != null &&
