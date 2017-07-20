@@ -31,6 +31,7 @@ const AnnotationList: React.SFC<IAnnotationListProps> = (props) =>
 					documents={props.documents}
 					key={index}
 					updateAnnotation={props.updateAnnotation}
+					updateAnnotationDocumentText={props.updateAnnotationDocumentText}
 				  updateText={props.updateText}
 				/>
 			)

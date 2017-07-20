@@ -5,7 +5,7 @@ import TextTree from "./text-tree";
 import Text from "./text";
 import Annotations from "./annotations";
 import {
-	createAnnotationDocument,
+	createAnnotationDocument, updateAnnotationDocumentText,
 } from "../../actions/documents";
 import {activateAnnotationDocument, goToChildDocument} from "../../actions/annotation-path";
 import Menu from "./menu";
@@ -65,6 +65,7 @@ class ActiveDocument extends React.Component<any, any> {
 			documents,
 			goToChildDocument,
 			rootDocumentId,
+			updateAnnotationDocumentText,
 			updateText,
 		} = this.props;
 
@@ -121,6 +122,7 @@ class ActiveDocument extends React.Component<any, any> {
 						deleteAnnotation={deleteAnnotation}
 						documents={documents}
 						updateAnnotation={updateAnnotation}
+						updateAnnotationDocumentText={updateAnnotationDocumentText}
 					  updateText={updateText}
 					/>
 				</Column>
@@ -145,6 +147,7 @@ export default connect(
 		createAnnotationDocument,
 		deleteAnnotation,
 		goToChildDocument,
+		updateAnnotationDocumentText,
 		updateText,
 		setRootId,
 	}

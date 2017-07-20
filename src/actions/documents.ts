@@ -1,14 +1,33 @@
 import {activateAnnotation, deactivateAnnotation} from "./root";
+import debounce = require('lodash.debounce');
+export const debounceWait = 3000;
 
-export const updateText = (text, ev, documentId?) => (dispatch, getState) => {
-	const root = getState().root;
+const replayTextEvents = (text, dispatch, getState) => {
+	dispatch({
+		documentId: getState().root.active_document_id,
+		events: getState().documentTextEvents,
+		text,
+		type: 'DOCUMENTS_REPLAY_TEXT_EVENTS'
+	})
+};
+const debouncedReplayTextEvents = debounce(replayTextEvents, debounceWait);
+
+export const updateText = (text: string, ev: any, keyCode: number) => (dispatch, getState) => {
+	debouncedReplayTextEvents(text, dispatch, getState);
 	dispatch({
 		caretPosition: ev.currentTarget.selectionStart,
-		documentId: documentId || getState().root.active_document_id,
-		text,
+		documentId: getState().root.active_document_id,
+		keyCode: keyCode,
 		type: 'DOCUMENTS_UPDATE_TEXT',
 	});
 };
+
+export const updateAnnotationDocumentText = (text: string, ev: any, documentId: string) => (dispatch, getState) =>
+	dispatch({
+		documentId: documentId,
+		text,
+		type: 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT',
+	});
 
 export const createAnnotation = (ev) => (dispatch, getState) => {
 	const { selectionStart, selectionEnd } = ev.currentTarget;

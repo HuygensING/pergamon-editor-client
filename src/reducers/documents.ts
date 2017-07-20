@@ -57,15 +57,27 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-		case 'DOCUMENTS_UPDATE_TEXT': {
+		case 'DOCUMENTS_REPLAY_TEXT_EVENTS': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc) => {
 				const annotations = doc.annotations.map((a) => {
-					if (a.start >= action.caretPosition - 1) {
-						a.start = a.start + 1;
-					}
-					if (a.end >= action.caretPosition - 1) {
-						a.end = a.end + 1;
-					}
+					action.events.map(e => {
+						// Backspace
+						if (e.keyCode === 8 || e.keyCode === 46) {
+							if (a.start > e.caretPosition) {
+								a.start = a.start - 1;
+							}
+							if (a.end >= e.caretPosition) {
+								a.end = a.end - 1;
+							}
+						} else  {
+							if (a.start >= e.caretPosition - 1) {
+								a.start = a.start + 1;
+							}
+							if (a.end >= e.caretPosition - 1) {
+								a.end = a.end + 1;
+							}
+						}
+					});
 
 					return a;
 				});
@@ -76,6 +88,15 @@ export default (state = initialState, action) => {
 					tree: getTree(doc.id, action.text, annotations),
 				};
 			});
+
+			break;
+		}
+
+
+		case 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc) => ({
+				text: action.text,
+			}));
 
 			break;
 		}

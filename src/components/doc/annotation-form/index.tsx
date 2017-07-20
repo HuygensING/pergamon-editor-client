@@ -1,7 +1,7 @@
 import * as React from 'react';
 import HFSelect from 'hire-forms-select';
 import HFInput from 'hire-forms-input';
-import Textarea from './textarea';
+import AnnotationDocumentTextarea, {IAnnotationFormTextareaProps} from './textarea';
 import styled from "styled-components";
 import tags from '../tags';
 import Start from "./start";
@@ -54,15 +54,14 @@ const StyledRemoveButton = styled(RemoveButton)`
 	${inputEl}
 `;
 
-export interface IAnnotationFormProps {
+export interface IAnnotationFormProps extends IAnnotationFormTextareaProps {
 	activateAnnotationDocument: (IAnnotation, string) => void;
-	activeAnnotationDocument: IDocument;
 	activeAnnotation: IAnnotation;
 	activeDocument: IDocument;
 	createAnnotationDocument: (string) => void;
 	deleteAnnotation: (string) => void;
 	updateAnnotation: (any) => void;
-	updateText: (any) => void;
+	updateText: (text: string, ev: any, keyCode: number) => void;
 }
 
 const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
@@ -140,9 +139,9 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 			</Label>
 			{
 				props.activeAnnotation.hasOwnProperty('documentId') ?
-					<Textarea
+					<AnnotationDocumentTextarea
 						activeAnnotationDocument={props.activeAnnotationDocument}
-					  updateText={props.updateText}
+					  updateAnnotationDocumentText={props.updateAnnotationDocumentText}
 					/> :
 					<BodyButton
 						onClick={() =>

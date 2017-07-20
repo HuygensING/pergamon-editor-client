@@ -35,6 +35,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 			deleteAnnotation,
 			documents,
 			updateAnnotation,
+			updateAnnotationDocumentText,
 			updateText,
 		} = this.props;
 
@@ -74,6 +75,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 						deleteAnnotation={deleteAnnotation}
 						documents={documents}
 						updateAnnotation={updateAnnotation}
+						updateAnnotationDocumentText={updateAnnotationDocumentText}
 						updateText={updateText}
 					/>
 				</Wrapper>

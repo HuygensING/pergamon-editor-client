@@ -42,6 +42,7 @@ const Annotation: React.SFC<IAnnotationProps> = (props) =>
 				  createAnnotationDocument={props.createAnnotationDocument}
 				  deleteAnnotation={props.deleteAnnotation}
 				  updateAnnotation={props.updateAnnotation}
+				  updateAnnotationDocumentText={props.updateAnnotationDocumentText}
 				  updateText={props.updateText}
 				/> :
 				props.annotation.hasOwnProperty('documentId') ?
@@ -61,6 +62,7 @@ const Annotation: React.SFC<IAnnotationProps> = (props) =>
 				deleteAnnotation={props.deleteAnnotation}
 				documents={props.documents}
 				updateAnnotation={props.updateAnnotation}
+				updateAnnotationDocumentText={props.updateAnnotationDocumentText}
 				updateText={props.updateText}
 			/>
 		}

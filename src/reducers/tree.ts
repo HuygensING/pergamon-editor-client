@@ -7,7 +7,7 @@ import {IAnnotation} from "./documents";
 const createTree = (text: string, annotations: IAnnotation[]): IAnnotation =>
 	({
 		start: 0,
-		end: text.length - 1,
+		end: text.length,
 		id: 'some-random-tree-id',
 		type: 'doc',
 		children: annotations

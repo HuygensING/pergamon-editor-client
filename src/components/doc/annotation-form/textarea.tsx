@@ -1,6 +1,7 @@
 import * as React from 'react';
 import HFTextarea from 'hire-forms-textarea';
 import styled from "styled-components";
+import {IDocument} from "../../../reducers/documents";
 
 const Textarea = styled(HFTextarea)`
 	display: inline-block;
@@ -8,7 +9,16 @@ const Textarea = styled(HFTextarea)`
 	width: 70%;
 `;
 
-class ChildDocumentTextarea extends React.Component<any, any> {
+export interface IAnnotationFormTextareaProps {
+	activeAnnotationDocument: IDocument;
+	updateAnnotationDocumentText: (text: string, ev: any, documentId: string) => void;
+}
+
+interface IState {
+	value: string;
+}
+
+class AnnotationDocumentTextarea extends React.Component<IAnnotationFormTextareaProps, IState> {
 	public state = {
 		value: this.props.activeAnnotationDocument.text
 	};
@@ -19,7 +29,7 @@ class ChildDocumentTextarea extends React.Component<any, any> {
 				autoresize
 				onChange={(value, ev) => {
 					this.setState({value});
-					this.props.updateText(value, ev, this.props.activeAnnotationDocument.id);
+					this.props.updateAnnotationDocumentText(value, ev, this.props.activeAnnotationDocument.id);
 				}}
 				value={this.state.value}
 			/>
@@ -27,4 +37,4 @@ class ChildDocumentTextarea extends React.Component<any, any> {
 	}
 }
 
-export default ChildDocumentTextarea;
+export default AnnotationDocumentTextarea;

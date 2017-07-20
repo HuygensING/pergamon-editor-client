@@ -23,7 +23,7 @@ export const activateDocument = (id) => async (dispatch, getState) => {
 		type: 'ACTIVATE_DOCUMENT',
 		id,
 	});
-}
+};
 
 export const setRootId = (id) => (dispatch, getState) => {
 	dispatch({
