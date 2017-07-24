@@ -26,13 +26,31 @@ export const splitAnnotation = (annotation, splitPoints) => {
 		splitPoints = splitPoints.concat(annotation.end);
 	}
 
-	return splitPoints.reduce((agg, curr, index, arr) => {
+	const parts = splitPoints.reduce((agg, curr, index, arr) => {
 		if (index === arr.length - 1) return agg;
 
 		let to = arr[index + 1];
 		agg.push({...annotation, ...{start: curr, end: to}});
 		return agg;
 	}, []);
+
+	if (parts.length > 1) {
+		for (let i = 0; i < parts.length; i++) {
+			const part = parts[i];
+
+			if (i === 0) {
+				part.__first = true;
+			}
+			else if (i === (parts.length - 1)) {
+				part.__last = true;
+			}
+			else {
+				part.__segment = true;
+			}
+		}
+	}
+
+	return parts;
 };
 
 export const splitAnnotations = () => {

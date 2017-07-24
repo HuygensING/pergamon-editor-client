@@ -38,6 +38,20 @@ export default (state = initialState, action) => {
 			break;
 		}
 
+		case 'ACTIVATE_NOTE': {
+			nextState = updateProp(nextState, {
+				activeNoteId: action.id,
+			});
+			break;
+		}
+
+		case 'DEACTIVATE_NOTE': {
+			nextState = updateProp(nextState, {
+				activeNoteId: null,
+			});
+			break;
+		}
+
 		default:
 	}
 

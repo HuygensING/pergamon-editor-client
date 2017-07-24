@@ -5,6 +5,8 @@ import {updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
 
 export interface IAnnotation {
+	__first?: boolean;
+	__last?: boolean;
 	attributes?: any;
 	children?: IAnnotation[],
 	documentId?: string,
@@ -54,6 +56,17 @@ export default (state = initialState, action) => {
 					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
 					null
 			);
+
+			break;
+		}
+
+		case 'ACTIVATE_NOTE': {
+			nextState = updatePropInArray(nextState, action.documentId, (doc) =>
+				(doc.tree == null) ?
+					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
+					null
+			);
+
 			break;
 		}
 

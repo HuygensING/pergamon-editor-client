@@ -1,43 +1,43 @@
 import styled from 'styled-components'
-
-const InlineDiv = styled.div`
-	display: inline;
-`;
+import Note from "./note";
+import {InlineDiv} from "./base";
 
 const Doc = styled.div`
-	// background: lightyellow;
-	// border: 2px dotted orange;
-	box-sizing: border-box;
-	padding: 1em;
-	height: 65vh;
-	overflow: auto;
 `;
 
 const Paragraph = styled.div`
 	margin: 1em;
 `;
 
-const Text = styled(InlineDiv)``;
+const Text = InlineDiv.extend``;
 
-const Bold = styled(InlineDiv)`
+const Bold = InlineDiv.extend`
 	font-weight: bold;
 `;
 
-const Italic = styled(InlineDiv)`
+const Italic = InlineDiv.extend`
 	font-style: italic;
 `;
 
-const Underline = styled(InlineDiv)`
+const Underline = InlineDiv.extend`
 	text-decoration: underline;
 `;
 
-const Highlight = styled(InlineDiv)`
+const Highlight = InlineDiv.extend`
 	background-color: rgba(255, 255, 0, 0.8);
+`;
+
+const Del = InlineDiv.extend`
+	display: none;
 `;
 
 export default {
 	bold: {
 		component: Bold,
+		display: 'inline',
+	},
+	del: {
+		component: Del,
 		display: 'inline',
 	},
 	doc: {
@@ -46,6 +46,10 @@ export default {
 	},
 	italic: {
 		component: Italic,
+		display: 'inline',
+	},
+	note: {
+		component: Note,
 		display: 'inline',
 	},
 	paragraph: {

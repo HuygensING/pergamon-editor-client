@@ -2,24 +2,37 @@ import * as React from 'react';
 import fillGaps from "./fill-gaps";
 import TextAnnotation from "./text-annotation";
 
-const TextTree = ({ annotation, root, text }) => {
+const TextTree = ({
+	activateNote,
+	activeNoteId,
+	activeAnnotation,
+	documents,
+	root,
+	text
+}) => {
 	const children = (root.hasOwnProperty('children') && root.children.length) ?
 		root.children
 			.reduce(fillGaps(root), [])
 			.map((child, i) =>
 				<TextTree
-					root={child}
-					annotation={annotation}
-					text={text}
+					activateNote={activateNote}
+					activeNoteId={activeNoteId}
+					activeAnnotation={activeAnnotation}
+					documents={documents}
 					key={i}
+					root={child}
+					text={text}
 				/>
 			) :
 		text.slice(root.start, root.end);
 
 	return (
 		<TextAnnotation
-			activeAnnotation={annotation}
+			activateNote={activateNote}
+			activeAnnotation={activeAnnotation}
+			activeNoteId={activeNoteId}
 			annotation={root}
+		  documents={documents}
 		>
 			{children}
 		</TextAnnotation>

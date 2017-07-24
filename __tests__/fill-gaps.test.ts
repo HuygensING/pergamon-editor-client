@@ -1,4 +1,4 @@
-import fillGaps from "../src/components/doc/fill-gaps";
+import fillGaps from "../src/components/documents/fill-gaps";
 
 describe('fillGaps', () => {
 	test('fillGaps', () => {

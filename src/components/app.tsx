@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux'
 
 import Home from './home';
-import Doc from './doc';
+import Doc from './documents';
 
 import store from '../store';
 import history from '../store/history';
@@ -37,7 +37,7 @@ export default () => (
 				/>
 				<Route
 					component={Doc}
-					path="/document/:id"
+					path="/documents/:id"
 				/>
 			</App>
 		</ConnectedRouter>

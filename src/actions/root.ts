@@ -1,7 +1,5 @@
 export const deactivateAnnotation = () => async (dispatch, getState) => {
-	dispatch({
-		type: 'DEACTIVATE_ANNOTATION',
-	});
+	dispatch({ type: 'DEACTIVATE_ANNOTATION' });
 };
 
 
@@ -32,4 +30,21 @@ export const setRootId = (id) => (dispatch, getState) => {
 	});
 
 	dispatch(activateDocument(id));
+};
+
+export const deactivateNote = () => async (dispatch, getState) => {
+	dispatch({ type: 'DEACTIVATE_NOTE' });
+};
+
+export const activateNote = (id, documentId) => (dispatch, getState) => {
+	const rootState = getState().root;
+	if (rootState.activeNoteId !== id) {
+		dispatch({
+			documentId,
+			id,
+			type: 'ACTIVATE_NOTE',
+		});
+	} else {
+		dispatch(deactivateNote());
+	}
 };

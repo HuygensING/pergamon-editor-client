@@ -9,7 +9,7 @@ import {
 } from "../../actions/documents";
 import {activateAnnotationDocument, goToChildDocument} from "../../actions/annotation-path";
 import Menu from "./menu";
-import {activateAnnotation, setRootId} from "../../actions/root";
+import {activateAnnotation, activateNote, setRootId} from "../../actions/root";
 import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../actions/documents";
 
 export const Head2 = styled.h2`
@@ -40,6 +40,14 @@ const Column = styled.div`
 	width: 32vw;
 `;
 
+export const ColumnBody = styled.div`
+	box-sizing: border-box;
+	padding: 1em;
+	height: 65vh;
+	overflow-y: auto;
+	position: relative;
+`;
+
 class ActiveDocument extends React.Component<any, any> {
 	public componentDidMount() {
 		this.props.setRootId(this.props.match.params.id, true);
@@ -55,8 +63,10 @@ class ActiveDocument extends React.Component<any, any> {
 		const {
 			activateAnnotation,
 			activateAnnotationDocument,
+			activateNote,
 			activeAnnotationId,
 			activeDocumentId,
+			activeNoteId,
 			annotationsInPath,
 			updateAnnotation,
 			createAnnotation,
@@ -104,11 +114,16 @@ class ActiveDocument extends React.Component<any, any> {
 				</Column>
 				<Column>
 					<Head3>Output</Head3>
-					<TextTree
-						annotation={activeAnnotation}
-						root={activeDocument.tree}
-					  text={activeDocument.text}
-					/>
+					<ColumnBody>
+						<TextTree
+							activateNote={activateNote}
+							activeNoteId={activeNoteId}
+							activeAnnotation={activeAnnotation}
+							documents={documents}
+							root={activeDocument.tree}
+							text={activeDocument.text}
+						/>
+					</ColumnBody>
 				</Column>
 				<Column>
 					<Annotations
@@ -133,6 +148,7 @@ class ActiveDocument extends React.Component<any, any> {
 export default connect(
 	state => ({
 		activeAnnotationId: state.root.active_annotation_id,
+		activeNoteId: state.root.activeNoteId,
 		annotationsInPath: state.annotationPath,
 		activeDocumentId: state.root.active_document_id,
 		documents: state.documents,
@@ -141,6 +157,7 @@ export default connect(
 	{
 		activateAnnotation,
 		activateAnnotationDocument,
+		activateNote,
 		updateAnnotation,
 		createAnnotation,
 		createAnnotationDocument,
