@@ -79,20 +79,6 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				}
 			</Immutable>
 		</Li>
-		{
-			tags[props.activeAnnotation.type].display === 'inline' &&
-			<Li>
-				<Label>Render</Label>
-				<TextAnnotation
-					annotation={props.activeAnnotation}
-				>
-					{
-						props.activeDocument.text
-							.slice(props.activeAnnotation.start, props.activeAnnotation.end)
-					}
-				</TextAnnotation>
-			</Li>
-		}
 		<Li>
 			<Label>Type</Label>
 			<Select

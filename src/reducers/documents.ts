@@ -5,8 +5,20 @@ import {updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
 
 export interface IAnnotation {
-	__first?: boolean;
-	__last?: boolean;
+	// If the annotation is splitted, is it the first segment?
+	_first?: boolean;
+
+	// If the annotation is splitted, is it the last segment?
+	_last?: boolean;
+
+	// If the annotation is splitted, is it not the first and not the last?
+	// Ie. somewhere in between.
+	_segment?: boolean;
+
+	// Type and id of the target (parent)
+	_targetId?: string;
+	_targetType?: 'annotation' | 'document';
+
 	attributes?: any;
 	children?: IAnnotation[],
 	documentId?: string,
@@ -17,6 +29,7 @@ export interface IAnnotation {
 }
 
 export interface IDocument {
+	_activeNoteId?: string,
 	id: string;
 	annotations: IAnnotation[],
 	text: string;
@@ -61,10 +74,35 @@ export default (state = initialState, action) => {
 		}
 
 		case 'ACTIVATE_NOTE': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc) =>
-				(doc.tree == null) ?
-					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
-					null
+			// Set the annotation id (note id) on the
+			// target document (parent of note)
+			nextState = updatePropInArray(
+				nextState,
+				action.target.id,
+				(doc) => ({ _activeNoteId: action.annotation.id }),
+			);
+
+			if (action.annotationDocument != null) {
+				// Calc the tree of the annotation document (the note body)
+				// if the tree is not calculated yet.
+				nextState = updatePropInArray(
+					nextState,
+					action.annotationDocument.id,
+					(doc) =>
+						(doc.tree == null) ?
+							{ tree: getTree(doc.id, doc.text, doc.annotations) } :
+							null
+				);
+			}
+
+			break;
+		}
+
+		case 'DEACTIVATE_NOTE': {
+			nextState = updatePropInArray(
+				nextState,
+				action.documentId,
+				(doc) => ({ _activeNoteId: null }),
 			);
 
 			break;
@@ -105,7 +143,6 @@ export default (state = initialState, action) => {
 			break;
 		}
 
-
 		case 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc) => ({
 				text: action.text,
@@ -117,6 +154,8 @@ export default (state = initialState, action) => {
 		case 'DOCUMENTS_CREATE_ANNOTATION': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
 				const annotations = doc.annotations.concat({
+					_targetId: action.documentId,
+					_targetType: 'document',
 					id: action.annotationId,
 					start: action.start,
 					end: action.end,

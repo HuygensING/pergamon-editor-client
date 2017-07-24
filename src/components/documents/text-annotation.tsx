@@ -16,6 +16,7 @@ const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
 	if (!componentByTag.hasOwnProperty(props.annotation.type)) {
 		throw new Error(`Component not found: ${props.annotation.type}`);
 	}
+
 	const Tag = componentByTag[props.annotation.type].component;
 
 	const ActiveTag = styled(Tag)`

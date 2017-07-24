@@ -1,10 +1,8 @@
 import * as React from 'react';
 import HireTooltip from 'hire-tooltip';
-import {IAnnotation} from "../../../reducers/documents";
 import {InlineDiv} from "./base";
 import styled from "styled-components";
 import TextTree from "../text-tree";
-import {ReactDOM} from "react";
 
 const NoteNumber = InlineDiv.extend`
 	background-color: #DDD;
@@ -43,6 +41,7 @@ class Note extends React.Component<any, any> {
 			activeNoteId,
 			annotation,
 			children,
+			className,
 			documents,
 		} = this.props;
 
@@ -53,23 +52,29 @@ class Note extends React.Component<any, any> {
 			documents.find(d => d.id === annotation.documentId) :
 			null;
 
-		const annotationDocumentId = annotationDocument ? annotationDocument.id : null;
+		// const annotationDocumentId = annotationDocument ? annotationDocument.id : null;
 
 		const isLast = ((
-				!annotation.hasOwnProperty('__first') &&
-				!annotation.hasOwnProperty('__segment') &&
-				!annotation.hasOwnProperty('__last')
+				!annotation.hasOwnProperty('_first') &&
+				!annotation.hasOwnProperty('_segment') &&
+				!annotation.hasOwnProperty('_last')
 			) ||
-			annotation.__last
+			annotation._last
 		);
 
 		return (
-			<Span isLast={isLast}>
+			<Span
+				className={className}
+				isLast={isLast}
+			>
 				{children}
 				{
 					isLast &&
 					<NoteNumber
-						onClick={() => activateNote(annotation.id, annotationDocumentId)}
+						onClick={(ev) => {
+							ev.stopPropagation();
+							if (activateNote) activateNote(annotation)
+						}}
 					>
 						N
 						{
@@ -84,8 +89,7 @@ class Note extends React.Component<any, any> {
 									) ?
 										<TextTree
 											activateNote={activateNote}
-											activeNoteId={activeNoteId}
-											activeAnnotation={null}
+											activeNoteId={annotationDocument._activeNoteId}
 											documents={documents}
 											root={annotationDocument.tree}
 											text={annotationDocument.text}

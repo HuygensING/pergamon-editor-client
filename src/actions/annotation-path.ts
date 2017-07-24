@@ -22,7 +22,7 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 
 	const documentId = (annotation != null) ?
 		annotation.documentId :
-		state.root.root_document_id;
+		state.root.rootDocumentId;
 
 	dispatch(activateDocument(documentId))
 

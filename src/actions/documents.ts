@@ -4,7 +4,7 @@ export const debounceWait = 3000;
 
 const replayTextEvents = (text, dispatch, getState) => {
 	dispatch({
-		documentId: getState().root.active_document_id,
+		documentId: getState().root.activeDocumentId,
 		events: getState().documentTextEvents,
 		text,
 		type: 'DOCUMENTS_REPLAY_TEXT_EVENTS'
@@ -16,7 +16,7 @@ export const updateText = (text: string, ev: any, keyCode: number) => (dispatch,
 	debouncedReplayTextEvents(text, dispatch, getState);
 	dispatch({
 		caretPosition: ev.currentTarget.selectionStart,
-		documentId: getState().root.active_document_id,
+		documentId: getState().root.activeDocumentId,
 		keyCode: keyCode,
 		type: 'DOCUMENTS_UPDATE_TEXT',
 	});
@@ -37,8 +37,8 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 
 	dispatch({
 		annotationId,
-		annotationType: 'text',
-		documentId: getState().root.active_document_id,
+		annotationType: 'note',
+		documentId: getState().root.activeDocumentId,
 		end: selectionEnd,
 		start: selectionStart,
 		type: 'DOCUMENTS_CREATE_ANNOTATION',
@@ -50,8 +50,8 @@ export const createAnnotation = (ev) => (dispatch, getState) => {
 export const updateAnnotation = (props) => async (dispatch, getState) => {
 	const root = getState().root;
 	dispatch({
-		annotationId: root.active_annotation_id,
-		documentId: root.active_document_id,
+		annotationId: root.activeAnnotationId,
+		documentId: root.activeDocumentId,
 		props,
 		type: 'DOCUMENTS_UPDATE_ANNOTATION',
 	});
@@ -60,8 +60,8 @@ export const updateAnnotation = (props) => async (dispatch, getState) => {
 export const deleteAnnotation = () => (dispatch, getState) => {
 	const root = getState().root;
 	dispatch({
-		annotationId: root.active_annotation_id,
-		documentId: root.active_document_id,
+		annotationId: root.activeAnnotationId,
+		documentId: root.activeDocumentId,
 		type: 'DOCUMENTS_DELETE_ANNOTATION',
 	});
 

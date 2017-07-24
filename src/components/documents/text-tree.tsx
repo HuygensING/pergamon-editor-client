@@ -1,38 +1,41 @@
 import * as React from 'react';
 import fillGaps from "./fill-gaps";
 import TextAnnotation from "./text-annotation";
+import {IAnnotation, IDocument} from "../../reducers/documents";
 
-const TextTree = ({
-	activateNote,
-	activeNoteId,
-	activeAnnotation,
-	documents,
-	root,
-	text
-}) => {
-	const children = (root.hasOwnProperty('children') && root.children.length) ?
-		root.children
-			.reduce(fillGaps(root), [])
+interface ITextTree {
+	activateNote?: (string) => void;
+	activeNoteId?: string;
+	activeAnnotation?: IAnnotation;
+	documents: IDocument[];
+	root: IAnnotation;
+	text: string;
+}
+
+const TextTree: React.SFC<ITextTree> = (props) => {
+	const children = (props.root.hasOwnProperty('children') && props.root.children.length) ?
+		props.root.children
+			.reduce(fillGaps(props.root), [])
 			.map((child, i) =>
 				<TextTree
-					activateNote={activateNote}
-					activeNoteId={activeNoteId}
-					activeAnnotation={activeAnnotation}
-					documents={documents}
+					activateNote={props.activateNote}
+					activeNoteId={props.activeNoteId}
+					activeAnnotation={props.activeAnnotation}
+					documents={props.documents}
 					key={i}
 					root={child}
-					text={text}
+					text={props.text}
 				/>
 			) :
-		text.slice(root.start, root.end);
+		props.text.slice(props.root.start, props.root.end);
 
 	return (
 		<TextAnnotation
-			activateNote={activateNote}
-			activeAnnotation={activeAnnotation}
-			activeNoteId={activeNoteId}
-			annotation={root}
-		  documents={documents}
+			activateNote={props.activateNote}
+			activeAnnotation={props.activeAnnotation}
+			activeNoteId={props.activeNoteId}
+			annotation={props.root}
+		  documents={props.documents}
 		>
 			{children}
 		</TextAnnotation>

@@ -1,4 +1,5 @@
 import {hasOverlap} from "./utils";
+import {IAnnotation} from "../../reducers/documents";
 
 export const toSplitPoints = (splitPoints, curr, index, arr) => {
 	if (index === 0) return splitPoints;
@@ -18,7 +19,7 @@ export const toSplitPoints = (splitPoints, curr, index, arr) => {
 		.sort((a: number, b: number) => a - b); // Sort numerically
 };
 
-export const splitAnnotation = (annotation, splitPoints) => {
+export const splitAnnotation = (annotation: IAnnotation, splitPoints: number[]) => {
 	if (annotation.start !== splitPoints[0]) {
 		splitPoints = [annotation.start].concat(splitPoints);
 	}
@@ -26,7 +27,7 @@ export const splitAnnotation = (annotation, splitPoints) => {
 		splitPoints = splitPoints.concat(annotation.end);
 	}
 
-	const parts = splitPoints.reduce((agg, curr, index, arr) => {
+	const parts: IAnnotation[] = splitPoints.reduce((agg, curr, index, arr) => {
 		if (index === arr.length - 1) return agg;
 
 		let to = arr[index + 1];
@@ -39,13 +40,13 @@ export const splitAnnotation = (annotation, splitPoints) => {
 			const part = parts[i];
 
 			if (i === 0) {
-				part.__first = true;
+				part._first = true;
 			}
 			else if (i === (parts.length - 1)) {
-				part.__last = true;
+				part._last = true;
 			}
 			else {
-				part.__segment = true;
+				part._segment = true;
 			}
 		}
 	}

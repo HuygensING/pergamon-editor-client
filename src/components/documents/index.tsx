@@ -66,7 +66,6 @@ class ActiveDocument extends React.Component<any, any> {
 			activateNote,
 			activeAnnotationId,
 			activeDocumentId,
-			activeNoteId,
 			annotationsInPath,
 			updateAnnotation,
 			createAnnotation,
@@ -117,7 +116,7 @@ class ActiveDocument extends React.Component<any, any> {
 					<ColumnBody>
 						<TextTree
 							activateNote={activateNote}
-							activeNoteId={activeNoteId}
+							activeNoteId={activeDocument._activeNoteId}
 							activeAnnotation={activeAnnotation}
 							documents={documents}
 							root={activeDocument.tree}
@@ -147,12 +146,11 @@ class ActiveDocument extends React.Component<any, any> {
 
 export default connect(
 	state => ({
-		activeAnnotationId: state.root.active_annotation_id,
-		activeNoteId: state.root.activeNoteId,
+		activeAnnotationId: state.root.activeAnnotationId,
 		annotationsInPath: state.annotationPath,
-		activeDocumentId: state.root.active_document_id,
+		activeDocumentId: state.root.activeDocumentId,
 		documents: state.documents,
-		rootDocumentId: state.root.root_document_id,
+		rootDocumentId: state.root.rootDocumentId,
 	}),
 	{
 		activateAnnotation,
