@@ -9,7 +9,7 @@ const NoteNumber = InlineDiv.extend`
 	border: 1px solid #BBB;
 	border-radius: 1em;
 	cursor: pointer;
-	font-size: 0.6em;
+	font-size: 10px;
 	line-height: 1.7em;
 	margin-left: 0.2em;
 	position: absolute;
@@ -29,9 +29,11 @@ const Span = InlineDiv.extend`
 `;
 
 const Tooltip = styled(HireTooltip)`
-	margin-left: -82px;
-	margin-top: 34px;
-	width: 180px;
+	font-size: 16px;
+	margin-left: calc(-10vw + 8px);
+	margin-top: 16px;
+	width: 20vw;
+	z-index: 1;
 `;
 
 class Note extends React.Component<any, any> {

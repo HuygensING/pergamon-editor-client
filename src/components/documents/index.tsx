@@ -45,7 +45,6 @@ export const ColumnBody = styled.div`
 	padding: 1em;
 	height: 65vh;
 	overflow-y: auto;
-	position: relative;
 `;
 
 class ActiveDocument extends React.Component<any, any> {
