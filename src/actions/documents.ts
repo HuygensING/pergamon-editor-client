@@ -1,6 +1,6 @@
 import {activateAnnotation, deactivateAnnotation} from "./root";
 import debounce = require('lodash.debounce');
-export const debounceWait = 3000;
+import {debounceWait} from "../constants";
 
 const replayTextEvents = (text, dispatch, getState) => {
 	dispatch({
