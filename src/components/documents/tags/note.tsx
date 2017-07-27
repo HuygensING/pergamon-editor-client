@@ -3,24 +3,42 @@ import HireTooltip from 'hire-tooltip';
 import {InlineDiv} from "./base";
 import styled from "styled-components";
 import TextTree from "../text-tree";
+import {orangeLight, orangeRGB} from "../../../constants";
+import EditAnnotationDocumentButton from "../../ui/edit-annotation-document-button";
+
+interface INoteNumber {
+	active: boolean;
+}
 
 const NoteNumber = InlineDiv.extend`
-	background-color: #DDD;
-	border: 1px solid #BBB;
+	background-color: ${(props: INoteNumber) =>
+		props.active ?
+			orangeLight :
+			'#DDD'
+	};
 	border-radius: 1em;
 	cursor: pointer;
 	font-size: 10px;
-	line-height: 1.7em;
+	line-height: 1.9em;
 	margin-left: 0.2em;
 	position: absolute;
 	text-align: center;
 	width: 1.9em;
 `;
 
+interface ISpan {
+	active: boolean;
+	isLast: boolean;
+}
+
 const Span = InlineDiv.extend`
-	background-color: #EEE;
+	background-color: ${(props: ISpan) =>
+		props.active ?
+			`rgba(${orangeRGB}, 0.2)` :
+			'none'	
+	};
 	
-	${(props: { isLast: boolean }) =>
+	${(props: ISpan) =>
 		props.isLast ?
 			`margin-right: 1em;
 			padding-right: 0.6em;` :
@@ -39,7 +57,9 @@ const Tooltip = styled(HireTooltip)`
 class Note extends React.Component<any, any> {
 	public render()	 {
 		const {
+			activateAnnotationDocument,
 			activateNote,
+			activeAnnotationDocument,
 			activeNoteId,
 			annotation,
 			children,
@@ -54,8 +74,6 @@ class Note extends React.Component<any, any> {
 			documents.find(d => d.id === annotation.documentId) :
 			null;
 
-		// const annotationDocumentId = annotationDocument ? annotationDocument.id : null;
-
 		const isLast = ((
 				!annotation.hasOwnProperty('_first') &&
 				!annotation.hasOwnProperty('_segment') &&
@@ -64,8 +82,11 @@ class Note extends React.Component<any, any> {
 			annotation._last
 		);
 
+		const active = activeNoteId === annotation.id;
+
 		return (
 			<Span
+				active={active}
 				className={className}
 				isLast={isLast}
 			>
@@ -73,6 +94,7 @@ class Note extends React.Component<any, any> {
 				{
 					isLast &&
 					<NoteNumber
+						active={active}
 						onClick={(ev) => {
 							ev.stopPropagation();
 							if (activateNote) activateNote(annotation)
@@ -80,10 +102,17 @@ class Note extends React.Component<any, any> {
 					>
 						N
 						{
-							activeNoteId === annotation.id &&
+							active &&
 							<Tooltip
 								borderColor="black"
 							>
+								<EditAnnotationDocumentButton
+									activateAnnotationDocument={activateAnnotationDocument}
+									activeAnnotation={annotation}
+									activeAnnotationDocument={activeAnnotationDocument}
+								  bare
+								  topRight
+								/>
 								{
 									(
 										annotationDocument &&

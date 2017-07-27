@@ -10,6 +10,7 @@ import Button from "../../ui/button";
 import RemoveButton from "../../ui/remove-button";
 import TextAnnotation from "../text-annotation";
 import {IAnnotation, IDocument} from "../../../reducers/documents";
+import EditAnnotationDocumentButton from "../../ui/edit-annotation-document-button";
 
 export const inputEl = `
 	display: inline-block;
@@ -109,19 +110,11 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 		<Li>
 			<Label>
 				Body
-				{
-					props.activeAnnotation.hasOwnProperty('documentId') &&
-					<Button
-						onClick={() =>
-							props.activateAnnotationDocument(
-								props.activeAnnotation,
-								props.activeAnnotationDocument.id
-							)
-						}
-					>
-						✎
-					</Button>
-				}
+				<EditAnnotationDocumentButton
+					activateAnnotationDocument={props.activateAnnotationDocument}
+					activeAnnotation={props.activeAnnotation}
+					activeAnnotationDocument={props.activeAnnotationDocument}
+				/>
 			</Label>
 			{
 				props.activeAnnotation.hasOwnProperty('documentId') ?

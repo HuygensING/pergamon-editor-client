@@ -113,7 +113,9 @@ class ActiveDocument extends React.Component<any, any> {
 					<Head3>Output</Head3>
 					<ColumnBody>
 						<TextTree
+							activateAnnotationDocument={activateAnnotationDocument}
 							activateNote={activateNote}
+							activeAnnotationDocument={activeAnnotationDocument}
 							activeNoteId={activeDocument._activeNoteId}
 							activeAnnotation={activeAnnotation}
 							documents={documents}

@@ -3,13 +3,14 @@ import styled from "styled-components";
 export const buttonBackgroundColor = '#EEE';
 
 interface IButton {
+	bare?: boolean;
 	scale?: string;
 }
 
 const Button = styled.div`
-	background: ${buttonBackgroundColor};
+	background: ${(props: any) => props.bare ? 'none' : buttonBackgroundColor};
 	border-radius: 3px;
-	border: 1px solid #DDD;
+	border: ${(props: any) => props.bare ? 'none' : '1px solid #DDD'};
 	cursor: pointer;
 	display: inline-block;
 	font-size: ${(props: IButton) => props.scale + 'em'};	

@@ -1,4 +1,5 @@
-export const orange = '#FF5722';
-export const orangeRGB = '255, 87, 34';
+export const orange: string = '#FF5722';
+export const orangeLight: string = '#ff9d7e';
+export const orangeRGB: string = '255, 87, 34';
 
-export const debounceWait = 1000;
+export const debounceWait: number = 1000;

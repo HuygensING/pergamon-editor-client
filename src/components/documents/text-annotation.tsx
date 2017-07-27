@@ -4,12 +4,17 @@ import styled from "styled-components";
 import {orange, orangeRGB} from "../../constants";
 import {IAnnotation, IDocument} from "../../reducers/documents";
 
-interface ITextAnnotationProps {
+export interface ITextAnnotationCommon {
+	activateAnnotationDocument?: (IAnnotation, string) => void;
 	activateNote?: (string) => void;
 	activeAnnotation?: IAnnotation;
+	activeAnnotationDocument?: IDocument;
 	activeNoteId?: string;
-	annotation: IAnnotation;
 	documents?: IDocument[];
+}
+
+interface ITextAnnotationProps extends ITextAnnotationCommon {
+	annotation: IAnnotation;
 }
 
 const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
@@ -40,6 +45,8 @@ const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
 
 	return (
 		<Comp
+			activateAnnotationDocument={props.activateAnnotationDocument}
+			activeAnnotationDocument={props.activeAnnotationDocument}
 			activateNote={props.activateNote}
 			activeNoteId={props.activeNoteId}
 			annotation={props.annotation}
