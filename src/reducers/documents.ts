@@ -146,6 +146,7 @@ export default (state = initialState, action) => {
 		case 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc) => ({
 				text: action.text,
+				tree: getTree(doc.id, action.text, doc.annotations),
 			}));
 
 			break;

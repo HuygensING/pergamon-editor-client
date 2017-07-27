@@ -1,4 +1,5 @@
 import * as React from 'react';
+import debounce = require('lodash.debounce');
 import HFTextarea from 'hire-forms-textarea';
 import styled from "styled-components";
 import {IDocument} from "../../../reducers/documents";
@@ -23,13 +24,16 @@ class AnnotationDocumentTextarea extends React.Component<IAnnotationFormTextarea
 		value: this.props.activeAnnotationDocument.text
 	};
 
+	private updateText = debounce(this.props.updateAnnotationDocumentText, 1000)
+
 	public render() {
 		return (
 			<Textarea
 				autoresize
 				onChange={(value, ev) => {
+
 					this.setState({value});
-					this.props.updateAnnotationDocumentText(value, ev, this.props.activeAnnotationDocument.id);
+					this.updateText(value, ev, this.props.activeAnnotationDocument.id);
 				}}
 				value={this.state.value}
 			/>

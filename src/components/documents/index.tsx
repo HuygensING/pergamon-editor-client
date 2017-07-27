@@ -42,7 +42,6 @@ const Column = styled.div`
 
 export const ColumnBody = styled.div`
 	box-sizing: border-box;
-	padding: 1em;
 	height: 65vh;
 	overflow-y: auto;
 `;

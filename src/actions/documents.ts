@@ -22,12 +22,14 @@ export const updateText = (text: string, ev: any, keyCode: number) => (dispatch,
 	});
 };
 
-export const updateAnnotationDocumentText = (text: string, ev: any, documentId: string) => (dispatch, getState) =>
-	dispatch({
-		documentId: documentId,
-		text,
-		type: 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT',
-	});
+export const updateAnnotationDocumentText =
+	(text: string, ev: any, documentId: string) =>
+		(dispatch, getState) =>
+			dispatch({
+				documentId: documentId,
+				text,
+				type: 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT',
+			});
 
 export const createAnnotation = (ev) => (dispatch, getState) => {
 	const { selectionStart, selectionEnd } = ev.currentTarget;
