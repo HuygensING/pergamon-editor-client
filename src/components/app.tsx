@@ -10,6 +10,21 @@ import store from '../store';
 import history from '../store/history';
 import styled from "styled-components";
 
+import Messages, { addMessage } from 'hire-messages';
+addMessage({
+	type: 'error',
+	value: 'This is a error',
+});
+addMessage({
+	type: 'warning',
+	value: 'This is a warning',
+});
+addMessage({
+	type: 'success',
+	value: 'OK, that\'s good!',
+});
+
+
 const App = styled.div`
 	height: 100%;
 `;
@@ -39,6 +54,7 @@ export default () => (
 					component={Doc}
 					path="/documents/:id"
 				/>
+				{Messages}
 			</App>
 		</ConnectedRouter>
 	</Provider>
