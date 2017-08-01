@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from "styled-components";
-import history from '../../store/history';
+import history from '../../../store/history';
 // import Select from 'hire-forms-select';
-import {orange} from "../../constants";
+import {orange} from "../../../constants";
 
 const Wrapper = styled.div`
 	background: #DDD;

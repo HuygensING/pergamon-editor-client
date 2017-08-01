@@ -4,25 +4,26 @@ import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux'
 
 import Home from './home';
-import Doc from './documents';
+import Documents from './documents';
+import DocumentRecord from './documents/record';
 
 import store from '../store';
 import history from '../store/history';
 import styled from "styled-components";
 
 import Messages, { addMessage } from 'hire-messages';
-addMessage({
-	type: 'error',
-	value: 'This is a error',
-});
-addMessage({
-	type: 'warning',
-	value: 'This is a warning',
-});
-addMessage({
-	type: 'success',
-	value: 'OK, that\'s good!',
-});
+// addMessage({
+// 	type: 'error',
+// 	value: 'This is a error',
+// });
+// addMessage({
+// 	type: 'warning',
+// 	value: 'This is a warning',
+// });
+// addMessage({
+// 	type: 'success',
+// 	value: 'OK, that\'s good!',
+// });
 
 
 const App = styled.div`
@@ -51,8 +52,13 @@ export default () => (
 					path="/"
 				/>
 				<Route
-					component={Doc}
+					component={DocumentRecord}
 					path="/documents/:id"
+				/>
+				<Route
+					component={Documents}
+					exact
+					path="/documents"
 				/>
 				{Messages}
 			</App>

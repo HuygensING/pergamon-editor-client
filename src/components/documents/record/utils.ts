@@ -11,11 +11,8 @@ export const byStartEnd = (a, b) => {
 };
 
 export const byDisplayStartEnd = (a, b) => {
-
-	// // Only for overlapping annotations it is needed to check display prop
-	// if (a.end < b.start) return -1;
-	// if (a.start > b.end) return 1;
-
+	// if (!componentsByTag.hasOwnProperty(a.type)) a.type = 'text';
+	// if (!componentsByTag.hasOwnProperty(b.type)) b.type = 'text';
 	const aDisplay = componentsByTag[a.type].display;
 	const bDisplay = componentsByTag[b.type].display;
 

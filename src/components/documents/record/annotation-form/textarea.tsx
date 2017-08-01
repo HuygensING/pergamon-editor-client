@@ -2,7 +2,7 @@ import * as React from 'react';
 import debounce = require('lodash.debounce');
 import HFTextarea from 'hire-forms-textarea';
 import styled from "styled-components";
-import {IDocument} from "../../../reducers/documents";
+import {IDocument} from "../../../../reducers/documents";
 
 const Textarea = styled(HFTextarea)`
 	display: inline-block;

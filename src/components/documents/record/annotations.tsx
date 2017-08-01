@@ -3,7 +3,7 @@ import AnnotationList from "./annotation-list";
 import {Head2, Head3, ColumnBody} from "./index";
 import styled from "styled-components";
 import {byStartEnd} from "./utils";
-import Button from "../ui/button";
+import Button from "../../ui/button";
 import {IAnnotationCommon} from "./annotation";
 
 interface IState {

@@ -2,6 +2,20 @@ import {activateAnnotation, deactivateAnnotation} from "./root";
 import debounce = require('lodash.debounce');
 import {debounceWait} from "../constants";
 
+export const addDocument = (id) => async (dispatch, getState) => {
+	const documents = getState().documents;
+
+	if (documents.find(d => d.id === id) == null) {
+		const result = await fetch(`/api/documents/${id}`);
+		const doc = await result.json();
+		doc.id = id;
+		dispatch({
+			type: 'DOCUMENTS_ADD',
+			document: doc,
+		});
+	}
+};
+
 const replayTextEvents = (text, dispatch, getState) => {
 	dispatch({
 		documentId: getState().root.activeDocumentId,

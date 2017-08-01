@@ -1,5 +1,5 @@
 import {hasOverlap} from "./utils";
-import {IAnnotation} from "../../reducers/documents";
+import {IAnnotation} from "../../../reducers/documents";
 
 export const toSplitPoints = (splitPoints, curr, index, arr) => {
 	if (index === 0) return splitPoints;

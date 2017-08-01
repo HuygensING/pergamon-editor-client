@@ -3,7 +3,7 @@ import styled from "styled-components";
 import {Head4} from "./index";
 import AnnotationList from "./annotation-list";
 import AnnotationForm, {IAnnotationFormProps} from "./annotation-form";
-import {IAnnotation, IDocument} from "../../reducers/documents";
+import {IAnnotation, IDocument} from "../../../reducers/documents";
 import TextTree from "./text-tree";
 
 const Li = styled.li`

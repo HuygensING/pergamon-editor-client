@@ -43,23 +43,23 @@ export const defaultDocument: IDocument = {
 	tree: null,
 };
 
-export const initialState: IDocument[] = [
-	original,
-	typical,
-	large
-];
+export const initialState: IDocument[] = [];
 
 export default (state = initialState, action) => {
 	let nextState = state;
 
 	switch (action.type) {
+		case 'DOCUMENTS_ADD': {
+			nextState = nextState.concat(action.document);
+			break;
+		}
+
 		case 'DOCUMENTS_CREATE_DOCUMENT': {
 			const newDocument = updateProp(defaultDocument, {
 				 id: action.documentId,
 			});
 
 			nextState = nextState.concat(newDocument);
-
 			break;
 		}
 
@@ -69,7 +69,6 @@ export default (state = initialState, action) => {
 					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
 					null
 			);
-
 			break;
 		}
 

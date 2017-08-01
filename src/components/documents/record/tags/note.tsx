@@ -3,8 +3,8 @@ import HireTooltip from 'hire-tooltip';
 import {InlineDiv} from "./base";
 import styled from "styled-components";
 import TextTree from "../text-tree";
-import {orangeLight, orangeRGB} from "../../../constants";
-import EditAnnotationDocumentButton from "../../ui/edit-annotation-document-button";
+import {orangeLight, orangeRGB} from "../../../../constants";
+import EditAnnotationDocumentButton from "../../../ui/edit-annotation-document-button";
 
 interface INoteNumber {
 	active: boolean;

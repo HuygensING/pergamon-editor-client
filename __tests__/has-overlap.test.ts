@@ -1,4 +1,4 @@
-import {hasOverlap} from "../src/components/documents/utils";
+import {hasOverlap} from "../src/components/documents/record/utils";
 
 describe('hasOverlap', () => {
 	test('hasOverlap 1', () => {

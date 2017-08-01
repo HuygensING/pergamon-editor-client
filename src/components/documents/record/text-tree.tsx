@@ -1,7 +1,7 @@
 import * as React from 'react';
 import fillGaps from "./fill-gaps";
 import TextAnnotation, {ITextAnnotationCommon} from "./text-annotation";
-import {IAnnotation, IDocument} from "../../reducers/documents";
+import {IAnnotation, IDocument} from "../../../reducers/documents";
 
 interface ITextTree extends ITextAnnotationCommon {
 	root: IAnnotation;

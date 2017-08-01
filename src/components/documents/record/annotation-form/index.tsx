@@ -6,11 +6,11 @@ import styled from "styled-components";
 import tags from '../tags';
 import Start from "./start";
 import End from "./end";
-import Button from "../../ui/button";
-import RemoveButton from "../../ui/remove-button";
+import Button from "../../../ui/button";
+import RemoveButton from "../../../ui/remove-button";
 import TextAnnotation from "../text-annotation";
-import {IAnnotation, IDocument} from "../../../reducers/documents";
-import EditAnnotationDocumentButton from "../../ui/edit-annotation-document-button";
+import {IAnnotation, IDocument} from "../../../../reducers/documents";
+import EditAnnotationDocumentButton from "../../../ui/edit-annotation-document-button";
 
 export const inputEl = `
 	display: inline-block;

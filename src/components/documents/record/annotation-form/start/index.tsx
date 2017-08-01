@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Input} from "../index";
-import {IAnnotation} from "../../../../reducers/documents";
+import {IAnnotation} from "../../../../../reducers/documents";
 
 interface IProps {
 	activeAnnotation: IAnnotation;
