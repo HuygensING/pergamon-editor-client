@@ -77,10 +77,9 @@ class ActiveDocument extends React.Component<any, any> {
 		} = this.props;
 
 		const rootDocument = documents.find(d => d.id === rootDocumentId);
+		if (rootDocument == null) return null;
 
-		const activeDocument = documents
-				.find(d => d.id === activeDocumentId);
-
+		const activeDocument = documents.find(d => d.id === activeDocumentId);
 		if (activeDocument == null) return null;
 
 		const activeAnnotation = activeDocument.annotations

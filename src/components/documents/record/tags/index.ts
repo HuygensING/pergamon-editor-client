@@ -2,8 +2,8 @@ import styled from 'styled-components'
 import Note from "./note";
 import {InlineDiv} from "./base";
 
-const Doc = styled.div`
-`;
+const Div = styled.div``;
+const Doc = Div;
 
 const Paragraph = styled.div`
 	margin: 1em;
@@ -31,6 +31,14 @@ const Del = InlineDiv.extend`
 	display: none;
 `;
 
+const LineGroup = Div.extend`
+	margin: 2em 0;
+`;
+
+const Line = Div.extend`
+	line-height: 2em;
+`;
+
 export default {
 	bold: {
 		component: Bold,
@@ -44,6 +52,22 @@ export default {
 		component: Doc,
 		display: 'block',
 	},
+	TEI: {
+		component: Doc,
+		display: 'block',
+	},
+	teiHeader: {
+		component: Del,
+		display: 'block',
+	},
+	lg: {
+		component: LineGroup,
+		display: 'block',
+	},
+	l: {
+		component: Line,
+		display: 'block',
+	},
 	italic: {
 		component: Italic,
 		display: 'inline',
@@ -53,6 +77,14 @@ export default {
 		display: 'inline',
 	},
 	paragraph: {
+		component: Paragraph,
+		display: 'block',
+	},
+	para: {
+		component: Paragraph,
+		display: 'block',
+	},
+	p: {
 		component: Paragraph,
 		display: 'block',
 	},

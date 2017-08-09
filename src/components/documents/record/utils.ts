@@ -11,8 +11,16 @@ export const byStartEnd = (a, b) => {
 };
 
 export const byDisplayStartEnd = (a, b) => {
-	// if (!componentsByTag.hasOwnProperty(a.type)) a.type = 'text';
-	// if (!componentsByTag.hasOwnProperty(b.type)) b.type = 'text';
+	if (!componentsByTag.hasOwnProperty(a.type)) {
+		console.error(`Annotation type not found: "${a.type}"`)
+		componentsByTag[a.type] = componentsByTag.text;
+	}
+
+	if (!componentsByTag.hasOwnProperty(b.type)) {
+		console.error(`Annotation type not found: "${b.type}"`)
+		componentsByTag[b.type] = componentsByTag.text;
+	}
+
 	const aDisplay = componentsByTag[a.type].display;
 	const bDisplay = componentsByTag[b.type].display;
 

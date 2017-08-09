@@ -1,9 +1,9 @@
 export const getDocumentIds = () => async (dispatch, getState) => {
-	const result = await fetch(`/api/documents`);
-	const documentIds = await result.json();
+	const fetched = await fetch(`/api/documents`);
+	const data = await fetched.json();
 
 	dispatch({
-		documentIds,
+		documentIds: data.result,
 		type: 'DOCUMENT_IDS_RECEIVE',
 	});
 };
