@@ -27,11 +27,14 @@ import Messages, { addMessage } from 'hire-messages';
 
 
 const App = styled.div`
+	display: flex;
+	flex-direction: column;
 	height: 100%;
 `;
 
-const Header = styled.div`
+const Header = styled.header`
 	background: #CCC;
+	flex: 1;
 	font-size: 2em;
 	font-weight: bold;
 	height: 8vh;

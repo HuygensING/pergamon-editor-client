@@ -1,4 +1,4 @@
-import {splitAnnotation} from "../src/components/documents/record/split-annotations";
+import {splitAnnotation} from "../src/reducers/utils/split-annotations";
 import '../src/array';
 
 describe('splitAnnotation', () => {

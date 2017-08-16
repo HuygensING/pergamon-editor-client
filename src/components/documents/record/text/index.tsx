@@ -1,44 +1,15 @@
 import * as React from 'react';
 import styled from "styled-components";
 import Textarea from 'hire-forms-textarea';
-import {debounceWait} from "../../../constants";
-import {Head3} from "../../ui/index";
+import {debounceWait} from "../../../../constants";
+import TextHeader from "./header";
+import {Column, ColumnBody} from "../columns";
 
 const TextTextarea = styled(Textarea)`
 	border: none;
 	font-family: 'sans-serif';
-	height: 65vh;
+	height: 100%;
 	outline: none;
-	width: 100%;
-`;
-
-const Div50 = styled.div`
-	display: inline-block;
-	width: 50%;
-`;
-
-const ProgressBar = Div50.extend`
-	background-color: rgba(255, 0, 0, 0.1);
-	border: 1px solid red;
-	height: 1em;
-	position: relative;
-`;
-
-const Bar = styled.div`
-	background-color: rgba(255, 0, 0, 0.3);
-	border: 1px solid rgba(0, 0, 0, 0);
-	bottom: 0;
-	left: 0;
-	position: absolute;
-	top: 0;
-	width: 100%;
-`;
-
-const ProgressText = styled.div`
-	font-size: 0.8em;
-	position: absolute;
-	text-align: center;
-	top: 0;
 	width: 100%;
 `;
 
@@ -69,34 +40,27 @@ class Text extends React.Component<any, IState> {
 		const { updateText, createAnnotation } = this.props;
 		const { percentage, requestStart } = this.state;
 		return (
-			<div>
-				<Div50><Head3>Text</Head3></Div50>
-				<ProgressBar>
-					{
-						requestStart != null &&
-						<Bar style={{ width: `${percentage}%`}} />
-					}
-					{
-						requestStart != null &&
-						<ProgressText>
-							Updating in {Math.floor(debounceWait - (debounceWait * (percentage / 100)))}ms
-						</ProgressText>
-					}
-				</ProgressBar>
-				<TextTextarea
-					onInput={(text: string, ev: any, keyCode: number) => {
-						this.setState({
-							request: requestAnimationFrame(this.nextFrame),
-							requestStart: Date.now(),
-							value: text,
-						});
-
-						updateText(text, ev, keyCode);
-					}}
-					onMouseUp={(ev) => createAnnotation(ev)}
-					value={this.state.value}
+			<Column>
+				<TextHeader
+					percentage={percentage}
+					requestStart={requestStart}
 				/>
-			</div>
+				<ColumnBody style={{overflow: 'hidden'}}>
+					<TextTextarea
+						onInput={(text: string, ev: any, keyCode: number) => {
+							this.setState({
+								request: requestAnimationFrame(this.nextFrame),
+								requestStart: Date.now(),
+								value: text,
+							});
+
+							updateText(text, ev, keyCode);
+						}}
+						onMouseUp={(ev) => createAnnotation(ev)}
+						value={this.state.value}
+					/>
+				</ColumnBody>
+			</Column>
 		)
 	}
 

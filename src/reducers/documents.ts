@@ -1,4 +1,4 @@
-import {updateProp, updatePropInArray} from "./utils";
+import {updateProp, updatePropInArray} from "./utils/index";
 import {getTree} from "./tree";
 
 export interface IAnnotation {

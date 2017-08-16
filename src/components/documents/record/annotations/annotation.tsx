@@ -2,9 +2,9 @@ import * as React from 'react';
 import styled from "styled-components";
 import AnnotationList from "./annotation-list";
 import AnnotationForm, {IAnnotationFormProps} from "./annotation-form";
-import {IAnnotation, IDocument} from "../../../reducers/documents";
-import TextTree from "./text-tree";
-import {Head4} from "../../ui/index";
+import {IAnnotation, IDocument} from "../../../../reducers/documents";
+import TextTree from "../output/text-tree";
+import {Head4} from "../../../ui/index";
 
 const Li = styled.li`
 `;

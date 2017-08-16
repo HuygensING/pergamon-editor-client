@@ -1,6 +1,6 @@
-import createTree from '../src/components/documents/record/create-tree';
-import {addRow, byDisplayStartEnd} from "../src/components/documents/record/utils";
-import {splitAnnotations, toSplitPoints} from "../src/components/documents/record/split-annotations";
+import createTree from '../src/reducers/utils/create-tree';
+import {addRow, byDisplayStartEnd} from "../src/reducers/utils/sort";
+import {splitAnnotations, toSplitPoints} from "../src/reducers/utils/split-annotations";
 import { annotations, annotationsWithRow, annotationsSplitted, tree } from './data/original-b';
 
 describe('addRow', () => {

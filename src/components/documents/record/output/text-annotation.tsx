@@ -1,8 +1,8 @@
 import * as React from 'react';
 import componentByTag from './tags';
 import styled from "styled-components";
-import {orange, orangeRGB} from "../../../constants";
-import {IAnnotation, IDocument} from "../../../reducers/documents";
+import {orange, orangeRGB} from "../../../../constants";
+import {IAnnotation, IDocument} from "../../../../reducers/documents";
 
 export interface ITextAnnotationCommon {
 	activateAnnotationDocument?: (IAnnotation, string) => void;

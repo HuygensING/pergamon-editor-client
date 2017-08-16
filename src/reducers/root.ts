@@ -1,4 +1,4 @@
-import {updateProp} from "./utils";
+import {updateProp} from "./utils/index";
 
 interface IState {
 	activeAnnotationId: string;

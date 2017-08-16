@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
-import TextTree from "./text-tree";
-import Text from "./text";
-import Annotations from "./annotations";
+import TextTree from "./output/text-tree";
+import Text from "./text/index";
+import Annotations from "./annotations/index";
 import {
 	createAnnotationDocument, updateAnnotationDocumentText,
 } from "../../../actions/documents";
@@ -11,26 +11,12 @@ import {activateAnnotationDocument, goToChildDocument} from "../../../actions/an
 import Menu from "./menu";
 import {activateAnnotation, activateNote, setRootId} from "../../../actions/root";
 import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../../actions/documents";
-import {Head3} from "../../ui/index";
+import {Column, ColumnBody, ColumnHeader, Columns} from "./columns";
 
 const Div = styled.div`
-	height: calc(100% - 8vh);
-	position: relative;
-`;
-
-const Column = styled.div`
-	box-sizing: border-box;
-	display: inline-block;
-	margin-bottom: 10vh;
-	padding: 0 1vw;
-	vertical-align: top;
-	width: 32vw;
-`;
-
-export const ColumnBody = styled.div`
-	box-sizing: border-box;
-	height: 65vh;
-	overflow-y: auto;
+	display: flex;
+	flex: 9;
+	flex-direction: column;
 	position: relative;
 `;
 
@@ -89,29 +75,27 @@ class ActiveDocument extends React.Component<any, any> {
 				  goToChildDocument={goToChildDocument}
 				  root={rootDocument}
 				/>
-				<Column>
+				<Columns>
 					<Text
 						activeDocument={activeDocument}
 						createAnnotation={createAnnotation}
 						updateText={updateText}
 					/>
-				</Column>
-				<Column>
-					<Head3>Output</Head3>
-					<ColumnBody>
-						<TextTree
-							activateAnnotationDocument={activateAnnotationDocument}
-							activateNote={activateNote}
-							activeAnnotationDocument={activeAnnotationDocument}
-							activeNoteId={activeDocument._activeNoteId}
-							activeAnnotation={activeAnnotation}
-							documents={documents}
-							root={activeDocument.tree}
-							text={activeDocument.text}
-						/>
-					</ColumnBody>
-				</Column>
-				<Column>
+					<Column>
+						<ColumnHeader value="Output" />
+						<ColumnBody style={{ position: 'relative' }}>
+							<TextTree
+								activateAnnotationDocument={activateAnnotationDocument}
+								activateNote={activateNote}
+								activeAnnotationDocument={activeAnnotationDocument}
+								activeNoteId={activeDocument._activeNoteId}
+								activeAnnotation={activeAnnotation}
+								documents={documents}
+								root={activeDocument.tree}
+								text={activeDocument.text}
+							/>
+						</ColumnBody>
+					</Column>
 					<Annotations
 						activateAnnotation={activateAnnotation}
 						activateAnnotationDocument={activateAnnotationDocument}
@@ -123,9 +107,9 @@ class ActiveDocument extends React.Component<any, any> {
 						documents={documents}
 						updateAnnotation={updateAnnotation}
 						updateAnnotationDocumentText={updateAnnotationDocumentText}
-					  updateText={updateText}
+						updateText={updateText}
 					/>
-				</Column>
+				</Columns>
 			</Div>
 		);
 	}

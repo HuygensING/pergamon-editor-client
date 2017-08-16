@@ -1,8 +1,9 @@
 import * as md5 from 'md5';
-import {addRow, byDisplayStartEnd, byRowStartEnd} from "../components/documents/record/utils";
-import {splitAnnotations} from "../components/documents/record/split-annotations";
-import toTree from "../components/documents/record/create-tree";
+import {byDisplayStartEnd, byRowStartEnd} from "./utils/sort";
+import {splitAnnotations} from "./utils/split-annotations";
+import toTree from "./utils/create-tree";
 import {IAnnotation} from "./documents";
+import {addRow} from "./utils/add-row";
 
 const createTree = (text: string, annotations: IAnnotation[]): IAnnotation =>
 	({

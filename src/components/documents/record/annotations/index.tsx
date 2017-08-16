@@ -1,12 +1,11 @@
 import * as React from 'react';
 import AnnotationList from "./annotation-list";
-import {ColumnBody} from "./index";
 import styled from "styled-components";
-import {byStartEnd} from "./utils";
-import Button from "../../ui/button";
+import {byStartEnd} from "../../../../reducers/utils/sort";
+import Button from "../../../ui/button";
 import {IAnnotationCommon} from "./annotation";
 import HireFormsSelect from 'hire-forms-select';
-import {Head3} from "../../ui";
+import {Column, ColumnBody, ColumnHeader} from "../columns";
 
 const HeadButton = styled(Button)`
 	display: inline-block;
@@ -19,12 +18,8 @@ const Select = styled(HireFormsSelect)`
 	width: 75px;
 `;
 
-const H3 = styled(Head3)`
-	display: inline-block;
-`;
-
 const Menu = styled.div`
-	display: inline-block;
+	flex: 1;
 `;
 
 type Filter = 'all' | 'xml' | 'user';
@@ -56,14 +51,10 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 
 		const annotationList= activeDocument.annotations;
 		const annotationTree= activeDocument.tree.children;
-		console.log(this.state)
 
 		return (
-			<div>
-				<header>
-					<H3>
-						Annotations
-					</H3>
+			<Column>
+				<ColumnHeader value="Annotations">
 					<Menu>
 						<HeadButton
 							onClick={() => this.setState({list: true})}
@@ -77,19 +68,22 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 						>
 							Ͱ
 						</HeadButton>
-						<Select
-							onChange={v => {
-								this.setState({ filter: v })
-							}}
-							options={[
-								{ key: 'all', value: 'all' },
-								{ key: 'xml', value: 'xml' },
-								{ key: 'user', value: 'user'}
-							]}
-							value={{ key: this.state.filter, value: this.state.filter}}
-						/>
+						{
+							this.state.list &&
+							<Select
+								onChange={v => {
+									this.setState({ filter: v })
+								}}
+								options={[
+									{ key: 'all', value: 'all' },
+									{ key: 'xml', value: 'xml' },
+									{ key: 'user', value: 'user'}
+								]}
+								value={{ key: this.state.filter, value: this.state.filter}}
+							/>
+						}
 					</Menu>
-				</header>
+				</ColumnHeader>
 				<ColumnBody>
 					<AnnotationList
 						activateAnnotation={activateAnnotation}
@@ -112,7 +106,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 						updateText={updateText}
 					/>
 				</ColumnBody>
-			</div>
+			</Column>
 		);
 	}
 }

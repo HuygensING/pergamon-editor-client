@@ -1,4 +1,4 @@
-import {hasOverlap} from "./utils";
+import {hasOverlap} from "./index";
 
 const toTree = (agg, curr, index, arr) => {
 	if (agg.length === 0) {

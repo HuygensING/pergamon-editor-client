@@ -1,12 +1,11 @@
 import * as React from 'react';
 import styled from "styled-components";
-import history from '../../../store/history';
-// import Select from 'hire-forms-select';
 import {orange} from "../../../constants";
 
 const Wrapper = styled.div`
 	background: #DDD;
-	padding: 1vh 1vw;
+	flex 1;
+	padding: 0 1vw;
 	margin: 0;
 `;
 
@@ -50,14 +49,6 @@ const Menu = ({
 }) =>
 	<Wrapper>
 		<MenuItem>
-			{/*<Select*/}
-				{/*onChange={id => history.push(`/document/${id}`)}*/}
-				{/*options={documents.map(d => ({*/}
-					{/*key: d.id,*/}
-					{/*value: d.id,*/}
-				{/*}))}*/}
-				{/*value={{ key: root.id, value: root.id }}*/}
-			{/*/>*/}
 			<ul>
 				<LiRoot
 					active={annotationsInPath.length > 0}
