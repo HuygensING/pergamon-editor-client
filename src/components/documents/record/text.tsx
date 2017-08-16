@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from "styled-components";
 import Textarea from 'hire-forms-textarea';
-import {Head3} from "./index";
 import {debounceWait} from "../../../constants";
+import {Head3} from "../../ui/index";
 
 const TextTextarea = styled(Textarea)`
 	border: none;

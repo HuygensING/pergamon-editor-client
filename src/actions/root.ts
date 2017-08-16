@@ -47,7 +47,7 @@ export const activateNote =
 	(annotation: IAnnotation) =>
 		(dispatch, getState) => {
 			const state = getState();
-			const target = state.documents.find(d => d.id === annotation._targetId);
+			const target = state.documents.find(d => d.id === annotation.target);
 
 			if (target._activeNoteId !== annotation.id) {
 				const annotationDocument = state.documents.find(d => d.id === annotation.documentId);

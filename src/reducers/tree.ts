@@ -6,10 +6,6 @@ import {IAnnotation} from "./documents";
 
 const createTree = (text: string, annotations: IAnnotation[]): IAnnotation =>
 	({
-		start: 0,
-		end: text.length,
-		id: 'some-random-tree-id',
-		type: 'doc',
 		children: annotations
 			.sort(byDisplayStartEnd)
 			.map(addRow())
@@ -18,6 +14,12 @@ const createTree = (text: string, annotations: IAnnotation[]): IAnnotation =>
 			.map(addRow())
 			.sort(byRowStartEnd)
 			.reduce(toTree, []),
+		end: text.length,
+		id: 'some-random-tree-id',
+		source: 'system',
+		start: 0,
+		target: null,
+		type: 'doc',
 	});
 
 const treeCache = {};

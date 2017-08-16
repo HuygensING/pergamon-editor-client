@@ -1,11 +1,11 @@
-import {IDocument} from "../documents";
+import {IDocument} from "../src/reducers/documents";
 
 const original: IDocument = ({
 	tree: null,
 	id: 'original',
 	annotations: [
 		{
-			_targetId: 'original',
+			target: 'original',
 			_targetType: 'document',
 			id: 1,
 			type: 'paragraph',
@@ -13,7 +13,7 @@ const original: IDocument = ({
 			end: 30,
 		},
 		{
-			_targetId: 'original',
+			target: 'original',
 			_targetType: 'document',
 			id: 2,
 			type: 'paragraph',
@@ -21,7 +21,7 @@ const original: IDocument = ({
 			end: 72,
 		},
 		{
-			_targetId: 'original',
+			target: 'original',
 			_targetType: 'document',
 			id: 3,
 			type: 'bold',
@@ -29,7 +29,7 @@ const original: IDocument = ({
 			end: 17,
 		},
 		{
-			_targetId: 'original',
+			target: 'original',
 			_targetType: 'document',
 			id: 4,
 			type: 'underline',
@@ -37,7 +37,7 @@ const original: IDocument = ({
 			end: 39,
 		},
 		{
-			_targetId: 'original',
+			target: 'original',
 			_targetType: 'document',
 			id: 5,
 			type: 'italic',

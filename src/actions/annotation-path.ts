@@ -28,4 +28,3 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 
 	dispatch(deactivateAnnotation());
 };
-

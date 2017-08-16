@@ -1,6 +1,3 @@
-import original from './docs/original';
-import typical from './docs/typical';
-import large from './docs/large';
 import {updateProp, updatePropInArray} from "./utils";
 import {getTree} from "./tree";
 
@@ -16,7 +13,7 @@ export interface IAnnotation {
 	_segment?: boolean;
 
 	// Type and id of the target (parent)
-	_targetId?: string;
+	// _targetId?: string;
 	_targetType?: 'annotation' | 'document';
 
 	attributes?: any;
@@ -24,7 +21,9 @@ export interface IAnnotation {
 	documentId?: string,
 	end: number,
 	id?: number | string;
+	source: 'system' | 'xml' | 'user';
 	start: number,
+	target: string;
 	type: string;
 }
 
@@ -154,11 +153,12 @@ export default (state = initialState, action) => {
 		case 'DOCUMENTS_CREATE_ANNOTATION': {
 			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
 				const annotations = doc.annotations.concat({
-					_targetId: action.documentId,
+					target: action.documentId,
 					_targetType: 'document',
 					id: action.annotationId,
 					start: action.start,
 					end: action.end,
+					source: 'user',
 					type: action.annotationType,
 				});
 

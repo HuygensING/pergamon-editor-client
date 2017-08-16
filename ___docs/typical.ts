@@ -1,4 +1,4 @@
-import {IAnnotation, IDocument} from "../documents";
+import {IAnnotation, IDocument} from "../src/reducers/documents";
 
 const typical: IDocument = ({
 	tree: null,

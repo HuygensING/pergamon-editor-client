@@ -11,20 +11,7 @@ import {activateAnnotationDocument, goToChildDocument} from "../../../actions/an
 import Menu from "./menu";
 import {activateAnnotation, activateNote, setRootId} from "../../../actions/root";
 import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../../actions/documents";
-
-export const Head2 = styled.h2`
-	margin: 0;
-`;
-
-export const Head3 = styled.h3`
-	margin: 1em 0 0 0;
-`;
-
-export const Head4 = styled.h4`
-	color: #666;
-	font-size: 1em;
-	margin: 2em 0 0 0;
-`;
+import {Head3} from "../../ui/index";
 
 const Div = styled.div`
 	height: calc(100% - 8vh);
@@ -44,6 +31,7 @@ export const ColumnBody = styled.div`
 	box-sizing: border-box;
 	height: 65vh;
 	overflow-y: auto;
+	position: relative;
 `;
 
 class ActiveDocument extends React.Component<any, any> {
@@ -152,8 +140,7 @@ export default connect(
 		rootDocumentId: state.root.rootDocumentId,
 	}),
 	{
-		activateAnnotation,
-		activateAnnotationDocument,
+		activateAnnotation, activateAnnotationDocument,
 		activateNote,
 		updateAnnotation,
 		createAnnotation,

@@ -1,14 +1,28 @@
 import {activateAnnotation, deactivateAnnotation} from "./root";
 import debounce = require('lodash.debounce');
 import {debounceWait} from "../constants";
+import {addMessage} from 'hire-messages';
 
 export const addDocument = (id) => async (dispatch, getState) => {
 	const documents = getState().documents;
 
 	if (documents.find(d => d.id === id) == null) {
-		const result = await fetch(`/api/documents/${id}`);
-		const doc = await result.json();
+		const xhr = await fetch(`/api/documents/${id}`);
+		const doc = await xhr.json();
 		doc.id = id;
+
+		if (xhr.status === 200) {
+			addMessage({
+				type: 'success',
+				value: `Document ${doc.id} received`,
+			});
+		} else {
+			addMessage({
+				type: 'error',
+				value: xhr.statusText,
+			});
+		}
+
 		dispatch({
 			type: 'DOCUMENTS_ADD',
 			document: doc,
@@ -45,22 +59,39 @@ export const updateAnnotationDocumentText =
 				type: 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT',
 			});
 
-export const createAnnotation = (ev) => (dispatch, getState) => {
+export const createAnnotation = (ev) => async (dispatch, getState) => {
 	const { selectionStart, selectionEnd } = ev.currentTarget;
 	if (selectionEnd - selectionStart === 0) return;
 
-	const annotationId = `random-id-${Math.floor(Math.random() * 10000)}`;
+	// const annotationId = `random-id-${Math.floor(Math.random() * 10000)}`;
+	const documentId = getState().root.activeDocumentId;
+
+	const xhr = await fetch(`/api/documents/${documentId}/annotations`, {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: JSON.stringify({
+			end: selectionEnd,
+			source: 'user',
+			start: selectionStart,
+			target: documentId,
+			type: 'note',
+		}),
+		method: 'POST',
+	});
+
+	const annotation = await xhr.json();
 
 	dispatch({
-		annotationId,
+		annotationId: annotation.id,
 		annotationType: 'note',
-		documentId: getState().root.activeDocumentId,
+		documentId,
 		end: selectionEnd,
 		start: selectionStart,
 		type: 'DOCUMENTS_CREATE_ANNOTATION',
 	});
 
-	dispatch(activateAnnotation(annotationId));
+	dispatch(activateAnnotation(annotation.id));
 };
 
 export const updateAnnotation = (props) => async (dispatch, getState) => {
