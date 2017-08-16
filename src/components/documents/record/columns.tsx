@@ -16,6 +16,7 @@ export const Column = styled.li`
 `;
 
 const Header = styled.header`
+	align-items: center;
 	display: flex;
 	flex: 1;
 	flex-direction: row;
