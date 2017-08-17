@@ -24,7 +24,7 @@ export interface IAnnotationProps extends IAnnotationCommon {
 
 const Annotation: React.SFC<IAnnotationProps> = (props) => {
 	const annotationDocument = props.annotation.hasOwnProperty('documentId') ?
-		props.documents.find(d => d.id === props.annotation.documentId) :
+		props.documents.find(d => d.id === props.annotation.body) :
 		null;
 
 	return (

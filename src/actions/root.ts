@@ -50,7 +50,7 @@ export const activateNote =
 			const target = state.documents.find(d => d.id === annotation.target);
 
 			if (target._activeNoteId !== annotation.id) {
-				const annotationDocument = state.documents.find(d => d.id === annotation.documentId);
+				const annotationDocument = state.documents.find(d => d.id === annotation.body);
 
 				dispatch({
 					annotation, // the note

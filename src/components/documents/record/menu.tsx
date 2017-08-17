@@ -1,23 +1,20 @@
 import * as React from 'react';
 import styled from "styled-components";
 import {orange} from "../../../constants";
+import history from '../../../store/history';
 
-const Wrapper = styled.div`
+const Ul = styled.ul`
 	background: #DDD;
 	flex 1;
 	padding: 0 1vw;
 	margin: 0;
 `;
 
-const MenuItem = styled.div`
-	display: inline-block;
-`;
-
 interface ILi {
 	active: boolean;
 }
 
-const LiRoot = styled.li`
+const Link = styled.li`
 	display: inline-block;
 	
 	span {
@@ -31,10 +28,8 @@ const LiRoot = styled.li`
 			props.active ? `1px solid ${orange}` : 'none'
 		};
 	}
-`;
-
-const Li = LiRoot.extend`
-	&:before {
+	
+	& + li:before {
 		content: '>';
 		padding: 0 1em;
 	}
@@ -47,33 +42,30 @@ const Menu = ({
 	goToChildDocument,
 	root,
 }) =>
-	<Wrapper>
-		<MenuItem>
-			<ul>
-				<LiRoot
-					active={annotationsInPath.length > 0}
-				  onClick={() => goToChildDocument(-1)}
+	<Ul>
+		<Link
+			active
+			onClick={() => history.push('/documents')}
+		>
+			<span>Documents</span>
+		</Link>
+		<Link
+			active={annotationsInPath.length > 0}
+			onClick={() => goToChildDocument(-1)}
+		>
+			<span>{root.id}</span>
+		</Link>
+		{
+			annotationsInPath.map((a, i) =>
+				<Link
+					active={activeDocument.id !== a.documentId}
+					key={i}
+					onClick={() => goToChildDocument(i)}
 				>
-					<span>{root.id}</span>
-				</LiRoot>
-			</ul>
-		</MenuItem>
-		<MenuItem>
-			<ul>
-				{
-					annotationsInPath
-						.map((a, i) =>
-							<Li
-								active={activeDocument.id !== a.documentId}
-								key={i}
-								onClick={() => goToChildDocument(i)}
-							>
-								<span>{a.type}</span>
-							</Li>
-						)
-				}
-			</ul>
-		</MenuItem>
-	</Wrapper>;
+					<span>{a.type}</span>
+				</Link>
+			)
+		}
+	</Ul>;
 
 export default Menu;

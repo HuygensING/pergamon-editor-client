@@ -13,14 +13,14 @@ const Button = styled.div`
 	border: ${(props: any) => props.bare ? 'none' : '1px solid #DDD'};
 	cursor: pointer;
 	display: inline-block;
-	font-size: ${(props: IButton) => props.scale + 'em'};	
+	font-size: ${(props: IButton) => props.scale != null ? `${props.scale}em` : '1em'};	
 	height: 1.5em;
 	line-height: 1.5em;
 	overflow: hidden;
+	padding: 0 0.5em;
 	text-align: center;
 	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 1.5em;
 `;
 
 export default Button;

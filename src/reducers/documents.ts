@@ -18,7 +18,7 @@ export interface IAnnotation {
 
 	attributes?: any;
 	children?: IAnnotation[],
-	documentId?: string,
+	body?: string,
 	end: number,
 	id?: number | string;
 	source: 'system' | 'xml' | 'user';
