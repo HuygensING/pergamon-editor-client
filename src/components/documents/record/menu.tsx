@@ -4,7 +4,9 @@ import {orange} from "../../../constants";
 import history from '../../../store/history';
 
 const Ul = styled.ul`
+	align-items: center;
 	background: #DDD;
+	display: flex;
 	flex 1;
 	padding: 0 1vw;
 	margin: 0;
@@ -15,8 +17,8 @@ interface ILi {
 }
 
 const Link = styled.li`
-	display: inline-block;
-	
+	flex: none;
+		
 	span {
 		color: ${(props: ILi) =>
 			props.active ?  orange : 'initial'
