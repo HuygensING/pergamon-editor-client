@@ -1,8 +1,8 @@
 import { addMessage } from 'hire-messages';
 
 export const getDocumentIds = (force?: boolean) => async (dispatch, getState) => {
-	const documents = getState().documents;
-	if (!force && documents.length) return;
+	const documentIds = getState().documentIds;
+	if (!force && documentIds.length > 0) return;
 
 	const xhr = await fetch(`/api/documents`);
 	const data = await xhr.json();
