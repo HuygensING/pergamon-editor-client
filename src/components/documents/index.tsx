@@ -4,16 +4,14 @@ import {getDocumentIds} from "../../actions/document-ids";
 import {Link} from "react-router-dom";
 import styled from "styled-components";
 import Upload from "./upload";
+import {Column, ColumnBody, ColumnHeader} from "./record/columns";
 
-const Div = styled.div`
+const Columns = styled.div`
 	display: flex;
 	flex: 9;
 `;
-const Ul = styled.ul`
-	flex: 1;
-	overflow-y: auto;
-	padding: 1em;
-`;
+
+const ColumnBodyUl = ColumnBody.withComponent('ul');
 
 interface IProps {
 	documentIds: string[],
@@ -27,8 +25,10 @@ class Documents extends React.Component<IProps, null> {
 
 	public render() {
 		return (
-			<Div>
-				<Ul>
+			<Columns>
+				<Column>
+					<ColumnHeader value="Documents" />
+					<ColumnBodyUl>
 					{
 						this.props.documentIds.map(id =>
 							<li key={id}>
@@ -36,11 +36,17 @@ class Documents extends React.Component<IProps, null> {
 							</li>
 						)
 					}
-				</Ul>
-				<Upload
-					getDocumentIds={this.props.getDocumentIds}
-				/>
-			</Div>
+					</ColumnBodyUl>
+				</Column>
+				<Column>
+					<ColumnHeader value="Upload" />
+					<ColumnBody>
+						<Upload
+							getDocumentIds={this.props.getDocumentIds}
+						/>
+					</ColumnBody>
+				</Column>
+			</Columns>
 		);
 	}
 }
