@@ -14,8 +14,10 @@ export interface IAnnotation {
 
 	// Type and id of the target (parent)
 	// _targetId?: string;
+	// TODO remove?
 	_targetType?: 'annotation' | 'document';
 
+	annotations?: IAnnotation[],
 	attributes?: any;
 	children?: IAnnotation[],
 	body?: string,

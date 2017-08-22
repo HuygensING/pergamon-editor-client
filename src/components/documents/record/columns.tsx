@@ -36,5 +36,5 @@ export const ColumnBody = styled.div`
 	flex: 9;
 	overflow-x: hidden;
 	overflow-y: auto;
-	padding-bottom: 10vh;
+	padding-right: 1vw;
 `;

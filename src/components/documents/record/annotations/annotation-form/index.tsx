@@ -12,24 +12,21 @@ import {IAnnotation, IDocument} from "../../../../../reducers/documents";
 import EditAnnotationDocumentButton from "../../../../ui/edit-annotation-document-button";
 
 export const inputEl = `
-	display: inline-block;
-	width: 70%;
+	flex: 3;
 `;
 
 const Ul = styled.ul`
 	margin: 1em 0;
 `;
 const Li = styled.li`
+	display: flex;
 	margin-bottom: 1em;
-	width: 100%;
 `;
 
 const Label = styled.label`
 	color: #666;
-	display: inline-block;
+	flex: 1;
 	font-size: 0.8em;
-	vertical-align: top;
-	width: 30%;
 `;
 
 const Select = styled(HFSelect)`
@@ -54,6 +51,12 @@ const StyledRemoveButton = styled(RemoveButton)`
 	${inputEl}
 `;
 
+const Annotations = styled.ul`
+	${inputEl}
+	border-left: none !important;
+	padding: 0 !important;
+`;
+
 export interface IAnnotationFormProps extends IAnnotationFormTextareaProps {
 	activateAnnotationDocument: (IAnnotation, string) => void;
 	activeAnnotation: IAnnotation;
@@ -70,15 +73,18 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 			<Label>ID</Label>
 			<Immutable>{props.activeAnnotation.id}</Immutable>
 		</Li>
-		<Li>
-			<Label>Text</Label>
-			<Immutable>
-				{
-					props.activeDocument.text
-						.slice(props.activeAnnotation.start, props.activeAnnotation.end)
-				}
-			</Immutable>
-		</Li>
+		{
+			props.activeAnnotation.start < props.activeAnnotation.end &&
+			<Li>
+				<Label>Text</Label>
+				<Immutable>
+					{
+						props.activeDocument.text
+							.slice(props.activeAnnotation.start, props.activeAnnotation.end)
+					}
+				</Immutable>
+			</Li>
+		}
 		<Li>
 			<Label>Type</Label>
 			<Select
@@ -129,6 +135,36 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 					Add body
 					</BodyButton>
 			}
+		</Li>
+		<Li>
+			<Label>Annotations</Label>
+			<Annotations>
+				<Li>
+					<label></label>
+					<Button
+						onClick={ev => {
+							fetch(`/api/annotations/${props.activeAnnotation.id}/annotations`, {
+								body: JSON.stringify({
+									type: 'note',
+									target: props.activeAnnotation.id,
+									source: 'user',
+								}),
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								method: 'POST',
+							});
+						}}
+					>
+						Add annotation
+					</Button>
+				</Li>
+				{
+					props.activeAnnotation.annotations.map((a, i) =>
+						<Li key={i}>{a.id}</Li>
+					)
+				}
+			</Annotations>
 		</Li>
 		<Li>
 			<Label></Label>
