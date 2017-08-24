@@ -42,7 +42,7 @@ const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
 			ActiveTag :
 			Tag;
 	}
-
+	
 	return (
 		<Comp
 			activateAnnotationDocument={props.activateAnnotationDocument}

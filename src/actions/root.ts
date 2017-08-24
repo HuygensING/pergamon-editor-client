@@ -1,6 +1,6 @@
-import {IAnnotation, IDocument} from "../reducers/documents";
+import {IAnnotation} from "../reducers/documents";
 import {addDocument} from "./documents";
-import {getAnnotationAnnotations} from "./annotation";
+import {getAnnotation, getAnnotationAnnotations, updateAnnotation} from "./annotation";
 export const deactivateAnnotation = () => async (dispatch, getState) => {
 	dispatch({ type: 'DEACTIVATE_ANNOTATION' });
 };
@@ -8,12 +8,17 @@ export const deactivateAnnotation = () => async (dispatch, getState) => {
 
 export const activateAnnotation = (id) => async (dispatch, getState) => {
 	if (getState().root.activeAnnotationId !== id) {
-		await dispatch(getAnnotationAnnotations(id));
-
 		dispatch({
 			id,
 			type: 'ACTIVATE_ANNOTATION',
 		});
+
+		await dispatch(getAnnotationAnnotations(id));
+		const annotation = await getAnnotation(id);
+		if (annotation.body != null) {
+			dispatch(updateAnnotation({ body: annotation.body }));
+			await dispatch(addDocument(annotation.body));
+		}
 	} else {
 		dispatch(deactivateAnnotation());
 	}

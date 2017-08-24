@@ -60,7 +60,7 @@ const Menu = ({
 		{
 			annotationsInPath.map((a, i) =>
 				<Link
-					active={activeDocument.id !== a.documentId}
+					active={activeDocument.id !== a.body}
 					key={i}
 					onClick={() => goToChildDocument(i)}
 				>

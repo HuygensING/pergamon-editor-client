@@ -30,7 +30,7 @@ interface IState {
 
 class Annotations extends React.Component<IAnnotationCommon, IState> {
 	public state = {
-		filter: 'all' as Filter,
+		filter: 'user' as Filter,
 		list: true,
 	};
 

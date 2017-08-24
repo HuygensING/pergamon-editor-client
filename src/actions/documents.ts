@@ -1,5 +1,3 @@
-import * as uuidv4 from 'uuid/v4';
-import {activateAnnotation, deactivateAnnotation} from "./root";
 import debounce = require('lodash.debounce');
 import {debounceWait} from "../constants";
 import {addMessage} from 'hire-messages';
@@ -8,11 +6,11 @@ export const addDocument = (id) => async (dispatch, getState) => {
 	const documents = getState().documents;
 
 	if (documents.find(d => d.id === id) == null) {
-		const xhr = await fetch(`/api/documents/${id}`);
-		const doc = await xhr.json();
+		const response = await fetch(`/api/documents/${id}`);
+		const doc = await response.json();
 		doc.id = id;
 
-		if (xhr.status === 200) {
+		if (response.status === 200) {
 			addMessage({
 				type: 'success',
 				value: `Document ${doc.id} received`,
@@ -20,7 +18,7 @@ export const addDocument = (id) => async (dispatch, getState) => {
 		} else {
 			addMessage({
 				type: 'error',
-				value: xhr.statusText,
+				value: response.statusText,
 			});
 		}
 
@@ -49,95 +47,4 @@ export const updateText = (text: string, ev: any, keyCode: number) => (dispatch,
 		keyCode: keyCode,
 		type: 'DOCUMENTS_UPDATE_TEXT',
 	});
-};
-
-export const updateAnnotationDocumentText =
-	(text: string, ev: any, documentId: string) =>
-		(dispatch, getState) =>
-			dispatch({
-				documentId: documentId,
-				text,
-				type: 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT',
-			});
-
-export const createAnnotation = (ev) => async (dispatch, getState) => {
-	const { selectionStart, selectionEnd } = ev.currentTarget;
-	if (selectionEnd - selectionStart === 0) return;
-
-	const documentId = getState().root.activeDocumentId;
-
-	const xhr = await fetch(`/api/documents/${documentId}/annotations`, {
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			end: selectionEnd,
-			source: 'user',
-			start: selectionStart,
-			target: documentId,
-			type: 'note',
-		}),
-		method: 'POST',
-	});
-
-	const annotation = await xhr.json();
-
-	dispatch({
-		annotationId: annotation.id,
-		annotationType: 'note',
-		documentId,
-		end: selectionEnd,
-		start: selectionStart,
-		type: 'DOCUMENTS_CREATE_ANNOTATION',
-	});
-
-	dispatch(activateAnnotation(annotation.id));
-};
-
-export const updateAnnotation = (props) => async (dispatch, getState) => {
-	const root = getState().root;
-	dispatch({
-		annotationId: root.activeAnnotationId,
-		documentId: root.activeDocumentId,
-		props,
-		type: 'DOCUMENTS_UPDATE_ANNOTATION',
-	});
-};
-
-export const deleteAnnotation = () => (dispatch, getState) => {
-	const root = getState().root;
-	dispatch({
-		annotationId: root.activeAnnotationId,
-		documentId: root.activeDocumentId,
-		type: 'DOCUMENTS_DELETE_ANNOTATION',
-	});
-
-	dispatch(deactivateAnnotation());
-};
-
-export const createAnnotationDocument = () => async (dispatch, getState) => {
-	const root = getState().root;
-	const id = uuidv4();
-
-	const xhr = await fetch(`/api/documents/${id}`, {
-		method: 'PUT',
-	});
-
-	if (xhr.status === 201) {
-		const xhr2 = await fetch(`/api/annotations/${root.activeAnnotationId}/body`, {
-			method: 'PUT',
-			body: id,
-		});
-	}
-
-
-
-	// const documentId = `some-id-${Math.floor(Math.random() * 10000)}`;
-	//
-	// dispatch({
-	// 	documentId,
-	// 	type: 'DOCUMENTS_CREATE_DOCUMENT',
-	// });
-	//
-	// dispatch(updateAnnotation({ documentId }));
 };

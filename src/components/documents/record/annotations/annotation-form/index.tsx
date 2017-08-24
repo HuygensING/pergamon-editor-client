@@ -122,7 +122,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				/>
 			</Label>
 			{
-				props.activeAnnotation.hasOwnProperty('documentId') ?
+				props.activeAnnotationDocument != null ?
 					<AnnotationDocumentTextarea
 						activeAnnotationDocument={props.activeAnnotationDocument}
 					  updateAnnotationDocumentText={props.updateAnnotationDocumentText}
@@ -160,6 +160,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 					</Button>
 				</Li>
 				{
+					props.activeAnnotation.hasOwnProperty('annotations') &&
 					props.activeAnnotation.annotations.map((a, i) =>
 						<Li key={i}>{a.id}</Li>
 					)

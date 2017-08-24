@@ -4,14 +4,15 @@ import styled from "styled-components";
 import TextTree from "./output/text-tree";
 import Text from "./text/index";
 import Annotations from "./annotations/index";
-import {
-	createAnnotationDocument, updateAnnotationDocumentText,
-} from "../../../actions/documents";
 import {activateAnnotationDocument, goToChildDocument} from "../../../actions/annotation-path";
 import Menu from "./menu";
 import {activateAnnotation, activateNote, setRootId} from "../../../actions/root";
-import {createAnnotation, deleteAnnotation, updateAnnotation, updateText} from "../../../actions/documents";
+import {updateText} from "../../../actions/documents";
 import {Column, ColumnBody, ColumnHeader, Columns} from "./columns";
+import {
+	createAnnotation, createAnnotationDocument, deleteAnnotation,
+	updateAnnotation, updateAnnotationDocumentText
+} from "../../../actions/annotation";
 
 const Div = styled.div`
 	display: flex;
@@ -61,9 +62,9 @@ class ActiveDocument extends React.Component<any, any> {
 
 		const activeAnnotationDocument = (
 			activeAnnotation != null &&
-			activeAnnotation.hasOwnProperty('documentId')
+			activeAnnotation.hasOwnProperty('body')
 		) ?
-			documents.find(d => d.id === activeAnnotation.documentId) :
+			documents.find(d => d.id === activeAnnotation.body) :
 			null;
 
 		return (

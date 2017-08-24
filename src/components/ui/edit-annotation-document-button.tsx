@@ -25,7 +25,7 @@ interface IProps {
 const EditAnnotationDocumentButton: React.SFC<IProps> = (props) => {
 	const Comp = props.topRight ? TopRightButton : Button;
 
-	return props.activeAnnotation.hasOwnProperty('documentId') &&
+	return props.activeAnnotation.hasOwnProperty('body') &&
 	<Comp
 		bare={props.bare}
 		onClick={() =>
