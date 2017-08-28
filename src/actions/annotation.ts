@@ -92,19 +92,11 @@ export const createAnnotation = (ev) => async (dispatch, getState) => {
 	const range = sel.getRangeAt(0);
 	const startContainerId = getContainerId(range.startContainer);
 	const startAnnotation = findInTree(activeDocument.tree, startContainerId);
-	console.log('start', startContainerId, startAnnotation)
+	// console.log('start', startContainerId, startAnnotation)
 	const endContainerId = getContainerId(range.endContainer);
 	const endAnnotation = findInTree(activeDocument.tree, endContainerId);
-	console.log('end', endContainerId, endAnnotation)
-	console.log('range', range)
-
-	// console.log(endContainerId, endAnnotation, range.endContainer, range.endContainer.parentElement)
-
-	// return;
-
+	// console.log('end', endContainerId, endAnnotation)
 	// console.log('range', range)
-	// console.log('startAnnotation', startAnnotation)
-	// console.log('endAnnotation', endAnnotation)
 
 	const selectionStart = startAnnotation.start + range.startOffset;
 	const selectionEnd = endAnnotation.start + range.endOffset;
@@ -170,8 +162,9 @@ export const deleteAnnotation = () => (dispatch, getState) => {
 	dispatch(deactivateAnnotation());
 };
 
-export const createAnnotationDocument = () => async (dispatch, getState) => {
+export const createAnnotationDocument = (targetId?) => async (dispatch, getState) => {
 	const root = getState().root;
+	targetId = targetId == null ? root.activeAnnotationId : targetId;
 	const id = uuidv4();
 
 	const response = await fetch(`/api/documents/${id}`, {
@@ -184,22 +177,31 @@ export const createAnnotationDocument = () => async (dispatch, getState) => {
 	});
 
 	if (response.status === 201) {
-		const xhr2 = await fetch(`/api/annotations/${root.activeAnnotationId}/body`, {
+		const xhr2 = await fetch(`/api/annotations/${targetId}/body`, {
 			method: 'PUT',
 			body: id,
 		});
 
 		dispatch(updateAnnotation({ body: id }));
 	}
+};
 
+export const createAnnotationOnAnnotation = (targetId) => async (dispatch, getState) => {
+	const response = await fetch(`/api/annotations/${targetId}/annotations`, {
+		body: JSON.stringify({
+			type: 'note',
+			target: targetId,
+			source: 'user',
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		method: 'POST',
+	});
 
+	const json = await response.json();
 
-	// const documentId = `some-id-${Math.floor(Math.random() * 10000)}`;
-	//
-	// dispatch({
-	// 	documentId,
-	// 	type: 'DOCUMENTS_CREATE_DOCUMENT',
-	// });
-	//
-	// dispatch(updateAnnotation({ documentId }));
+	if (response.status === 201) {
+		dispatch(createAnnotationDocument(json.target));
+	}
 };

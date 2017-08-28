@@ -62,6 +62,7 @@ export interface IAnnotationFormProps extends IAnnotationFormTextareaProps {
 	activeAnnotation: IAnnotation;
 	activeDocument: IDocument;
 	createAnnotationDocument: (string) => void;
+	createAnnotationOnAnnotation: (string) => void;
 	deleteAnnotation: (string) => void;
 	updateAnnotation: (any) => void;
 	updateText: (text: string, ev: any, keyCode: number) => void;
@@ -142,19 +143,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				<Li>
 					<label></label>
 					<Button
-						onClick={ev => {
-							fetch(`/api/annotations/${props.activeAnnotation.id}/annotations`, {
-								body: JSON.stringify({
-									type: 'note',
-									target: props.activeAnnotation.id,
-									source: 'user',
-								}),
-								headers: {
-									'Content-Type': 'application/json',
-								},
-								method: 'POST',
-							});
-						}}
+						onClick={() => props.createAnnotationOnAnnotation(props.activeAnnotation.id)}
 					>
 						Add annotation
 					</Button>
@@ -162,7 +151,7 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				{
 					props.activeAnnotation.hasOwnProperty('annotations') &&
 					props.activeAnnotation.annotations.map((a, i) =>
-						<Li key={i}>{a.id}</Li>
+						<Li key={i}>{a.id}{console.log(a)}</Li>
 					)
 				}
 			</Annotations>

@@ -46,6 +46,7 @@ const Annotation: React.SFC<IAnnotationProps> = (props) => {
 						activeAnnotationDocument={props.activeAnnotationDocument}
 						activeDocument={props.activeDocument}
 						createAnnotationDocument={props.createAnnotationDocument}
+						createAnnotationOnAnnotation={props.createAnnotationOnAnnotation}
 						deleteAnnotation={props.deleteAnnotation}
 						updateAnnotation={props.updateAnnotation}
 						updateAnnotationDocumentText={props.updateAnnotationDocumentText}
@@ -72,6 +73,7 @@ const Annotation: React.SFC<IAnnotationProps> = (props) => {
 					activeDocument={props.activeDocument}
 					annotations={props.annotation.children}
 					createAnnotationDocument={props.createAnnotationDocument}
+					createAnnotationOnAnnotation={props.createAnnotationOnAnnotation}
 					deleteAnnotation={props.deleteAnnotation}
 					documents={props.documents}
 					updateAnnotation={props.updateAnnotation}

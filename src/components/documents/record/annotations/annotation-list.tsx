@@ -27,6 +27,7 @@ const AnnotationList: React.SFC<IAnnotationListProps> = (props) =>
 					activeDocument={props.activeDocument}
 					annotation={annotation}
 					createAnnotationDocument={props.createAnnotationDocument}
+					createAnnotationOnAnnotation={props.createAnnotationOnAnnotation}
 					deleteAnnotation={props.deleteAnnotation}
 					documents={props.documents}
 					key={index}

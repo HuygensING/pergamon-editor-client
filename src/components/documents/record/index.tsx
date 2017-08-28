@@ -11,7 +11,7 @@ import {setRootDocumentId, updateText} from "../../../actions/documents";
 import {Column, ColumnBody, ColumnHeader, Columns} from "./columns";
 import {
 	activateAnnotation,
-	createAnnotation, createAnnotationDocument, deleteAnnotation,
+	createAnnotation, createAnnotationDocument, createAnnotationOnAnnotation, deleteAnnotation,
 	updateAnnotation, updateAnnotationDocumentText
 } from "../../../actions/annotation";
 
@@ -44,6 +44,7 @@ class ActiveDocument extends React.Component<any, any> {
 			updateAnnotation,
 			createAnnotation,
 			createAnnotationDocument,
+			createAnnotationOnAnnotation,
 			deleteAnnotation,
 			documents,
 			goToChildDocument,
@@ -105,6 +106,7 @@ class ActiveDocument extends React.Component<any, any> {
 						activeAnnotation={activeAnnotation}
 						activeDocument={activeDocument}
 						createAnnotationDocument={createAnnotationDocument}
+						createAnnotationOnAnnotation={createAnnotationOnAnnotation}
 						deleteAnnotation={deleteAnnotation}
 						documents={documents}
 						updateAnnotation={updateAnnotation}
@@ -132,6 +134,7 @@ export default connect(
 		updateAnnotation,
 		createAnnotation,
 		createAnnotationDocument,
+		createAnnotationOnAnnotation,
 		deleteAnnotation,
 		goToChildDocument,
 		updateAnnotationDocumentText,

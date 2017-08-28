@@ -42,6 +42,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 			activeAnnotation,
 			activeDocument,
 			createAnnotationDocument,
+			createAnnotationOnAnnotation,
 			deleteAnnotation,
 			documents,
 			updateAnnotation,
@@ -99,6 +100,7 @@ class Annotations extends React.Component<IAnnotationCommon, IState> {
 								annotationTree
 						}
 						createAnnotationDocument={createAnnotationDocument}
+						createAnnotationOnAnnotation={createAnnotationOnAnnotation}
 						deleteAnnotation={deleteAnnotation}
 						documents={documents}
 						updateAnnotation={updateAnnotation}
