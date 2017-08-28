@@ -1,5 +1,6 @@
-import {activateDocument, deactivateAnnotation} from "./root";
 import {IAnnotation} from "../reducers/documents";
+import {activateDocument} from "./documents";
+import {deactivateAnnotation} from "./annotation";
 
 export const activateAnnotationDocument = (annotation: IAnnotation, documentId: string) =>
 	async (dispatch, getState) => {
@@ -22,7 +23,7 @@ export const goToChildDocument = (index) => async (dispatch, getState) => {
 
 	const documentId = (annotation != null) ?
 		annotation.documentId :
-		state.root.rootDocumentId;
+		state.documents.root.id;
 
 	dispatch(activateDocument(documentId))
 

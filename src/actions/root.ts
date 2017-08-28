@@ -1,47 +1,4 @@
 import {IAnnotation} from "../reducers/documents";
-import {addDocument} from "./documents";
-import {getAnnotation, getAnnotationAnnotations, updateAnnotation} from "./annotation";
-export const deactivateAnnotation = () => async (dispatch, getState) => {
-	dispatch({ type: 'DEACTIVATE_ANNOTATION' });
-};
-
-
-export const activateAnnotation = (id) => async (dispatch, getState) => {
-	if (getState().root.activeAnnotationId !== id) {
-		dispatch({
-			id,
-			type: 'ACTIVATE_ANNOTATION',
-		});
-
-		await dispatch(getAnnotationAnnotations(id));
-		const annotation = await getAnnotation(id);
-		if (annotation.body != null) {
-			dispatch(updateAnnotation({ body: annotation.body }));
-			await dispatch(addDocument(annotation.body));
-		}
-	} else {
-		dispatch(deactivateAnnotation());
-	}
-};
-
-export const activateDocument = (id) => async (dispatch, getState) => {
-	await dispatch(deactivateAnnotation());
-	await dispatch(addDocument(id));
-
-	dispatch({
-		type: 'ACTIVATE_DOCUMENT',
-		id,
-	});
-};
-
-export const setRootId = (id) => (dispatch, getState) => {
-	dispatch({
-		type: 'SET_ROOT_DOCUMENT_ID',
-		id,
-	});
-
-	dispatch(activateDocument(id));
-};
 
 export const deactivateNote = (documentId: string) =>
 	async (dispatch, getState) => {
@@ -54,11 +11,11 @@ export const deactivateNote = (documentId: string) =>
 export const activateNote =
 	(annotation: IAnnotation) =>
 		(dispatch, getState) => {
-			const state = getState();
-			const target = state.documents.find(d => d.id === annotation.target);
+			const documents = getState().documents.all;
+			const target = documents.find(d => d.id === annotation.target);
 
 			if (target._activeNoteId !== annotation.id) {
-				const annotationDocument = state.documents.find(d => d.id === annotation.body);
+				const annotationDocument = documents.find(d => d.id === annotation.body);
 
 				dispatch({
 					annotation, // the note

@@ -100,105 +100,84 @@ export default {
 		component: Highlight,
 		display: 'inline',
 	},
-
-	"tag:TEI": {
+	meta: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:teiHeader": {
+	body: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:meta": {
+	div: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:text": {
-		component: InlineDiv,
-		display: 'inline',
-	},
-	"tag:body": {
-		component: InlineDiv,
-		display: 'inline',
-	},
-	"tag:div": {
-		component: InlineDiv,
-		display: 'inline',
-	},
-	"tag:head": {
+	head: {
 		component: styled.h2``,
 		display: 'inline',
 	},
-	"tag:ref": {
+	ref: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:p": {
-		component: Paragraph,
-		display: 'inline',
-	},
-	"tag:pb": {
+	pb: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:placeName": {
+	placeName: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:persName": {
+	persName: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:rs": {
+	rs: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:geogName": {
+	geogName: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:name": {
+	name: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:lb": {
+	lb: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:seg": {
+	seg: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:note": {
-		component: InlineDiv,
-		display: 'inline',
-	},
-	"tag:hi": {
+	hi: {
 		component: Highlight,
 		display: 'inline',
 	},
-	"tag:sup": {
+	sup: {
 		component: styled.sup``,
 		display: 'inline',
 	},
-	"tag:graphic": {
+	graphic: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:figure": {
+	figure: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:table": {
+	table: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:row": {
+	row: {
 		component: InlineDiv,
 		display: 'inline',
 	},
-	"tag:cell": {
+	cell: {
 		component: InlineDiv,
 		display: 'inline',
-	},
+	}
 };

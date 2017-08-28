@@ -1,13 +1,72 @@
 import * as uuidv4 from 'uuid/v4';
-import {activateAnnotation, deactivateAnnotation} from "./root";
+import {addMessage} from 'hire-messages';
+import {addDocument} from "./documents";
+import {deactivateNote} from "./root";
+
+const getContainerId = (container) => {
+	if (container.nodeType === 3) container = container.parentElement;
+
+	while (!container.hasAttribute('id'))	{
+		container = container.parentElement;
+	}
+
+	return container.getAttribute('id');
+};
+
+const findInTree = (root, id) => {
+	let stack = [];
+	let node;
+	stack.push(root);
+
+	while (stack.length > 0) {
+		node = stack.pop();
+		if (node.id === id) {
+			break;
+		} else if (node.children && node.children.length) {
+			for (let ii = 0; ii < node.children.length; ii += 1) {
+				stack.push(node.children[ii]);
+			}
+		}
+	}
+
+	return node.id === id ? node : null;
+};
+
+const getAnnotation = async (id: string) => {
+	const response = await fetch(`/api/annotations/${id}`);
+	return await response.json();
+};
+
+export const deactivateAnnotation = () => async (dispatch, getState) => {
+	dispatch({ type: 'DEACTIVATE_ANNOTATION' });
+};
+
+
+export const activateAnnotation = (id) => async (dispatch, getState) => {
+	if (getState().root.activeAnnotationId !== id) {
+		dispatch({
+			id,
+			type: 'ACTIVATE_ANNOTATION',
+		});
+
+		await dispatch(getAnnotationAnnotations(id));
+		const annotation = await getAnnotation(id);
+		if (annotation.body != null) {
+			dispatch(updateAnnotation({ body: annotation.body }));
+			await dispatch(addDocument(annotation.body));
+		}
+	} else {
+		dispatch(deactivateAnnotation());
+	}
+};
 
 export const getAnnotationAnnotations = (annotationId) => async (dispatch, getState) => {
 	const response = await fetch(`/api/annotations/${annotationId}/annotations`);
 	const annotations = await response.json();
 
 	dispatch({
-		type: 'DOCUMENTS_UPDATE_ANNOTATION',
-		documentId: getState().root.rootDocumentId,
+		type: 'UPDATE_ANNOTATION',
+		documentId: getState().documents.active.id,
 		annotationId,
 		props: {
 			annotations,
@@ -15,18 +74,42 @@ export const getAnnotationAnnotations = (annotationId) => async (dispatch, getSt
 	})
 };
 
-export const getAnnotation = async (id: string) => {
-	const response = await fetch(`/api/annotations/${id}`);
-	return await response.json();
-};
-
 export const createAnnotation = (ev) => async (dispatch, getState) => {
-	const { selectionStart, selectionEnd } = ev.currentTarget;
-	if (selectionEnd - selectionStart === 0) return;
+	const sel = window.getSelection();
+	if (sel.isCollapsed || !sel.rangeCount) return;
 
-	const documentId = getState().root.activeDocumentId;
+	const state = getState();
+	const activeDocument = state.documents.active;
 
-	const response = await fetch(`/api/documents/${documentId}/annotations`, {
+	if (activeDocument._activeNoteId != null || state.root.activeAnnotationId != null) {
+		addMessage({
+			type: 'error',
+			value: 'Cannot create annotation when annotation or note is active',
+		});
+		return;
+	}
+
+	const range = sel.getRangeAt(0);
+	const startContainerId = getContainerId(range.startContainer);
+	const startAnnotation = findInTree(activeDocument.tree, startContainerId);
+	console.log('start', startContainerId, startAnnotation)
+	const endContainerId = getContainerId(range.endContainer);
+	const endAnnotation = findInTree(activeDocument.tree, endContainerId);
+	console.log('end', endContainerId, endAnnotation)
+	console.log('range', range)
+
+	// console.log(endContainerId, endAnnotation, range.endContainer, range.endContainer.parentElement)
+
+	// return;
+
+	// console.log('range', range)
+	// console.log('startAnnotation', startAnnotation)
+	// console.log('endAnnotation', endAnnotation)
+
+	const selectionStart = startAnnotation.start + range.startOffset;
+	const selectionEnd = endAnnotation.start + range.endOffset;
+
+	const response = await fetch(`/api/documents/${activeDocument.id}/annotations`, {
 		headers: {
 			'Content-Type': 'application/json',
 		},
@@ -34,7 +117,7 @@ export const createAnnotation = (ev) => async (dispatch, getState) => {
 			end: selectionEnd,
 			source: 'user',
 			start: selectionStart,
-			target: documentId,
+			target: activeDocument.id,
 			type: 'note',
 		}),
 		method: 'POST',
@@ -42,25 +125,28 @@ export const createAnnotation = (ev) => async (dispatch, getState) => {
 
 	const annotation = await response.json();
 
-	dispatch({
+	await dispatch({
 		annotationId: annotation.id,
 		annotationType: 'note',
-		documentId,
+		documentId: activeDocument.id,
 		end: selectionEnd,
 		start: selectionStart,
-		type: 'DOCUMENTS_CREATE_ANNOTATION',
+		type: 'CREATE_ANNOTATION',
 	});
 
 	dispatch(activateAnnotation(annotation.id));
+
+	sel.removeAllRanges();
 };
 
 export const updateAnnotation = (props) => (dispatch, getState) => {
-	const root = getState().root;
+	const state = getState();
+
 	dispatch({
-		annotationId: root.activeAnnotationId,
-		documentId: root.activeDocumentId,
+		annotationId: state.root.activeAnnotationId,
+		documentId: state.documents.active.id,
 		props,
-		type: 'DOCUMENTS_UPDATE_ANNOTATION',
+		type: 'UPDATE_ANNOTATION',
 	});
 };
 
@@ -74,10 +160,10 @@ export const updateAnnotationDocumentText =
 			});
 
 export const deleteAnnotation = () => (dispatch, getState) => {
-	const root = getState().root;
+	const state = getState();
 	dispatch({
-		annotationId: root.activeAnnotationId,
-		documentId: root.activeDocumentId,
+		annotationId: state.root.activeAnnotationId,
+		documentId: state.documents.active.id,
 		type: 'DOCUMENTS_DELETE_ANNOTATION',
 	});
 

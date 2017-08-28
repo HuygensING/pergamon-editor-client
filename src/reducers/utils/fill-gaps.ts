@@ -1,6 +1,7 @@
 import * as uuidv4 from 'uuid/v4';
 
-const fillGaps = (parent) => {
+// Export for __tests__/fill-gaps.test.ts
+export const reducer = (parent) => {
 	let prevEnd = parent.start;
 
 	return (agg, curr, index, arr) => {
@@ -14,7 +15,7 @@ const fillGaps = (parent) => {
 		if (prev == null && curr.start > parent.start) {
 			agg.push({
 				end: curr.start,
-				id: uuidv4(),
+				id: `start___${uuidv4()}`,
 				start: parent.start,
 				type: 'text',
 			});
@@ -29,7 +30,7 @@ const fillGaps = (parent) => {
 			const end = curr.start;
 			agg.push({
 				end,
-				id: uuidv4(),
+				id: `middle___${uuidv4()}`,
 				start,
 				type: 'text',
 			});
@@ -48,7 +49,7 @@ const fillGaps = (parent) => {
 		if (index === arr.length - 1 && prevEnd < parent.end) {
 			agg.push({
 				end: parent.end,
-				id: uuidv4(),
+				id: `end___${uuidv4()}`,
 				start: prevEnd,
 				type: 'text',
 			});
@@ -56,6 +57,15 @@ const fillGaps = (parent) => {
 
 		return agg;
 	}
+};
+
+const fillGaps = (root) => {
+	if (root.hasOwnProperty('children')) {
+		root.children = root.children
+			.reduce(reducer(root), [])
+			.map(fillGaps);
+	}
+	return root;
 };
 
 export default fillGaps;

@@ -1,7 +1,6 @@
 import * as React from 'react';
-import fillGaps from "./fill-gaps";
 import TextAnnotation, {ITextAnnotationCommon} from "./text-annotation";
-import {IAnnotation, IDocument} from "../../../../reducers/documents";
+import {IAnnotation} from "../../../../reducers/documents";
 
 interface ITextTree extends ITextAnnotationCommon {
 	root: IAnnotation;
@@ -11,7 +10,6 @@ interface ITextTree extends ITextAnnotationCommon {
 const TextTree: React.SFC<ITextTree> = (props) => {
 	const children = (props.root.hasOwnProperty('children') && props.root.children.length) ?
 		props.root.children
-			.reduce(fillGaps(props.root), [])
 			.map((child, i) =>
 				<TextTree
 					activateAnnotationDocument={props.activateAnnotationDocument}

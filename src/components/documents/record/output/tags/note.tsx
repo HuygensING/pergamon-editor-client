@@ -73,7 +73,6 @@ class Note extends React.Component<any, any> {
 		) ?
 			documents.find(d => d.id === annotation.body) :
 			null;
-		console.log('a&a', annotationDocument, activeAnnotationDocument)
 
 		const isLast = ((
 				!annotation.hasOwnProperty('_first') &&

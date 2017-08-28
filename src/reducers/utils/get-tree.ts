@@ -14,17 +14,7 @@ const orderAnnotations = (annotations) =>
 		.sort(byRowStartEnd)
 		.reduce(splitAnnotations(), [])
 		.map(addRow())
-		.sort(byRowStartEnd)
-		.reduce(toTree, []);
-
-const addGaps = (root) => {
-	if (root.hasOwnProperty('children')) {
-		root.children = root.children
-			.reduce(fillGaps(root), [])
-			.map(addGaps);
-	}
-	return root;
-};
+		.sort(byRowStartEnd);
 
 const treeCache = {};
 export const getTree = (id: string, text: string, annotations: IAnnotation[]): IAnnotation => {
@@ -33,7 +23,9 @@ export const getTree = (id: string, text: string, annotations: IAnnotation[]): I
 	if (treeCache.hasOwnProperty(hash)) {
 		return treeCache[hash];
 	}	else {
-		const children = orderAnnotations(JSON.parse(annotationString));
+		const children = orderAnnotations(JSON.parse(annotationString))
+			.reduce(toTree, []);
+
 		const rootAnnotation = ({
 			children,
 			end: text.length,
@@ -43,7 +35,7 @@ export const getTree = (id: string, text: string, annotations: IAnnotation[]): I
 			target: null,
 			type: 'doc',
 		});
-		const withGaps = addGaps(rootAnnotation);
+		const withGaps = fillGaps(rootAnnotation);
 		treeCache[hash] = withGaps;
 		return withGaps;
 	}

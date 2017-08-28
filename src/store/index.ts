@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import reducers from '../reducers';
 import thunkMiddleware from 'redux-thunk';
@@ -10,16 +10,6 @@ const logger = (/* store */) => next => action => {
 
 	return next(action);
 };
-//
-// const createStoreWithMiddleware = applyMiddleware(thunkMiddleware, logger)(createStore);
-//
-// const data = combineReducers({
-// 	...reducers,
-// 	routing: routerReducer,
-// });
-//
-// export default createStoreWithMiddleware(data, window['SERVER_STATE']);
-
 
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = routerMiddleware(history);
@@ -29,5 +19,6 @@ const middleware = routerMiddleware(history);
 export default createStore(
 	reducers,
 	applyMiddleware(middleware, thunkMiddleware, logger)
+	// applyMiddleware(middleware, thunkMiddleware)
 );
 

@@ -1,6 +1,7 @@
-import {updateProp, updatePropInArray} from "./utils/index";
-import {getTree} from "./tree";
+import {replaceItemInArray, updateProp, updatePropInArray} from "./utils/index";
+import {getTree} from "./utils/get-tree";
 
+export type SourceType = 'system' | 'xml' | 'user';
 export interface IAnnotation {
 	// If the annotation is splitted, is it the first segment?
 	_first?: boolean;
@@ -17,14 +18,14 @@ export interface IAnnotation {
 	// TODO remove?
 	_targetType?: 'annotation' | 'document';
 
-	annotations?: IAnnotation[],
+	annotations?: IAnnotation[];
 	attributes?: any;
-	children?: IAnnotation[],
-	body?: string,
-	end: number,
+	children?: IAnnotation[];
+	body?: string;
+	end: number;
 	id?: number | string;
-	source: 'system' | 'xml' | 'user';
-	start: number,
+	source: SourceType;
+	start: number;
 	target: string;
 	type: string;
 }
@@ -44,14 +45,41 @@ export const defaultDocument: IDocument = {
 	tree: null,
 };
 
-export const initialState: IDocument[] = [];
+interface IState {
+	active: IDocument;
+	all: IDocument[];
+	root: IDocument;
+}
+export const initialState: IState = {
+	active: null,
+	all: [],
+	root: null,
+};
 
 export default (state = initialState, action) => {
 	let nextState = state;
 
+	const updatePropsInDocument = (id, props) => {
+		const doc = nextState.all.find(x => x.id === id);
+		const nextDoc = updateProp(doc, props);
+		const all = replaceItemInArray(nextState.all, nextDoc);
+		const nextStateProps: Partial<IState> = { all };
+		if (nextDoc.id === nextState.active.id) nextStateProps.active = nextDoc;
+		return updateProp(nextState, nextStateProps);
+	};
+
 	switch (action.type) {
+		case 'SET_ROOT_DOCUMENT': {
+			nextState = updateProp(nextState, {
+				root: nextState.all.find(d => d.id === action.id),
+			});
+			break;
+		}
+
 		case 'DOCUMENTS_ADD': {
-			nextState = nextState.concat(action.document);
+			nextState = updateProp(nextState, {
+				all: nextState.all.concat(action.document)
+			});
 			break;
 		}
 
@@ -60,56 +88,60 @@ export default (state = initialState, action) => {
 				 id: action.documentId,
 			});
 
-			nextState = nextState.concat(newDocument);
+			nextState = updateProp(nextState, {
+				all: nextState.all.concat(newDocument)
+			});
 			break;
 		}
 
 		case 'ACTIVATE_DOCUMENT': {
-			nextState = updatePropInArray(nextState, action.id, (doc) =>
-				(doc.tree == null) ?
-					{ tree: getTree(doc.id, doc.text, doc.annotations) } :
-					null
-			);
+			let doc = nextState.all.find(d => d.id === action.id);
+			if (doc.tree == null) {
+				doc = updateProp(doc, { tree: getTree(doc.id, doc.text, doc.annotations)});
+			}
+
+			nextState = updateProp(nextState, {
+				all: replaceItemInArray(nextState.all, doc),
+				active: doc,
+			});
 			break;
 		}
 
 		case 'ACTIVATE_NOTE': {
 			// Set the annotation id (note id) on the
 			// target document (parent of note)
-			nextState = updatePropInArray(
-				nextState,
-				action.target.id,
-				(doc) => ({ _activeNoteId: action.annotation.id }),
-			);
+			let targetDocument = updateProp(action.target, { _activeNoteId: action.annotation.id })
 
-			if (action.annotationDocument != null) {
-				// Calc the tree of the annotation document (the note body)
-				// if the tree is not calculated yet.
-				nextState = updatePropInArray(
-					nextState,
-					action.annotationDocument.id,
-					(doc) =>
-						(doc.tree == null) ?
-							{ tree: getTree(doc.id, doc.text, doc.annotations) } :
-							null
-				);
+			let annotationDocument = action.annotationDocument;
+			// Calc the tree of the annotation document (the note body)
+			// if the tree is not calculated yet.
+			if (action.annotationDocument != null && action.annotationDocument.tree == null) {
+				annotationDocument = updateProp(nextState.active, {
+					tree: getTree(
+						action.annotationDocument.id,
+						action.annotationDocument.text,
+						action.annotationDocument.annotations
+					)
+				});
+			}
+
+			const all = replaceItemInArray(nextState.all, targetDocument, annotationDocument);
+
+			nextState = updateProp(nextState, { all });
+			if (targetDocument.id === nextState.active.id) {
+				nextState = updateProp(nextState, { active: targetDocument });
 			}
 
 			break;
 		}
 
 		case 'DEACTIVATE_NOTE': {
-			nextState = updatePropInArray(
-				nextState,
-				action.documentId,
-				(doc) => ({ _activeNoteId: null }),
-			);
-
+			nextState = updatePropsInDocument(action.documentId, { _activeNoteId: null });
 			break;
 		}
 
 		case 'DOCUMENTS_REPLAY_TEXT_EVENTS': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc) => {
+			const all = updatePropInArray(nextState, action.documentId, (doc) => {
 				const annotations = doc.annotations.map((a) => {
 					action.events.map(e => {
 						// Backspace
@@ -140,58 +172,64 @@ export default (state = initialState, action) => {
 				};
 			});
 
+			nextState = updateProp(nextState, { all });
+
 			break;
 		}
 
 		case 'DOCUMENTS_UPDATE_ANNOTATION_DOCUMENT_TEXT': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc) => ({
+			const all = updatePropInArray(nextState, action.documentId, (doc) => ({
 				text: action.text,
 				tree: getTree(doc.id, action.text, doc.annotations),
 			}));
 
+			nextState = updateProp(nextState, { all });
+
 			break;
 		}
 
-		case 'DOCUMENTS_CREATE_ANNOTATION': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
-				const annotations = doc.annotations.concat({
-					target: action.documentId,
-					_targetType: 'document',
-					id: action.annotationId,
-					start: action.start,
-					end: action.end,
-					source: 'user',
-					type: action.annotationType,
-				});
-
-				return {
-					annotations,
-					tree: getTree(action.id, doc.text, annotations),
-				};
+		case 'CREATE_ANNOTATION': {
+			const activeDocument = nextState.all.find(d => d.id === action.documentId);
+			const annotations = activeDocument.annotations.concat({
+				target: action.documentId,
+				_targetType: 'document',
+				id: action.annotationId,
+				start: action.start,
+				end: action.end,
+				source: 'user',
+				type: action.annotationType,
 			});
-
-			break;
-		}
-
-		case 'DOCUMENTS_UPDATE_ANNOTATION': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
-				const annotations = doc.annotations.map(a =>
-					(a.id === action.annotationId) ?
-						updateProp(a, action.props)	:
-						a
-				);
-
-				return {
-					annotations,
-					tree: getTree(action.id, doc.text, annotations),
-				};
+			const active = updateProp(activeDocument, {
+				annotations,
+				tree: getTree(activeDocument.id, activeDocument.text, annotations),
 			});
+			const all = replaceItemInArray(nextState.all, active);
+			nextState = updateProp(nextState, {all, active});
 
 			break;
 		}
 
-		case 'DOCUMENTS_DELETE_ANNOTATION': {
-			nextState = updatePropInArray(nextState, action.documentId, (doc: IDocument) => {
+		case 'UPDATE_ANNOTATION': {
+			const activeDocument = nextState.all.find(d => d.id === action.documentId);
+
+			const annotations = updatePropInArray(
+				activeDocument.annotations,
+				action.annotationId,
+				(anno: IAnnotation) => action.props
+			);
+
+			const active = updateProp(activeDocument, {
+				annotations,
+				tree: getTree(activeDocument.id, activeDocument.text, annotations),
+			});
+			const all = replaceItemInArray(nextState.all, active);
+			nextState = updateProp(nextState, { active, all });
+
+			break;
+		}
+
+		case 'DELETE_ANNOTATION': {
+			const all = updatePropInArray(nextState.all, action.documentId, (doc: IDocument) => {
 				const annotations = doc.annotations.filter(a =>
 					(a.id !== action.annotationId)
 				);
@@ -201,6 +239,8 @@ export default (state = initialState, action) => {
 					tree: getTree(action.id, doc.text, annotations),
 				};
 			});
+
+			nextState = updateProp(nextState, { all });
 
 			break;
 		}

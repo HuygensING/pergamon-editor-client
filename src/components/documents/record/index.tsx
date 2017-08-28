@@ -2,14 +2,15 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import TextTree from "./output/text-tree";
-import Text from "./text/index";
+// import Text from "./text/index";
 import Annotations from "./annotations/index";
 import {activateAnnotationDocument, goToChildDocument} from "../../../actions/annotation-path";
 import Menu from "./menu";
-import {activateAnnotation, activateNote, setRootId} from "../../../actions/root";
-import {updateText} from "../../../actions/documents";
+import {activateNote} from "../../../actions/root";
+import {setRootDocumentId, updateText} from "../../../actions/documents";
 import {Column, ColumnBody, ColumnHeader, Columns} from "./columns";
 import {
+	activateAnnotation,
 	createAnnotation, createAnnotationDocument, deleteAnnotation,
 	updateAnnotation, updateAnnotationDocumentText
 } from "../../../actions/annotation";
@@ -23,12 +24,12 @@ const Div = styled.div`
 
 class ActiveDocument extends React.Component<any, any> {
 	public componentDidMount() {
-		this.props.setRootId(this.props.match.params.id, true);
+		this.props.setRootDocumentId(this.props.match.params.id, true);
 	}
 
 	public componentWillReceiveProps(nextProps) {
 		if (this.props.match.params.id !== nextProps.match.params.id) {
-			this.props.setRootId(nextProps.match.params.id, true);
+			this.props.setRootDocumentId(nextProps.match.params.id, true);
 		}
 	}
 
@@ -38,7 +39,7 @@ class ActiveDocument extends React.Component<any, any> {
 			activateAnnotationDocument,
 			activateNote,
 			activeAnnotationId,
-			activeDocumentId,
+			activeDocument,
 			annotationsInPath,
 			updateAnnotation,
 			createAnnotation,
@@ -46,16 +47,12 @@ class ActiveDocument extends React.Component<any, any> {
 			deleteAnnotation,
 			documents,
 			goToChildDocument,
-			rootDocumentId,
+			rootDocument,
 			updateAnnotationDocumentText,
 			updateText,
 		} = this.props;
 
-		const rootDocument = documents.find(d => d.id === rootDocumentId);
-		if (rootDocument == null) return null;
-
-		const activeDocument = documents.find(d => d.id === activeDocumentId);
-		if (activeDocument == null) return null;
+		if (rootDocument == null || activeDocument == null) return null;
 
 		const activeAnnotation = activeDocument.annotations
 			.find(a => a.id === activeAnnotationId);
@@ -77,24 +74,28 @@ class ActiveDocument extends React.Component<any, any> {
 				  root={rootDocument}
 				/>
 				<Columns>
-					<Text
+					{/*<Text
 						activeDocument={activeDocument}
 						createAnnotation={createAnnotation}
 						updateText={updateText}
-					/>
+					/>*/}
 					<Column>
 						<ColumnHeader value="Output" />
 						<ColumnBody style={{ position: 'relative' }}>
-							<TextTree
-								activateAnnotationDocument={activateAnnotationDocument}
-								activateNote={activateNote}
-								activeAnnotationDocument={activeAnnotationDocument}
-								activeNoteId={activeDocument._activeNoteId}
-								activeAnnotation={activeAnnotation}
-								documents={documents}
-								root={activeDocument.tree}
-								text={activeDocument.text}
-							/>
+							<div
+								onMouseUp={createAnnotation}
+							>
+								<TextTree
+									activateAnnotationDocument={activateAnnotationDocument}
+									activateNote={activateNote}
+									activeAnnotationDocument={activeAnnotationDocument}
+									activeNoteId={activeDocument._activeNoteId}
+									activeAnnotation={activeAnnotation}
+									documents={documents}
+									root={activeDocument.tree}
+									text={activeDocument.text}
+								/>
+							</div>
 						</ColumnBody>
 					</Column>
 					<Annotations
@@ -120,12 +121,13 @@ export default connect(
 	state => ({
 		activeAnnotationId: state.root.activeAnnotationId,
 		annotationsInPath: state.annotationPath,
-		activeDocumentId: state.root.activeDocumentId,
-		documents: state.documents,
-		rootDocumentId: state.root.rootDocumentId,
+		activeDocument: state.documents.active,
+		documents: state.documents.all,
+		rootDocument: state.documents.root,
 	}),
 	{
-		activateAnnotation, activateAnnotationDocument,
+		activateAnnotation,
+		activateAnnotationDocument,
 		activateNote,
 		updateAnnotation,
 		createAnnotation,
@@ -134,6 +136,6 @@ export default connect(
 		goToChildDocument,
 		updateAnnotationDocumentText,
 		updateText,
-		setRootId,
+		setRootDocumentId,
 	}
 )(ActiveDocument);
