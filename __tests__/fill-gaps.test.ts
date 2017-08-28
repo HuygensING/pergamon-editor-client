@@ -1,4 +1,4 @@
-import fillGaps from "../src/components/documents/record/output/fill-gaps";
+import {reducer} from "../src/reducers/utils/fill-gaps";
 
 describe('fillGaps', () => {
 	test('fillGaps', () => {
@@ -12,7 +12,7 @@ describe('fillGaps', () => {
 			start: 0,
 		};
 
-		const received = root.children.reduce(fillGaps(root), [])
+		const received = root.children.reduce(reducer(root), [])
 			.map((x: any) => { delete x.id; delete x.type; return x; });
 
 		const expected = [

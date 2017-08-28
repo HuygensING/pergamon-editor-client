@@ -69,11 +69,13 @@ export const annotationsSplitted = [
 		type: 'paragraph',
 	},
 	{
+		_first: true,
 		start: 31,
 		end: 32,
 		type: 'paragraph',
 	},
 	{
+		_last: true,
 		start: 32,
 		end: 72,
 		type: 'paragraph',
@@ -84,16 +86,19 @@ export const annotationsSplitted = [
 		type: 'bold',
 	},
 	{
+		_first: true,
 		start: 23,
 		end: 31,
 		type: 'underline',
 	},
 	{
+		_segment: true,
 		start: 31,
 		end: 32,
 		type: 'underline',
 	},
 	{
+		_last: true,
 		start: 32,
 		end: 39,
 		type: 'underline',
@@ -112,11 +117,13 @@ export const tree = [
 		type: 'paragraph',
 		children: [
 			{
+				_first: true,
 				start: 31,
 				end: 32,
 				type: 'paragraph',
 				children: [
 					{
+						_segment: true,
 						start: 31,
 						end: 32,
 						type: 'underline',
@@ -129,6 +136,7 @@ export const tree = [
 				type: 'bold',
 			},
 			{
+				_first: true,
 				start: 23,
 				end: 31,
 				type: 'underline',
@@ -136,11 +144,13 @@ export const tree = [
 		]
 	},
 	{
+		_last: true,
 		start: 32,
 		end: 72,
 		type: 'paragraph',
 		children: [
 			{
+				_last: true,
 				start: 32,
 				end: 39,
 				type: 'underline',

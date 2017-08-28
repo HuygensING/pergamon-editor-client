@@ -1,7 +1,8 @@
-import createTree from '../src/reducers/utils/create-tree';
-import {addRow, byDisplayStartEnd} from "../src/reducers/utils/sort";
+import createTree from '../src/reducers/utils/to-tree';
+import {byDisplayStartEnd} from "../src/reducers/utils/sort";
 import {splitAnnotations, toSplitPoints} from "../src/reducers/utils/split-annotations";
 import { annotations, annotationsWithRow, annotationsSplitted, tree } from './data/original-b';
+import {addRow} from "../src/reducers/utils/add-row";
 
 describe('addRow', () => {
 	test('addRow 1', () => {

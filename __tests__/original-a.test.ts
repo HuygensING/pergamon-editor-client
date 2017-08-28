@@ -1,6 +1,6 @@
-import toTree from '../src/reducers/utils/create-tree';
+import toTree from '../src/reducers/utils/to-tree';
 import {splitAnnotations, toSplitPoints} from "../src/reducers/utils/split-annotations";
-import {addRow, byDisplayStartEnd, byStartEnd} from "../src/reducers/utils/sort";
+import {byDisplayStartEnd, byStartEnd} from "../src/reducers/utils/sort";
 import {
 	annotations,
 	annotationsSorted,
@@ -8,6 +8,7 @@ import {
 	annotationsWithRow,
 	tree
 } from "./data/original-a";
+import {addRow} from "../src/reducers/utils/add-row";
 
 describe('byDisplayStartEnd - set 1', () => {
 	test('byDisplayStartEnd 1', () => {

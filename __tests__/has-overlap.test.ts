@@ -1,4 +1,4 @@
-import {hasOverlap} from "../src/reducers/utils/sort";
+import {hasOverlap} from "../src/reducers/utils/index";
 
 describe('hasOverlap', () => {
 	test('hasOverlap 1', () => {

@@ -1,3 +1,5 @@
+import * as uuidv4 from 'uuid/v4';
+
 const fillGaps = (parent) => {
 	let prevEnd = parent.start;
 
@@ -12,9 +14,8 @@ const fillGaps = (parent) => {
 		if (prev == null && curr.start > parent.start) {
 			agg.push({
 				end: curr.start,
-				id: 'some-random-first-id',
+				id: uuidv4(),
 				start: parent.start,
-				// text: data.text.slice(0, end),
 				type: 'text',
 			});
 			prevEnd = curr.start;
@@ -28,9 +29,8 @@ const fillGaps = (parent) => {
 			const end = curr.start;
 			agg.push({
 				end,
-				id: `some-random-id-${index}`,
+				id: uuidv4(),
 				start,
-				// text: data.text.slice(start - 1, end),
 				type: 'text',
 			});
 		}
@@ -48,7 +48,7 @@ const fillGaps = (parent) => {
 		if (index === arr.length - 1 && prevEnd < parent.end) {
 			agg.push({
 				end: parent.end,
-				id: 'some-random-last-id',
+				id: uuidv4(),
 				start: prevEnd,
 				type: 'text',
 			});
