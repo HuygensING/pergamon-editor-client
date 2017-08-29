@@ -97,6 +97,8 @@ class ActiveDocument extends React.Component<any, any> {
 										text={activeDocument.text}
 									/>
 								</div>
+							{
+								rootDocument.id !== activeDocument.id &&
 								<ul
 									style={{ display: 'flex', flex: 1 }}
 								>
@@ -106,6 +108,7 @@ class ActiveDocument extends React.Component<any, any> {
 										updateText={updateText}
 									/>
 								</ul>
+							}
 						</ColumnBody>
 					</Column>
 					<Annotations

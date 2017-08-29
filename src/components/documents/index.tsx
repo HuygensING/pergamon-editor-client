@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import styled from "styled-components";
 import Upload from "./upload";
 import {Column, ColumnBody, ColumnHeader} from "./record/columns";
+import Button from "../ui/button";
 
 const Columns = styled.div`
 	display: flex;
@@ -27,7 +28,12 @@ class Documents extends React.Component<IProps, null> {
 		return (
 			<Columns>
 				<Column>
-					<ColumnHeader value="Documents" />
+					<ColumnHeader value="Documents">
+						<div style={{ flex: 3 }}>
+							<Button onClick={this.props.getDocumentIds}>⟳</Button>
+						</div>
+					</ColumnHeader>
+
 					<ColumnBodyUl>
 					{
 						this.props.documentIds.map(id =>
