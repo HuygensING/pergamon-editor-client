@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import styled from "styled-components";
 import TextTree from "./output/text-tree";
-// import Text from "./text/index";
+import Text from "./text/index";
 import Annotations from "./annotations/index";
 import {activateAnnotationDocument, goToChildDocument} from "../../../actions/annotation-path";
 import Menu from "./menu";
@@ -75,28 +75,37 @@ class ActiveDocument extends React.Component<any, any> {
 				  root={rootDocument}
 				/>
 				<Columns>
-					{/*<Text
-						activeDocument={activeDocument}
-						createAnnotation={createAnnotation}
-						updateText={updateText}
-					/>*/}
 					<Column>
 						<ColumnHeader value="Output" />
-						<ColumnBody style={{ position: 'relative' }}>
-							<div
-								onMouseUp={createAnnotation}
-							>
-								<TextTree
-									activateAnnotationDocument={activateAnnotationDocument}
-									activateNote={activateNote}
-									activeAnnotationDocument={activeAnnotationDocument}
-									activeNoteId={activeDocument._activeNoteId}
-									activeAnnotation={activeAnnotation}
-									documents={documents}
-									root={activeDocument.tree}
-									text={activeDocument.text}
-								/>
-							</div>
+						<ColumnBody style={{
+							display: 'flex',
+							flexDirection: 'column',
+							position: 'relative',
+						}}>
+								<div
+									style={{ flex: 1 }}
+									onMouseUp={createAnnotation}
+								>
+									<TextTree
+										activateAnnotationDocument={activateAnnotationDocument}
+										activateNote={activateNote}
+										activeAnnotationDocument={activeAnnotationDocument}
+										activeNoteId={activeDocument._activeNoteId}
+										activeAnnotation={activeAnnotation}
+										documents={documents}
+										root={activeDocument.tree}
+										text={activeDocument.text}
+									/>
+								</div>
+								<ul
+									style={{ display: 'flex', flex: 1 }}
+								>
+									<Text
+										activeDocument={activeDocument}
+										createAnnotation={createAnnotation}
+										updateText={updateText}
+									/>
+								</ul>
 						</ColumnBody>
 					</Column>
 					<Annotations

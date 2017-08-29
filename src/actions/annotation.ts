@@ -202,6 +202,6 @@ export const createAnnotationOnAnnotation = (targetId) => async (dispatch, getSt
 	const json = await response.json();
 
 	if (response.status === 201) {
-		dispatch(createAnnotationDocument(json.target));
+		dispatch(createAnnotationDocument(json.id));
 	}
 };

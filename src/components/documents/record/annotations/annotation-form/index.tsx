@@ -10,6 +10,7 @@ import Button from "../../../../ui/button";
 import RemoveButton from "../../../../ui/remove-button";
 import {IAnnotation, IDocument} from "../../../../../reducers/documents";
 import EditAnnotationDocumentButton from "../../../../ui/edit-annotation-document-button";
+import history from '../../../../../store/history';
 
 export const inputEl = `
 	flex: 3;
@@ -151,7 +152,16 @@ const AnnotationForm: React.SFC<IAnnotationFormProps> = (props) =>
 				{
 					props.activeAnnotation.hasOwnProperty('annotations') &&
 					props.activeAnnotation.annotations.map((a, i) =>
-						<Li key={i}>{a.id}{console.log(a)}</Li>
+						<Li
+							key={i}
+							onClick={async () => {
+								const response = await fetch(`/api/annotations/${a.id}`);
+								const json = await response.json();
+								history.push(`/documents/${json.body}`);
+							}}
+						>
+							{a.id}
+						</Li>
 					)
 				}
 			</Annotations>
