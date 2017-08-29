@@ -68,6 +68,11 @@ export default (state = initialState, action) => {
 		return updateProp(nextState, nextStateProps);
 	};
 
+	const updatePropsInDocumentWithCallback = (id, cb) => {
+		const doc = nextState.all.find(x => x.id === id);
+		return updatePropsInDocument(doc.id, cb(doc));
+	};
+
 	switch (action.type) {
 		case 'SET_ROOT_DOCUMENT': {
 			nextState = updateProp(nextState, {
@@ -141,7 +146,7 @@ export default (state = initialState, action) => {
 		}
 
 		case 'DOCUMENTS_REPLAY_TEXT_EVENTS': {
-			const all = updatePropInArray(nextState, action.documentId, (doc) => {
+			nextState = updatePropsInDocumentWithCallback(action.documentId, (doc) => {
 				const annotations = doc.annotations.map((a) => {
 					action.events.map(e => {
 						// Backspace
@@ -171,8 +176,6 @@ export default (state = initialState, action) => {
 					tree: getTree(doc.id, action.text, annotations),
 				};
 			});
-
-			nextState = updateProp(nextState, { all });
 
 			break;
 		}
