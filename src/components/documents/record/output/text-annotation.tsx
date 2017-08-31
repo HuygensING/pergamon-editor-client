@@ -50,8 +50,9 @@ const TextAnnotation: React.SFC<ITextAnnotationProps> = (props) => {
 			activateNote={props.activateNote}
 			activeNoteId={props.activeNoteId}
 			annotation={props.annotation}
+			className={props.annotation.type}
 			documents={props.documents}
-			id={props.annotation.id}
+			id={props.annotation._tagId}
 		>
 			{props.children}
 		</Comp>

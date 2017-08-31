@@ -34,6 +34,7 @@ const Annotation: React.SFC<IAnnotationProps> = (props) => {
 			}>
 				{props.annotation.type}
 				<Small>({props.annotation.start} - {props.annotation.end})</Small>
+				<Small>{props.annotation._tagId}</Small>
 			</Head4>
 			{
 				(

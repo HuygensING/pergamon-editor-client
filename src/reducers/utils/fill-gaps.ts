@@ -15,7 +15,7 @@ export const reducer = (parent) => {
 		if (prev == null && curr.start > parent.start) {
 			agg.push({
 				end: curr.start,
-				id: `start___${uuidv4()}`,
+				_tagId: `start___${uuidv4()}`,
 				start: parent.start,
 				type: 'text',
 			});
@@ -30,7 +30,7 @@ export const reducer = (parent) => {
 			const end = curr.start;
 			agg.push({
 				end,
-				id: `middle___${uuidv4()}`,
+				_tagId: `middle___${uuidv4()}`,
 				start,
 				type: 'text',
 			});
@@ -49,7 +49,7 @@ export const reducer = (parent) => {
 		if (index === arr.length - 1 && prevEnd < parent.end) {
 			agg.push({
 				end: parent.end,
-				id: `end___${uuidv4()}`,
+				_tagId: `end___${uuidv4()}`,
 				start: prevEnd,
 				type: 'text',
 			});

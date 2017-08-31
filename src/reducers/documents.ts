@@ -13,6 +13,8 @@ export interface IAnnotation {
 	// Ie. somewhere in between.
 	_segment?: boolean;
 
+	_tagId?: string;
+
 	// Type and id of the target (parent)
 	// _targetId?: string;
 	// TODO remove?

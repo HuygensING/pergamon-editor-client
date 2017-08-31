@@ -14,7 +14,19 @@ const orderAnnotations = (annotations) =>
 		.sort(byRowStartEnd)
 		.reduce(splitAnnotations(), [])
 		.map(addRow())
-		.sort(byRowStartEnd);
+		.sort(byRowStartEnd)
+		.map((a: IAnnotation) => {
+			const suffix = a.hasOwnProperty('_first') ?
+				'_first' :
+				a.hasOwnProperty('_last') ?
+					'_last' :
+					a.hasOwnProperty('_segment') ?
+						`_segment_${Math.round(Math.random() * 1000000)}` :
+						'';
+
+			a._tagId = `${a.id}__${a.type}${suffix}`;
+			return a;
+	});
 
 const treeCache = {};
 export const getTree = (id: string, text: string, annotations: IAnnotation[]): IAnnotation => {

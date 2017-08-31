@@ -25,7 +25,7 @@ export const addDocument = (id) => async (dispatch, getState) => {
 	const documents = getState().documents.all;
 
 	if (documents.find(d => d.id === id) == null) {
-		const response = await fetch(`/api/documents/${id}`);
+		const response = await fetch(`/api/documents/${id}?recursive=false`);
 		const doc = await response.json();
 		doc.id = id;
 

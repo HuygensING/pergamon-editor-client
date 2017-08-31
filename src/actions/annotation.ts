@@ -1,26 +1,20 @@
 import * as uuidv4 from 'uuid/v4';
 import {addMessage} from 'hire-messages';
 import {addDocument} from "./documents";
-import {deactivateNote} from "./root";
+import {IGNORE_CLASSNAME} from "../constants";
+import {IAnnotation} from "../reducers/documents";
 
-const getContainerId = (container) => {
-	if (container.nodeType === 3) container = container.parentElement;
-
-	while (!container.hasAttribute('id'))	{
-		container = container.parentElement;
-	}
-
-	return container.getAttribute('id');
-};
+const getContainer = (el: Node): Element => (el instanceof Element) ? el : el.parentElement;
 
 const findInTree = (root, id) => {
-	let stack = [];
-	let node;
+	let stack: IAnnotation[] = [];
+	let node: IAnnotation;
 	stack.push(root);
 
 	while (stack.length > 0) {
 		node = stack.pop();
-		if (node.id === id) {
+
+		if (node._tagId === id) {
 			break;
 		} else if (node.children && node.children.length) {
 			for (let ii = 0; ii < node.children.length; ii += 1) {
@@ -28,8 +22,8 @@ const findInTree = (root, id) => {
 			}
 		}
 	}
-
-	return node.id === id ? node : null;
+	
+	return node._tagId === id ? node : null;
 };
 
 const getAnnotation = async (id: string) => {
@@ -71,7 +65,7 @@ export const getAnnotationAnnotations = (annotationId) => async (dispatch, getSt
 		props: {
 			annotations,
 		}
-	})
+	});
 };
 
 export const createAnnotation = (ev) => async (dispatch, getState) => {
@@ -90,12 +84,29 @@ export const createAnnotation = (ev) => async (dispatch, getState) => {
 	}
 
 	const range = sel.getRangeAt(0);
-	const startContainerId = getContainerId(range.startContainer);
+	const startContainer = getContainer(range.startContainer);
+	const endContainer = getContainer(range.endContainer);
+	
+	if (
+			startContainer.classList.contains(IGNORE_CLASSNAME) ||
+			endContainer.classList.contains(IGNORE_CLASSNAME)
+	) {
+		addMessage({
+			type: 'error',
+			value: 'Cannot create annotation on selected element',
+		});
+		return;
+	}
+
+	const startContainerId = startContainer.getAttribute('id');
 	const startAnnotation = findInTree(activeDocument.tree, startContainerId);
-	// console.log('start', startContainerId, startAnnotation)
-	const endContainerId = getContainerId(range.endContainer);
+
+	// console.log('start', startContainer, startAnnotation)
+
+	const endContainerId = endContainer.getAttribute('id');
 	const endAnnotation = findInTree(activeDocument.tree, endContainerId);
-	// console.log('end', endContainerId, endAnnotation)
+	
+	// console.log('end', endContainer, endAnnotation)
 	// console.log('range', range)
 
 	const selectionStart = startAnnotation.start + range.startOffset;

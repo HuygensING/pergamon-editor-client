@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import Note from "./note";
-import {InlineDiv} from "./base";
+import {Div, InlineDiv} from "./base";
 
-const Div = styled.div``;
 const Doc = Div;
 
 const Paragraph = styled.div`

@@ -3,7 +3,7 @@ import HireTooltip from 'hire-tooltip';
 import {InlineDiv} from "./base";
 import styled from "styled-components";
 import TextTree from "../text-tree";
-import {orangeLight, orangeRGB} from "../../../../../constants";
+import {IGNORE_CLASSNAME, orangeLight, orangeRGB} from "../../../../../constants";
 import EditAnnotationDocumentButton from "../../../../ui/edit-annotation-document-button";
 
 interface INoteNumber {
@@ -83,11 +83,12 @@ class Note extends React.Component<any, any> {
 		);
 
 		const active = activeNoteId === annotation.id;
-
+		
 		return (
 			<Span
 				active={active}
 				className={className}
+				id={this.props.id}
 				isLast={isLast}
 			>
 				{children}
@@ -95,6 +96,7 @@ class Note extends React.Component<any, any> {
 					isLast &&
 					<NoteNumber
 						active={active}
+						className={IGNORE_CLASSNAME}
 						onClick={(ev) => {
 							ev.stopPropagation();
 							if (activateNote) activateNote(annotation)
