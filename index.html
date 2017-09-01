@@ -29,6 +29,9 @@
 			}
 		</style>
 		<style>
+            .node {
+				cursor: pointer;
+			}
 
 			.node circle {
 				fill: #999;
@@ -51,6 +54,15 @@
 				stroke: #555;
 				stroke-opacity: 0.4;
 				stroke-width: 1.5px;
+			}
+
+			#tooltip {
+				background: rgba(200, 200, 200, 0.6);
+                position: absolute;
+				padding: 1em;
+				border-radius: 3px;
+				box-sizing: border-box;
+                width: 300px
 			}
 
 		</style>

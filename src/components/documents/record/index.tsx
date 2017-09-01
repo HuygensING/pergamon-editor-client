@@ -120,6 +120,7 @@ class ActiveDocument extends React.Component<any, any> {
 					{
 						this.state.visualisations ?
 							<Visualisations
+								activateAnnotation={activateAnnotation}
 								activeDocument={activeDocument}
 							/> :
 							<Annotations

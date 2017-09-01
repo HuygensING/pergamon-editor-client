@@ -1,4 +1,5 @@
 import * as uuidv4 from 'uuid/v4';
+import {SYSTEM_TEXT_TYPE} from "../../constants";
 
 // Export for __tests__/fill-gaps.test.ts
 export const reducer = (parent) => {
@@ -17,7 +18,7 @@ export const reducer = (parent) => {
 				end: curr.start,
 				_tagId: `start___${uuidv4()}`,
 				start: parent.start,
-				type: 'text',
+				type: SYSTEM_TEXT_TYPE,
 			});
 			prevEnd = curr.start;
 		}
@@ -32,7 +33,7 @@ export const reducer = (parent) => {
 				end,
 				_tagId: `middle___${uuidv4()}`,
 				start,
-				type: 'text',
+				type: SYSTEM_TEXT_TYPE,
 			});
 		}
 
@@ -51,7 +52,7 @@ export const reducer = (parent) => {
 				end: parent.end,
 				_tagId: `end___${uuidv4()}`,
 				start: prevEnd,
-				type: 'text',
+				type: SYSTEM_TEXT_TYPE,
 			});
 		}
 

@@ -2,8 +2,6 @@ import styled from 'styled-components'
 import Note from "./note";
 import {Div, InlineDiv} from "./base";
 
-const Doc = Div;
-
 const Paragraph = styled.div`
 	margin: 1em;
 `;
@@ -39,6 +37,10 @@ const Line = Div.extend`
 `;
 
 export default {
+	__text: {
+		component: Text,
+		display: 'inline',
+	},
 	bold: {
 		component: Bold,
 		display: 'inline',
@@ -48,11 +50,11 @@ export default {
 		display: 'inline',
 	},
 	doc: {
-		component: Doc,
+		component: Div,
 		display: 'block',
 	},
 	TEI: {
-		component: Doc,
+		component: Div,
 		display: 'block',
 	},
 	teiHeader: {
@@ -88,8 +90,8 @@ export default {
 		display: 'block',
 	},
 	text: {
-		component: Text,
-		display: 'inline',
+		component: Div,
+		display: 'block',
 	},
 	underline: {
 		component: Underline,
@@ -104,8 +106,8 @@ export default {
 		display: 'inline',
 	},
 	body: {
-		component: InlineDiv,
-		display: 'inline',
+		component: Div,
+		display: 'block',
 	},
 	div: {
 		component: InlineDiv,
@@ -113,7 +115,7 @@ export default {
 	},
 	head: {
 		component: styled.h2``,
-		display: 'inline',
+		display: 'block',
 	},
 	ref: {
 		component: InlineDiv,

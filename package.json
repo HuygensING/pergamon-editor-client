@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/d3": "^4.10.0",
     "@types/jest": "^20.0.5",
     "@types/lodash.debounce": "^4.0.2",
     "@types/node": "^8.0.17",
