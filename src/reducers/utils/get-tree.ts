@@ -7,7 +7,7 @@ import {IAnnotation, SourceType} from "../documents";
 import {addRow} from "./add-row";
 import fillGaps from "./fill-gaps";
 
-const orderAnnotations = (annotations) =>
+export const orderAnnotations = (annotations) =>
 	annotations
 		.sort(byDisplayStartEnd)
 		.map(addRow())

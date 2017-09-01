@@ -7,7 +7,7 @@ import {IAnnotationCommon} from "./annotation";
 import HireFormsSelect from 'hire-forms-select';
 import {Column, ColumnBody, ColumnHeader} from "../columns";
 
-const HeadButton = styled(Button)`
+export const HeadButton = styled(Button)`
 	display: inline-block;
 	margin-left: 1em;
 `;
@@ -18,7 +18,7 @@ const Select = styled(HireFormsSelect)`
 	width: 75px;
 `;
 
-const Menu = styled.div`
+export const Menu = styled.div`
 	flex: 1;
 `;
 

@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "classnames": "^2.2.5",
+    "d3": "^4.10.0",
     "hire-forms-input": "^3.0.3",
     "hire-forms-select": "^2.2.10",
     "hire-forms-textarea": "^2.3.0",

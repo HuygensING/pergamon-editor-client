@@ -14,6 +14,7 @@ import {
 	createAnnotation, createAnnotationDocument, createAnnotationOnAnnotation, deleteAnnotation,
 	updateAnnotation, updateAnnotationDocumentText
 } from "../../../actions/annotation";
+import Visualisations from "./visualisations/index";
 
 const Div = styled.div`
 	display: flex;
@@ -23,6 +24,10 @@ const Div = styled.div`
 `;
 
 class ActiveDocument extends React.Component<any, any> {
+	public state = {
+		visualisations: true,
+	};
+
 	public componentDidMount() {
 		this.props.setRootDocumentId(this.props.match.params.id, true);
 	}
@@ -74,6 +79,7 @@ class ActiveDocument extends React.Component<any, any> {
 				  goToChildDocument={goToChildDocument}
 				  root={rootDocument}
 				/>
+				<div onClick={() => this.setState({ visualisations: !this.state.visualisations })}>click</div>
 				<Columns>
 					<Column>
 						<ColumnHeader value="Output" />
@@ -111,20 +117,26 @@ class ActiveDocument extends React.Component<any, any> {
 							}
 						</ColumnBody>
 					</Column>
-					<Annotations
-						activateAnnotation={activateAnnotation}
-						activateAnnotationDocument={activateAnnotationDocument}
-						activeAnnotationDocument={activeAnnotationDocument}
-						activeAnnotation={activeAnnotation}
-						activeDocument={activeDocument}
-						createAnnotationDocument={createAnnotationDocument}
-						createAnnotationOnAnnotation={createAnnotationOnAnnotation}
-						deleteAnnotation={deleteAnnotation}
-						documents={documents}
-						updateAnnotation={updateAnnotation}
-						updateAnnotationDocumentText={updateAnnotationDocumentText}
-						updateText={updateText}
-					/>
+					{
+						this.state.visualisations ?
+							<Visualisations
+								activeDocument={activeDocument}
+							/> :
+							<Annotations
+								activateAnnotation={activateAnnotation}
+								activateAnnotationDocument={activateAnnotationDocument}
+								activeAnnotationDocument={activeAnnotationDocument}
+								activeAnnotation={activeAnnotation}
+								activeDocument={activeDocument}
+								createAnnotationDocument={createAnnotationDocument}
+								createAnnotationOnAnnotation={createAnnotationOnAnnotation}
+								deleteAnnotation={deleteAnnotation}
+								documents={documents}
+								updateAnnotation={updateAnnotation}
+								updateAnnotationDocumentText={updateAnnotationDocumentText}
+								updateText={updateText}
+							/>
+					}
 				</Columns>
 			</Div>
 		);
