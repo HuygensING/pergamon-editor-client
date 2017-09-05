@@ -20,7 +20,7 @@ const update = (props) => {
 		filterText(JSON.parse(myTree)) :
 		activeDocument.tree;
 
-	const svg = d3.select("svg");
+	const svg = d3.select("svg.vis");
 	svg.html('')
 	d3.select('#tooltip').remove();
 	const svgNode = svg.node() as Element;

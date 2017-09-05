@@ -12,6 +12,7 @@ import history from '../store/history';
 import styled from "styled-components";
 
 import Messages, { addMessage } from 'hire-messages';
+import VisualisationTests from "./visualisation-tests";
 // addMessage({
 // 	type: 'error',
 // 	value: 'This is a error',
@@ -62,6 +63,15 @@ export default () => (
 					component={Documents}
 					exact
 					path="/documents"
+				/>
+				<Route
+					component={VisualisationTests}
+					exact
+					path="/visualisation-tests"
+				/>
+				<Route
+					component={VisualisationTests}
+					path="/visualisation-tests/:type"
 				/>
 				{Messages}
 			</App>

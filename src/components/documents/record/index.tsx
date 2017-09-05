@@ -23,6 +23,17 @@ const Div = styled.div`
 	position: relative;
 `;
 
+const SwitchRightColumn = styled.div`
+	background: #CCC;
+	border-radius: 3px;
+	color: white;
+	cursor: pointer;
+	padding: 2px 8px;
+	position: absolute;
+	right: -3px;
+	top: 72px;
+`;
+
 class ActiveDocument extends React.Component<any, any> {
 	public state = {
 		visualisations: true,
@@ -79,7 +90,12 @@ class ActiveDocument extends React.Component<any, any> {
 				  goToChildDocument={goToChildDocument}
 				  root={rootDocument}
 				/>
-				<div onClick={() => this.setState({ visualisations: !this.state.visualisations })}>click</div>
+				<SwitchRightColumn
+					onClick={() => this.setState({ visualisations: !this.state.visualisations })}>
+					{
+						!this.state.visualisations ? 'visualisation' : 'annotations'
+					}
+				</SwitchRightColumn>
 				<Columns>
 					<Column>
 						<ColumnHeader value="Output" />

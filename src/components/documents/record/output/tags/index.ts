@@ -115,7 +115,7 @@ export default {
 	},
 	head: {
 		component: styled.h2``,
-		display: 'block',
+		display: 'bloc',
 	},
 	ref: {
 		component: InlineDiv,
