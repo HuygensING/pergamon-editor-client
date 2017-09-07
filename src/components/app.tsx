@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route } from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux'
 
@@ -48,7 +48,7 @@ export default () => (
 		<ConnectedRouter history={history}>
 			<App>
 				<Header>
-					Pergamon client
+					<Link to="/">Pergamon client</Link>
 				</Header>
 				<Route
 					component={Home}
