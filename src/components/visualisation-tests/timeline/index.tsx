@@ -9,11 +9,10 @@ const events = data.map(d => ({
 const TimelineTest = () =>
 	<Timeline
 		events={events}
-		resize={() => {}}
 		root={{
 			dateRange: {
-				from: new Date('1550'),
-				to: new Date('1700')
+				from: new Date('1600'),
+				to: new Date('1650')
 			},
 			title: 'my root',
 		}}

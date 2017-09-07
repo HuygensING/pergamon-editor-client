@@ -92,7 +92,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1610-01?",
+		"date": "1610-01",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "Den Haag (nl)",
@@ -157,7 +157,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1613~",
+		"date": "1613",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[Den Haag (nl)]",
@@ -170,7 +170,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1613~",
+		"date": "1613",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "Den Haag (nl)",
@@ -196,7 +196,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1615~",
+		"date": "1615",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[Den Haag (nl)]",
@@ -456,7 +456,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1617-09-26?",
+		"date": "1617-09-26",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[Den Haag (nl)]",
@@ -807,7 +807,7 @@ export default [
 	},
 	{
 		"language": "French",
-		"date": "1619-09-30?",
+		"date": "1619-09-30",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[Den Haag (nl)]",
@@ -820,7 +820,7 @@ export default [
 	},
 	{
 		"language": "Dutch",
-		"date": "1619-09-30?",
+		"date": "1619-09-30",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[Den Haag (nl)]",
@@ -1782,7 +1782,7 @@ export default [
 	},
 	{
 		"language": "French",
-		"date": "1622-08-14?",
+		"date": "1622-08-14",
 		"extra": {},
 		"appendices": [],
 		"senderLoc": "[London (gb)]",
