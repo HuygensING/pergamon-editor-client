@@ -5,9 +5,9 @@ services:
       context: ../
       dockerfile: docker/Dockerfile-prod-client
     ports:
-      - "80:80"
+      - "443:443"
     restart: always
-#     volumes:
-#       - pergamon_secrets:/etc/nginx/ssl
-# volumes:
-#   - pergamon_secrets:
+    volumes:
+      - pergamon_secrets:/etc/nginx/ssl
+volumes:
+  pergamon_secrets:
