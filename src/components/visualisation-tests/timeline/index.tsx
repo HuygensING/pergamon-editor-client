@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Timeline from 'timeline';
+import Timeline from 'timeline2';
 import data from './data';
 const events = data.map(d => ({
 	date: new Date(d.date),
