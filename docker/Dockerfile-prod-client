@@ -9,4 +9,4 @@ COPY node_modules/react-dom /usr/share/nginx/html/node_modules/react-dom/
 COPY node_modules/hire-forms-input /usr/share/nginx/html/node_modules/hire-forms-input/
 COPY node_modules/hire-forms-select /usr/share/nginx/html/node_modules/hire-forms-select/
 
-EXPOSE 80
+EXPOSE 443
